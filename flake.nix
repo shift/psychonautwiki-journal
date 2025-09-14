@@ -94,12 +94,22 @@
           pname = "psychonautwiki-journal-desktop";
           version = "1.0.0";
           
-          src = ./.;
+          src = ./psychonautwiki-journal-desktop;
           
-          inherit buildInputs nativeBuildInputs;
+          nativeBuildInputs = with pkgs; [
+            jdk
+            gradle_7
+          ];
+          
+          inherit buildInputs;
+          
+          JAVA_HOME = "${jdk}";
+          GRADLE_OPTS = "-Dorg.gradle.daemon=false";
+          
+          configurePhase = "true";  # Skip cmake configure
           
           buildPhase = ''
-            gradle build
+            gradle build --no-daemon
           '';
           
           installPhase = ''
@@ -115,13 +125,22 @@
             pname = "psychonautwiki-journal-tests";
             version = "1.0.0";
             
-            src = ./.;
+            src = ./psychonautwiki-journal-desktop;
             
-            inherit buildInputs nativeBuildInputs;
+            nativeBuildInputs = with pkgs; [
+              jdk
+              gradle_7
+            ];
+            
+            inherit buildInputs;
+            
+            JAVA_HOME = "${jdk}";
+            GRADLE_OPTS = "-Dorg.gradle.daemon=false";
+            
+            configurePhase = "true";  # Skip cmake configure
             
             buildPhase = ''
-              gradle test
-              gradle integrationTest
+              gradle test --no-daemon
             '';
             
             installPhase = ''

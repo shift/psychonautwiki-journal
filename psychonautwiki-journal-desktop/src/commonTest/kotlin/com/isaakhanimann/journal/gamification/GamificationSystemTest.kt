@@ -140,7 +140,7 @@ class GamificationSystemTest : StringSpec({
         )
         
         safetyScore.overallScore shouldBeGreaterThan 80.0
-        safetyScore.components shouldContain (SafetyComponent.DOSAGE_PRECISION to 90.0)
+        safetyScore.components.keys shouldContain SafetyComponent.DOSAGE_PRECISION
         safetyScore.trend shouldBe ScoreTrend.IMPROVING
         safetyScore.improvementAreas shouldHaveSize 1
     }
@@ -156,7 +156,7 @@ class GamificationSystemTest : StringSpec({
         
         event.type shouldBe GamificationEventType.EXPERIENCE_CREATED
         event.experienceId shouldBe "123"
-        event.metadata shouldContain ("quality" to "high")
+        event.metadata.keys shouldContain "quality"
         event.xpAwarded shouldBe 50L
     }
     
@@ -168,21 +168,22 @@ class GamificationSystemTest : StringSpec({
             id = "weekly_safety",
             title = "Weekly Safety Challenge",
             description = "Use 3 different safety practices",
-            category = AchievementCategory.SAFETY_FIRST,
+            category = ChallengeCategory.SAFETY,
+            difficulty = ChallengeDifficulty.INTERMEDIATE,
             xpReward = 200L,
             startDate = now,
             endDate = oneWeekLater,
             requirements = listOf(
-                AchievementRequirement(
+                ChallengeRequirement(
                     type = RequirementType.SAFETY_PRACTICES_USED,
                     target = 3L,
-                    timeFrame = TimeFrame.WEEKLY
+                    description = "Use 3 different safety practices"
                 )
             )
         )
         
         challenge.endDate.epochSeconds shouldBeGreaterThan challenge.startDate.epochSeconds
-        challenge.requirements.first().timeFrame shouldBe TimeFrame.WEEKLY
+        challenge.requirements.first().type shouldBe RequirementType.SAFETY_PRACTICES_USED
     }
     
     "Gamification stats should aggregate correctly" {

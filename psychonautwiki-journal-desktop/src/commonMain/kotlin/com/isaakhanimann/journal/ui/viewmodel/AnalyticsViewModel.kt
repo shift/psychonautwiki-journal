@@ -2,12 +2,13 @@ package com.isaakhanimann.journal.ui.viewmodel
 
 import com.isaakhanimann.journal.data.repository.ExperienceRepository
 import com.isaakhanimann.journal.data.model.Experience
+import com.isaakhanimann.journal.data.model.Substance
 import com.isaakhanimann.journal.plugin.*
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
-import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.minus
+import kotlin.time.Duration.Companion.days
 
 enum class AnalyticsTimeRange(val displayName: String, val days: Int?) {
     LAST_WEEK("Last Week", 7),
@@ -52,7 +53,7 @@ class AnalyticsViewModel(
             try {
                 val experiences = experienceRepository.getAllExperiences().first()
                 val filteredExperiences = filterExperiencesByTimeRange(experiences, _selectedTimeRange.value)
-                val substances = emptyList() // Simplified for now
+                val substances = emptyList<Substance>() // Simplified for now
                 
                 val analyticsContext = AnalyticsContext(
                     experiences = filteredExperiences,
@@ -78,7 +79,7 @@ class AnalyticsViewModel(
     ): List<Experience> {
         if (timeRange.days == null) return experiences
         
-        val cutoffDate = Clock.System.now().minus(timeRange.days!!, DateTimeUnit.TimeBased.DAY)
+        val cutoffDate = Clock.System.now().minus(timeRange.days!!.days)
         return experiences.filter { experience ->
             experience.date?.let { date -> date >= cutoffDate } ?: false
         }
@@ -87,7 +88,7 @@ class AnalyticsViewModel(
     private fun getTimeRange(range: AnalyticsTimeRange): TimeRange? {
         return range.days?.let { days ->
             val end = Clock.System.now()
-            val start = end.minus(days, DateTimeUnit.TimeBased.DAY)
+            val start = end.minus(days.days)
             TimeRange(start, end)
         }
     }

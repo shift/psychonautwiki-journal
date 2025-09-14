@@ -1,12 +1,11 @@
 package com.isaakhanimann.journal.ui.components.visualization
 
-import androidx.compose.ui.test.*
-import androidx.compose.ui.test.junit4.createComposeRule
 import com.isaakhanimann.journal.plugin.VisualizationData
 import com.isaakhanimann.journal.plugin.VisualizationType
-import com.isaakhanimann.journal.ui.theme.JournalTheme
 import io.kotest.core.spec.style.StringSpec
-import org.junit.Rule
+import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
+import io.kotest.matchers.collections.shouldContain
 
 class AdvancedVisualizationTest : StringSpec({
     

@@ -113,7 +113,10 @@ class GamificationPlugin : Plugin, KoinComponent {
             id = "gamification_visualization",
             name = "Progress Visualization",
             description = "Visualizes user progress and achievements",
-            visualizationComponent = ::generateProgressVisualization
+            visualizationComponent = { context -> 
+                // TODO: Implement progress visualization
+                "Progress visualization not yet implemented"
+            }
         )
     }
     
@@ -138,7 +141,7 @@ class GamificationPlugin : Plugin, KoinComponent {
     */
     
     private suspend fun analyzeGamificationProgress(context: AnalyticsContext): AnalyticsResult {
-        val stats = gamificationService.getGamificationStats()
+        val stats = gamificationService.gamificationStats.value
         val insights = gamificationService.getProgressInsights()
         val challenges = gamificationService.getPersonalizedChallenges()
         

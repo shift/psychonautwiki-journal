@@ -44,28 +44,36 @@ class GamificationViewModel : BaseViewModel(), KoinComponent {
     
     private fun observeGamificationData() {
         viewModelScope.launch {
-            combine(
-                gamificationService.userLevel,
-                gamificationService.gamificationStats,
-                gamificationService.achievements,
-                gamificationService.streaks,
-                gamificationService.questProgress,
-                gamificationService.safetyScore
-            ) { userLevel, stats, achievements, streaks, questProgress, safetyScore ->
-                _uiState.value.copy(
-                    userLevel = userLevel,
-                    stats = stats,
-                    unlockedAchievements = achievements,
-                    recentAchievements = achievements.sortedByDescending { it.unlockedAt }.take(5),
-                    streaks = streaks,
-                    questProgress = questProgress,
-                    completedQuests = questProgress.filter { it.isCompleted },
-                    safetyScore = safetyScore,
-                    isLoading = false
-                )
-            }.collect { newState ->
-                _uiState.value = newState
-            }
+            gamificationService.userLevel
+                .combine(gamificationService.gamificationStats) { userLevel, stats -> userLevel to stats }
+                .combine(gamificationService.achievements) { (userLevel, stats), achievements -> Triple(userLevel, stats, achievements) }
+                .combine(gamificationService.streaks) { (userLevel, stats, achievements), streaks -> 
+                    listOf(userLevel, stats, achievements, streaks) 
+                }
+                .combine(gamificationService.questProgress) { list, questProgress -> 
+                    list + questProgress
+                }
+                .combine(gamificationService.safetyScore) { list, safetyScore ->
+                    val userLevel = list[0] as UserLevel
+                    val stats = list[1] as GamificationStats
+                    val achievements = list[2] as List<UserAchievement>
+                    val streaks = list[3] as Map<StreakType, Streak>
+                    val questProgress = list[4] as List<UserQuestProgress>
+                    
+                    GamificationUiState(
+                        userLevel = userLevel,
+                        stats = stats,
+                        unlockedAchievements = achievements,
+                        recentAchievements = achievements.sortedByDescending { it.unlockedAt }.take(5),
+                        streaks = streaks,
+                        questProgress = questProgress,
+                        completedQuests = questProgress.filter { it.isCompleted },
+                        safetyScore = safetyScore,
+                        isLoading = false
+                    )
+                }.collect { newState ->
+                    _uiState.value = newState
+                }
         }
     }
     

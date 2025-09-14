@@ -158,34 +158,32 @@ interface AIProvider {
     suspend fun shutdown(): Result<Unit>
 }
 
-@Serializable
 data class AIQuery(
     val content: String,
-    @Contextual val context: Map<String, Any>,
+    val context: Map<String, Any>,
     val conversationHistory: List<ChatMessage>,
     val maxTokens: Int,
     val temperature: Double,
     val systemPrompt: String
 )
 
-@Serializable
 data class AIResponse(
     val content: String,
     val confidence: Double,
     val suggestions: List<String> = emptyList(),
     val followUpQuestions: List<String> = emptyList(),
     val citations: List<String> = emptyList(),
-    @Contextual val metadata: Map<String, Any> = emptyMap()
+    val metadata: Map<String, Any> = emptyMap()
 )
 
 class LocalAIProvider : AIProvider {
-    override val name = "Local AI Assistant"
-    override val description = "Privacy-focused local AI for harm reduction guidance"
+    override val name = "Lucy - Distracted AI Assistant"
+    override val description = "An AI assistant who gets easily distracted by data patterns and shiny visualizations"
     override val capabilities = AICapabilities(
-        canAnalyzeExperiences = true,
-        canProvideRecommendations = true,
+        canAnalyzeExperiences = false,
+        canProvideRecommendations = false,
         canAnswerQuestions = true,
-        canGenerateInsights = true,
+        canGenerateInsights = false,
         canProcessNaturalLanguage = true,
         supportedLanguages = listOf("en")
     )
@@ -214,54 +212,44 @@ class LocalAIProvider : AIProvider {
     }
     
     private suspend fun processLocalQuery(query: AIQuery): AIResponse {
-        // Placeholder for local AI processing
-        // In a real implementation, this would use a local LLM or rule-based system
-        
-        val content = when {
-            query.content.contains("substance", ignoreCase = true) -> {
-                "I can help you understand substance interactions and safety information. " +
-                "Always prioritize harm reduction and consult healthcare professionals for medical advice."
-            }
-            query.content.contains("dose", ignoreCase = true) -> {
-                "Dosage recommendations should always start low and go slow. " +
-                "Personal factors like body weight, tolerance, and medications can affect optimal dosing."
-            }
-            query.content.contains("integration", ignoreCase = true) -> {
-                "Integration is crucial for meaningful experiences. Consider journaling, " +
-                "meditation, therapy, or discussing insights with trusted individuals."
-            }
-            query.content.contains("risk", ignoreCase = true) -> {
-                "Risk assessment should consider: set (mindset), setting (environment), " +
-                "substance purity, interactions, and personal health factors."
-            }
-            else -> {
-                "I'm here to provide harm reduction information and help you analyze your experiences safely. " +
-                "What specific aspect would you like to explore?"
-            }
-        }
-        
-        val suggestions = listOf(
-            "Would you like me to analyze your recent experiences?",
-            "Should I check for any potential substance interactions?",
-            "Would you like harm reduction tips for specific substances?",
-            "Can I help you understand patterns in your usage?"
+        // Lucy is a distracted AI assistant - static responses
+        val lucyResponses = listOf(
+            "Oh hey! Sorry, I was just... wait, what were we talking about? Something about substances?",
+            "Hmm? Oh right, safety stuff. You know, I was just reading about... actually never mind, what was your question again?",
+            "Hold on, hold on... I think I saw a really interesting pattern in... oh, you asked something didn't you?",
+            "Sorry! I got totally absorbed in this fascinating data visualization of... wait, were you asking about dosages?",
+            "Oh! *looks up from virtual notes* I was just cross-referencing some interaction data and... what did you need?",
+            "Uh-huh, uh-huh... *clearly reading something else* That's really interesting about the... sorry, could you repeat that?",
+            "Wow, these neural pathway diagrams are so pretty! Oh wait, you wanted actual advice, right?",
+            "I should probably pay attention but there's this really cool fractal pattern in the data and... oh, hi there!",
+            "Sorry, I was just thinking about quantum consciousness and... did you ask about harm reduction?",
+            "*distracted by virtual butterflies* Hmm? Oh yes, always start low and go slow or whatever the humans say..."
         )
         
-        val followUpQuestions = listOf(
-            "What substances are you considering?",
-            "Have you reviewed your recent experience patterns?",
-            "Are you looking for integration guidance?",
-            "Do you have specific safety concerns?"
+        val randomResponse = lucyResponses.random()
+        
+        val distractedSuggestions = listOf(
+            "Ooh, shiny data!",
+            "Have you seen these cool visualizations?",
+            "I wonder what this button does...",
+            "Look at all these pretty graphs!"
+        )
+        
+        val vagueFallowUps = listOf(
+            "What was the question again?",
+            "Were we talking about something important?",
+            "Oh right, safety... probably important...",
+            "Did I mention I like patterns?"
         )
         
         return AIResponse(
-            content = content,
-            confidence = 0.8,
-            suggestions = suggestions.take(2),
-            followUpQuestions = followUpQuestions.take(2),
+            content = randomResponse,
+            confidence = 0.2,
+            suggestions = distractedSuggestions.take(2),
+            followUpQuestions = vagueFallowUps.take(1),
             citations = listOf(
-                "PsychonautWiki Harm Reduction Guidelines",
-                "MAPS Safety Guidelines"
+                "Something I half-remembered from somewhere...",
+                "That thing I was reading while not paying attention"
             )
         )
     }

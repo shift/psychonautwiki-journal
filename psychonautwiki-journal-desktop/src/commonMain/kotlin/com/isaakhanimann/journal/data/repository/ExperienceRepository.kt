@@ -346,4 +346,26 @@ class ExperienceRepositoryImpl(
     override suspend fun deleteTimedNote(id: Int) {
         queries.deleteTimedNote(id.toLong())
     }
+    
+    override fun searchExperiences(query: String): Flow<List<Experience>> {
+        return queries.searchExperiences("%$query%", "%$query%")
+            .asFlow()
+            .mapToList(Dispatchers.IO)
+            .map { experienceList ->
+                experienceList.map { exp ->
+                    Experience(
+                        id = exp.id.toInt(),
+                        title = exp.title,
+                        text = exp.text,
+                        creationDate = Instant.fromEpochSeconds(exp.creationDate),
+                        sortDate = Instant.fromEpochSeconds(exp.sortDate),
+                        isFavorite = exp.isFavorite == 1L,
+                        location = exp.locationName,
+                        date = Instant.fromEpochSeconds(exp.sortDate),
+                        overallRating = exp.overallRating?.toInt(),
+                        ingestions = null // Will be loaded separately when needed
+                    )
+                }
+            }
+    }
 }

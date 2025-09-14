@@ -7,6 +7,7 @@ import com.isaakhanimann.journal.data.repository.DraftManager
 import com.isaakhanimann.journal.data.repository.IngestionDraft
 import com.isaakhanimann.journal.data.substance.PsychonautWikiDatabase
 import com.isaakhanimann.journal.data.substance.SubstanceInfo
+import com.isaakhanimann.journal.ui.viewmodel.AutoSaveStatus
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.delay
@@ -433,21 +434,6 @@ data class IngestionFormState(
 
 enum class IngestionEditorMode {
     CREATE, EDIT
-}
-
-enum class DoseClassification(val displayName: String, val description: String) {
-    THRESHOLD("Threshold", "Barely noticeable effects"),
-    LIGHT("Light", "Mild effects, still functional"),
-    COMMON("Common", "Normal recreational dose"),
-    STRONG("Strong", "Intense effects, impaired function"),
-    HEAVY("Heavy", "Very strong effects, high risk"),
-    UNKNOWN("Unknown", "Dose range not available");
-    
-    val isRisky: Boolean get() = this in listOf(HEAVY)
-}
-
-enum class AutoSaveStatus {
-    NONE, SAVING, SAVED, ERROR
 }
 
 enum class DoseClassification(val displayName: String, val description: String) {
