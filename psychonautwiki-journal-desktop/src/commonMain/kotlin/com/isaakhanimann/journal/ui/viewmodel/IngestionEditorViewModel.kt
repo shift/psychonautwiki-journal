@@ -36,6 +36,7 @@ class IngestionEditorViewModel(
         editingIngestionId = null
         _formState.value = IngestionFormState()
         _uiState.value = IngestionEditorUiState(mode = IngestionEditorMode.CREATE)
+        validateForm()
     }
     
     fun initializeForEditing(experienceId: Int, ingestionId: Int) {
@@ -68,6 +69,7 @@ class IngestionEditorViewModel(
                             mode = IngestionEditorMode.EDIT,
                             isLoading = false
                         )
+                        validateForm()
                     }
                 }
             } catch (e: Exception) {

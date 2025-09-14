@@ -3,6 +3,7 @@ package com.isaakhanimann.journal.data
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
+import io.kotest.matchers.collections.shouldNotBeEmpty
 import com.isaakhanimann.journal.data.model.*
 import com.isaakhanimann.journal.data.substance.PsychonautWikiDatabase
 import kotlinx.datetime.Clock

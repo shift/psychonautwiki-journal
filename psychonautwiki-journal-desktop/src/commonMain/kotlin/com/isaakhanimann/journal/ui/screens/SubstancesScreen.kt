@@ -32,11 +32,22 @@ fun SubstancesScreen(navController: DesktopNavigationController) {
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        Text(
-            text = "Substance Database",
-            style = MaterialTheme.typography.headlineMedium,
-            modifier = Modifier.padding(bottom = 16.dp)
-        )
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            IconButton(
+                onClick = { navController.navigateToDashboard() }
+            ) {
+                Icon(Icons.Default.Home, contentDescription = "Home")
+            }
+            Text(
+                text = "Substance Database",
+                style = MaterialTheme.typography.headlineMedium
+            )
+        }
         
         if (isLoading) {
             Box(

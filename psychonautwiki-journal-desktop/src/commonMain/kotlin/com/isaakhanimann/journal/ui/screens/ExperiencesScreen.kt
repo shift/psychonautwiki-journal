@@ -45,10 +45,19 @@ fun ExperiencesScreen(navController: DesktopNavigationController) {
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(
-                        text = "Experiences",
-                        style = MaterialTheme.typography.headlineMedium
-                    )
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        IconButton(
+                            onClick = { navController.navigateToDashboard() }
+                        ) {
+                            Icon(Icons.Default.Home, contentDescription = "Home")
+                        }
+                        Text(
+                            text = "Experiences",
+                            style = MaterialTheme.typography.headlineMedium
+                        )
+                    }
                     
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -119,7 +128,7 @@ fun ExperiencesScreen(navController: DesktopNavigationController) {
                 }
             }
         } else {
-            val experiences = uiState.data?.let { listOf<ExperienceSummary>() } ?: emptyList()
+            val experiences = uiState.data ?: emptyList()
             if (experiences.isEmpty()) {
                 // Empty state
                 Box(

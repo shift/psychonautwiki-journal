@@ -39,15 +39,27 @@ fun SettingsScreen(navController: DesktopNavigationController) {
                 Column(
                     modifier = Modifier.padding(16.dp)
                 ) {
-                    Text(
-                        text = "Settings",
-                        style = MaterialTheme.typography.headlineMedium
-                    )
-                    Text(
-                        text = "Configure your journal preferences",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        IconButton(
+                            onClick = { navController.navigateToDashboard() }
+                        ) {
+                            Icon(Icons.Default.Home, contentDescription = "Home")
+                        }
+                        Column {
+                            Text(
+                                text = "Settings",
+                                style = MaterialTheme.typography.headlineMedium
+                            )
+                            Text(
+                                text = "Configure your journal preferences",
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+                    }
                 }
             }
         }

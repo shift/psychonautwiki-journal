@@ -29,6 +29,7 @@ class ExperienceEditorViewModel(
         editingExperienceId = null
         _formState.value = ExperienceFormState()
         _uiState.value = ExperienceEditorUiState(mode = EditorMode.CREATE)
+        validateForm()
     }
     
     private fun loadExperience(experienceId: Int) {
@@ -53,6 +54,7 @@ class ExperienceEditorViewModel(
                             experienceWithDetails = experienceWithDetails,
                             isLoading = false
                         )
+                        validateForm()
                     } else {
                         _uiState.value = _uiState.value.copy(
                             isLoading = false,

@@ -64,6 +64,7 @@ kotlin {
             implementation(libs.kotest.framework.engine)
             implementation(libs.kotest.assertions.core)
             implementation(libs.mockk)
+            implementation(libs.koin.test)
         }
         
         val desktopTest by getting {
