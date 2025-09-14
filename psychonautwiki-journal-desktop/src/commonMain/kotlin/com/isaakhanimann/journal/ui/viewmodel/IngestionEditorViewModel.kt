@@ -3,16 +3,21 @@ package com.isaakhanimann.journal.ui.viewmodel
 import com.isaakhanimann.journal.data.experience.ExperienceTracker
 import com.isaakhanimann.journal.data.model.*
 import com.isaakhanimann.journal.data.repository.SubstanceRepository
+import com.isaakhanimann.journal.data.repository.DraftManager
+import com.isaakhanimann.journal.data.repository.IngestionDraft
 import com.isaakhanimann.journal.data.substance.PsychonautWikiDatabase
 import com.isaakhanimann.journal.data.substance.SubstanceInfo
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.Job
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 
 class IngestionEditorViewModel(
     private val experienceTracker: ExperienceTracker,
-    private val substanceRepository: SubstanceRepository
+    private val substanceRepository: SubstanceRepository,
+    private val draftManager: DraftManager
 ) : BaseViewModel() {
     
     private val _uiState = MutableStateFlow(IngestionEditorUiState())
@@ -26,22 +31,129 @@ class IngestionEditorViewModel(
     
     private var experienceId: Int = 0
     private var editingIngestionId: Int? = null
+    private var autoSaveJob: Job? = null
+    private var formId: String = ""
+    
+    companion object {
+        private const val AUTO_SAVE_DELAY_MS = 30_000L // 30 seconds
+    }
     
     init {
         loadSubstanceSearchResults()
+        startAutoSaveMonitoring()
+    }
+    
+    private fun startAutoSaveMonitoring() {
+        viewModelScope.launch {
+            formState
+                .debounce(5000) // Wait 5 seconds after user stops typing
+                .collect { form ->
+                    if (formId.isNotBlank() && form.hasSubstantialContent()) {
+                        autoSaveDraft()
+                    }
+                }
+        }
+    }
+    
+    private fun scheduleAutoSave() {
+        autoSaveJob?.cancel()
+        autoSaveJob = viewModelScope.launch {
+            delay(AUTO_SAVE_DELAY_MS)
+            autoSaveDraft()
+        }
+    }
+    
+    private suspend fun autoSaveDraft() {
+        val form = _formState.value
+        if (form.hasSubstantialContent()) {
+            val draft = IngestionDraft(
+                substanceName = form.substanceName,
+                dose = form.dose,
+                units = form.units,
+                administrationRoute = form.administrationRoute.name,
+                time = form.time.toEpochMilliseconds(),
+                endTime = form.endTime?.toEpochMilliseconds(),
+                notes = form.notes,
+                isDoseAnEstimate = form.isDoseAnEstimate,
+                stomachFullness = form.stomachFullness?.name,
+                consumerName = form.consumerName
+            )
+            
+            try {
+                draftManager.saveIngestionDraft(formId, draft)
+                _uiState.value = _uiState.value.copy(
+                    autoSaveStatus = AutoSaveStatus.SAVED,
+                    lastAutoSave = Clock.System.now()
+                )
+                
+                // Clear the saved status after 3 seconds
+                viewModelScope.launch {
+                    delay(3000)
+                    if (_uiState.value.autoSaveStatus == AutoSaveStatus.SAVED) {
+                        _uiState.value = _uiState.value.copy(autoSaveStatus = AutoSaveStatus.NONE)
+                    }
+                }
+            } catch (e: Exception) {
+                _uiState.value = _uiState.value.copy(autoSaveStatus = AutoSaveStatus.ERROR)
+            }
+        }
+    }
+    
+    private suspend fun loadDraftIfExists() {
+        if (formId.isNotBlank() && editingIngestionId == null) {
+            val draft = draftManager.getIngestionDraft(formId)
+            if (draft != null && draft.hasSubstantialContent()) {
+                _formState.value = IngestionFormState(
+                    substanceName = draft.substanceName,
+                    dose = draft.dose,
+                    units = draft.units,
+                    administrationRoute = AdministrationRoute.values().find { it.name == draft.administrationRoute } ?: AdministrationRoute.ORAL,
+                    time = Instant.fromEpochMilliseconds(draft.time),
+                    endTime = draft.endTime?.let { Instant.fromEpochMilliseconds(it) },
+                    notes = draft.notes,
+                    isDoseAnEstimate = draft.isDoseAnEstimate,
+                    stomachFullness = draft.stomachFullness?.let { StomachFullness.values().find { sf -> sf.name == it } },
+                    consumerName = draft.consumerName
+                )
+                _uiState.value = _uiState.value.copy(
+                    hasDraft = true,
+                    draftLastSaved = Instant.fromEpochMilliseconds(draft.lastSaved)
+                )
+                validateForm()
+            }
+        }
+    }
+    
+    fun acceptDraft() {
+        _uiState.value = _uiState.value.copy(hasDraft = false)
+    }
+    
+    fun discardDraft() {
+        viewModelScope.launch {
+            draftManager.clearIngestionDraft(formId)
+            _uiState.value = _uiState.value.copy(hasDraft = false)
+            initializeForCreation(experienceId) // Reset form
+        }
     }
     
     fun initializeForCreation(experienceId: Int) {
         this.experienceId = experienceId
         editingIngestionId = null
+        formId = "ingestion_new_${experienceId}_${Clock.System.now().toEpochMilliseconds()}"
         _formState.value = IngestionFormState()
         _uiState.value = IngestionEditorUiState(mode = IngestionEditorMode.CREATE)
         validateForm()
+        
+        // Load any existing draft
+        viewModelScope.launch {
+            loadDraftIfExists()
+        }
     }
     
     fun initializeForEditing(experienceId: Int, ingestionId: Int) {
         this.experienceId = experienceId
         editingIngestionId = ingestionId
+        formId = "ingestion_edit_${ingestionId}"
         loadIngestion(ingestionId)
     }
     
@@ -99,46 +211,56 @@ class IngestionEditorViewModel(
         val substanceInfo = PsychonautWikiDatabase.getSubstanceByName(substanceName)
         _uiState.value = _uiState.value.copy(selectedSubstanceInfo = substanceInfo)
         validateForm()
+        scheduleAutoSave()
     }
     
     fun updateDose(dose: String) {
         _formState.value = _formState.value.copy(dose = dose)
         calculateDoseClassification()
         validateForm()
+        scheduleAutoSave()
     }
     
     fun updateUnits(units: String) {
         _formState.value = _formState.value.copy(units = units)
         calculateDoseClassification()
+        scheduleAutoSave()
     }
     
     fun updateAdministrationRoute(route: AdministrationRoute) {
         _formState.value = _formState.value.copy(administrationRoute = route)
         calculateDoseClassification()
+        scheduleAutoSave()
     }
     
     fun updateTime(time: Instant) {
         _formState.value = _formState.value.copy(time = time)
+        scheduleAutoSave()
     }
     
     fun updateEndTime(endTime: Instant?) {
         _formState.value = _formState.value.copy(endTime = endTime)
+        scheduleAutoSave()
     }
     
     fun updateNotes(notes: String) {
         _formState.value = _formState.value.copy(notes = notes)
+        scheduleAutoSave()
     }
     
     fun toggleDoseEstimate() {
         _formState.value = _formState.value.copy(isDoseAnEstimate = !_formState.value.isDoseAnEstimate)
+        scheduleAutoSave()
     }
     
     fun updateStomachFullness(fullness: StomachFullness?) {
         _formState.value = _formState.value.copy(stomachFullness = fullness)
+        scheduleAutoSave()
     }
     
     fun updateConsumerName(name: String) {
         _formState.value = _formState.value.copy(consumerName = name)
+        scheduleAutoSave()
     }
     
     private fun calculateDoseClassification() {
@@ -244,6 +366,15 @@ class IngestionEditorViewModel(
                     isSaving = false,
                     saveSuccess = true
                 )
+                
+                // Clear draft after successful save
+                if (formId.isNotBlank()) {
+                    draftManager.clearIngestionDraft(formId)
+                    _uiState.value = _uiState.value.copy(
+                        hasDraft = false,
+                        autoSaveStatus = AutoSaveStatus.NONE
+                    )
+                }
             } catch (e: Exception) {
                 _uiState.value = _uiState.value.copy(
                     isSaving = false,
@@ -270,7 +401,11 @@ data class IngestionEditorUiState(
     val error: String? = null,
     val substanceSearchResults: List<SubstanceInfo> = emptyList(),
     val selectedSubstanceInfo: SubstanceInfo? = null,
-    val doseClassification: DoseClassification? = null
+    val doseClassification: DoseClassification? = null,
+    val hasDraft: Boolean = false,
+    val draftLastSaved: Instant? = null,
+    val autoSaveStatus: AutoSaveStatus = AutoSaveStatus.NONE,
+    val lastAutoSave: Instant? = null
 ) {
     val canSave: Boolean get() = !isLoading && !isSaving
 }
@@ -293,10 +428,15 @@ data class IngestionFormState(
     val hasEndTime: Boolean get() = endTime != null
     val hasNotes: Boolean get() = notes.isNotBlank()
     val isMultipleConsumers: Boolean get() = consumerName.isNotBlank()
+    val hasSubstantialContent: Boolean get() = substanceName.trim().length > 2 || dose.isNotBlank()
 }
 
 enum class IngestionEditorMode {
     CREATE, EDIT
+}
+
+enum class AutoSaveStatus {
+    NONE, SAVING, SAVED, ERROR
 }
 
 enum class DoseClassification(val displayName: String, val description: String) {

@@ -5,7 +5,13 @@ import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
 import com.isaakhanimann.journal.database.Database
 import com.isaakhanimann.journal.data.repository.*
 import com.isaakhanimann.journal.data.experience.ExperienceTracker
+import com.isaakhanimann.journal.data.export.ExportManager
+import com.isaakhanimann.journal.data.export.ExportManagerImpl
+import com.isaakhanimann.journal.data.import.ImportManager
+import com.isaakhanimann.journal.data.import.ImportManagerImpl
 import com.isaakhanimann.journal.ui.theme.ThemeManager
+import com.isaakhanimann.journal.ui.utils.FileDialogHandler
+import com.isaakhanimann.journal.ui.utils.DesktopFileDialogHandler
 import com.isaakhanimann.journal.ui.viewmodel.*
 import org.koin.dsl.module
 import java.io.File
@@ -56,6 +62,22 @@ val appModule = module {
         PreferencesRepositoryImpl(get())
     }
     
+    single<DraftManager> {
+        DraftManagerImpl(get())
+    }
+    
+    single<ExportManager> {
+        ExportManagerImpl(get())
+    }
+    
+    single<ImportManager> {
+        ImportManagerImpl(get())
+    }
+    
+    single<FileDialogHandler> {
+        DesktopFileDialogHandler()
+    }
+    
     // Theme Management
     single<ThemeManager> {
         ThemeManager(get())
@@ -76,11 +98,11 @@ val appModule = module {
     }
     
     factory<ExperienceEditorViewModel> {
-        ExperienceEditorViewModel(get())
+        ExperienceEditorViewModel(get(), get())
     }
     
     factory<IngestionEditorViewModel> {
-        IngestionEditorViewModel(get(), get())
+        IngestionEditorViewModel(get(), get(), get())
     }
     
     factory<ExperienceTimelineViewModel> {

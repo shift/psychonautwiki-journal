@@ -130,6 +130,20 @@ class ExperienceTracker(
         }
     }
     
+    fun getAllExperiencesWithDetails(): Flow<List<ExperienceWithDetails>> {
+        return experienceRepository.getAllExperiences().combine(
+            experienceRepository.getAllIngestions()
+        ) { experiences, allIngestions ->
+            experiences.map { experience ->
+                val experienceIngestions = allIngestions.filter { it.experienceId == experience.id }
+                ExperienceWithDetails(
+                    experience = experience,
+                    ingestions = experienceIngestions
+                )
+            }
+        }
+    }
+    
     suspend fun createNewExperience(
         title: String,
         text: String = "",

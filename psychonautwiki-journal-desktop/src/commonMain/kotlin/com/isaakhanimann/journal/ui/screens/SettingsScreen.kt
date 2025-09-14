@@ -16,6 +16,11 @@ import com.isaakhanimann.journal.ui.compose.LocalConfiguration
 import com.isaakhanimann.journal.ui.layout.calculateWindowSizeClass
 import com.isaakhanimann.journal.ui.theme.ThemeMode
 import com.isaakhanimann.journal.ui.viewmodel.SettingsViewModel
+import com.isaakhanimann.journal.data.export.ExportManager
+import com.isaakhanimann.journal.data.import.ImportManager
+import com.isaakhanimann.journal.data.import.ImportFormat
+import com.isaakhanimann.journal.ui.utils.FileDialogHandler
+import kotlinx.coroutines.launch
 import org.koin.compose.getKoin
 
 @Composable
@@ -64,9 +69,320 @@ fun SettingsScreen(navController: DesktopNavigationController) {
                                 text = "Configure your journal preferences",
                                 style = MaterialTheme.typography.bodyMedium,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
+            )
         }
     }
+}
+
+@Composable
+private fun DataExportSection() {
+    val koin = getKoin()
+    val exportManager = remember { koin.get<ExportManager>() }
+    val fileDialogHandler = remember { koin.get<FileDialogHandler>() }
+    val scope = rememberCoroutineScope()
+    var isExporting by remember { mutableStateOf(false) }
+    var exportResult by remember { mutableStateOf<String?>(null) }
+    
+    SettingsSection(title = "Data Export") {
+        SettingItem(
+            title = "Export to JSON",
+            description = "Export all experiences and data in JSON format",
+            icon = Icons.Default.DataObject,
+            onClick = {
+                scope.launch {
+                    isExporting = true
+                    try {
+                        val filePath = fileDialogHandler.saveFile(
+                            title = "Export to JSON",
+                            defaultName = "experiences_export.json",
+                            extension = "json"
+                        )
+                        
+                        if (filePath != null) {
+                            val success = exportManager.exportToJsonFile(filePath)
+                            exportResult = if (success) {
+                                "Successfully exported to $filePath"
+                            } else {
+                                "Failed to export data"
+                            }
+                        }
+                    } catch (e: Exception) {
+                        exportResult = "Export error: ${e.message}"
+                    } finally {
+                        isExporting = false
+                    }
+                }
+            },
+            trailing = {
+                if (isExporting) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(20.dp),
+                        strokeWidth = 2.dp
+                    )
+                }
+            }
+        )
+        
+        SettingItem(
+            title = "Export to CSV",
+            description = "Export experiences in spreadsheet-compatible format",
+            icon = Icons.Default.TableChart,
+            onClick = {
+                scope.launch {
+                    isExporting = true
+                    try {
+                        val filePath = fileDialogHandler.saveFile(
+                            title = "Export to CSV",
+                            defaultName = "experiences_export.csv",
+                            extension = "csv"
+                        )
+                        
+                        if (filePath != null) {
+                            val success = exportManager.exportToCsvFile(filePath)
+                            exportResult = if (success) {
+                                "Successfully exported to $filePath"
+                            } else {
+                                "Failed to export data"
+                            }
+                        }
+                    } catch (e: Exception) {
+                        exportResult = "Export error: ${e.message}"
+                    } finally {
+                        isExporting = false
+                    }
+                }
+            },
+            trailing = {
+                if (isExporting) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(20.dp),
+                        strokeWidth = 2.dp
+                    )
+                }
+            }
+        )
+    }
+    
+    // Show export result snackbar or dialog
+    exportResult?.let { result ->
+        LaunchedEffect(result) {
+            // You could show a snackbar here or create a simple dialog
+            // For now, we'll just clear the result after showing it
+            kotlinx.coroutines.delay(3000)
+            exportResult = null
+        }
+    }
+}
+
+@Composable
+private fun DataImportSection() {
+    val koin = getKoin()
+    val importManager = remember { koin.get<ImportManager>() }
+    val fileDialogHandler = remember { koin.get<FileDialogHandler>() }
+    val scope = rememberCoroutineScope()
+    var isImporting by remember { mutableStateOf(false) }
+    var importResult by remember { mutableStateOf<String?>(null) }
+    var showConfirmDialog by remember { mutableStateOf(false) }
+    var pendingImportFile by remember { mutableStateOf<String?>(null) }
+    var pendingImportFormat by remember { mutableStateOf<ImportFormat?>(null) }
+    
+    SettingsSection(title = "Data Import") {
+        SettingItem(
+            title = "Import from JSON",
+            description = "Import experiences from a JSON backup file",
+            icon = Icons.Default.FileUpload,
+            onClick = {
+                scope.launch {
+                    val filePath = fileDialogHandler.openFile(
+                        title = "Import from JSON",
+                        extension = "json"
+                    )
+                    
+                    if (filePath != null) {
+                        pendingImportFile = filePath
+                        pendingImportFormat = ImportFormat.JSON
+                        showConfirmDialog = true
+                    }
+                }
+            },
+            trailing = {
+                if (isImporting) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(20.dp),
+                        strokeWidth = 2.dp
+                    )
+                }
+            }
+        )
+        
+        SettingItem(
+            title = "Import from CSV",
+            description = "Import experiences from a CSV spreadsheet file",
+            icon = Icons.Default.TableView,
+            onClick = {
+                scope.launch {
+                    val filePath = fileDialogHandler.openFile(
+                        title = "Import from CSV",
+                        extension = "csv"
+                    )
+                    
+                    if (filePath != null) {
+                        pendingImportFile = filePath
+                        pendingImportFormat = ImportFormat.CSV
+                        showConfirmDialog = true
+                    }
+                }
+            },
+            trailing = {
+                if (isImporting) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(20.dp),
+                        strokeWidth = 2.dp
+                    )
+                }
+            }
+        )
+    }
+    
+    // Import confirmation dialog
+    if (showConfirmDialog && pendingImportFile != null && pendingImportFormat != null) {
+        ImportConfirmationDialog(
+            filePath = pendingImportFile!!,
+            format = pendingImportFormat!!,
+            onConfirm = {
+                scope.launch {
+                    isImporting = true
+                    try {
+                        val result = when (pendingImportFormat) {
+                            ImportFormat.JSON -> importManager.importFromJsonFile(pendingImportFile!!)
+                            ImportFormat.CSV -> importManager.importFromCsvFile(pendingImportFile!!)
+                            else -> null
+                        }
+                        
+                        importResult = when (result) {
+                            is com.isaakhanimann.journal.data.import.ImportResult.Success -> {
+                                "Successfully imported ${result.imported} experiences"
+                            }
+                            is com.isaakhanimann.journal.data.import.ImportResult.Error -> {
+                                "Import failed: ${result.message}"
+                            }
+                            else -> "Import failed: Unknown error"
+                        }
+                    } catch (e: Exception) {
+                        importResult = "Import error: ${e.message}"
+                    } finally {
+                        isImporting = false
+                        showConfirmDialog = false
+                        pendingImportFile = null
+                        pendingImportFormat = null
+                    }
+                }
+            },
+            onCancel = {
+                showConfirmDialog = false
+                pendingImportFile = null
+                pendingImportFormat = null
+            }
+        )
+    }
+    
+    // Show import result
+    importResult?.let { result ->
+        LaunchedEffect(result) {
+            kotlinx.coroutines.delay(3000)
+            importResult = null
+        }
+    }
+}
+
+@Composable
+private fun ImportConfirmationDialog(
+    filePath: String,
+    format: ImportFormat,
+    onConfirm: () -> Unit,
+    onCancel: () -> Unit
+) {
+    AlertDialog(
+        onDismissRequest = onCancel,
+        title = {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Warning,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.primary
+                )
+                Text("Confirm Import")
+            }
+        },
+        text = {
+            Column(
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                Text(
+                    text = "Are you sure you want to import data from this file?",
+                    style = MaterialTheme.typography.bodyMedium
+                )
+                
+                Card(
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.surfaceVariant
+                    )
+                ) {
+                    Column(
+                        modifier = Modifier.padding(12.dp),
+                        verticalArrangement = Arrangement.spacedBy(4.dp)
+                    ) {
+                        Text(
+                            text = "File: ${filePath.substringAfterLast("/")}",
+                            style = MaterialTheme.typography.labelMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                        Text(
+                            text = "Format: ${format.name}",
+                            style = MaterialTheme.typography.labelMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                }
+                
+                Card(
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.3f)
+                    )
+                ) {
+                    Text(
+                        text = "⚠️ This will add new experiences to your journal. Existing data will not be modified.",
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.onErrorContainer,
+                        modifier = Modifier.padding(12.dp)
+                    )
+                }
+            }
+        },
+        confirmButton = {
+            Button(
+                onClick = onConfirm
+            ) {
+                Icon(
+                    imageVector = Icons.Default.FileUpload,
+                    contentDescription = null,
+                    modifier = Modifier.size(18.dp)
+                )
+                Spacer(modifier = Modifier.width(4.dp))
+                Text("Import")
+            }
+        },
+        dismissButton = {
+            OutlinedButton(
+                onClick = onCancel
+            ) {
+                Text("Cancel")
+            }
+        }
+    )
 }
 
 @Composable
@@ -193,6 +509,16 @@ private fun AboutDialog(
                     }
                 )
             }
+        }
+        
+        // Data Export Section
+        item {
+            DataExportSection()
+        }
+        
+        // Data Import Section
+        item {
+            DataImportSection()
         }
         
         // Privacy & Data Section

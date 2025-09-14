@@ -17,8 +17,12 @@ import androidx.compose.ui.unit.dp
 import com.isaakhanimann.journal.navigation.DesktopNavigationController
 import com.isaakhanimann.journal.ui.viewmodel.ExperienceEditorViewModel
 import com.isaakhanimann.journal.ui.viewmodel.EditorMode
+import com.isaakhanimann.journal.ui.viewmodel.AutoSaveStatus
+import com.isaakhanimann.journal.ui.components.AutoSaveStatusIndicator
+import com.isaakhanimann.journal.ui.components.DraftRestoreDialog
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
+import kotlinx.datetime.Instant
 import org.koin.compose.koinInject
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -48,6 +52,15 @@ fun ExperienceEditorScreen(
         }
     }
     
+    // Show draft restore dialog
+    if (uiState.hasDraft && uiState.draftLastSaved != null) {
+        DraftRestoreDialog(
+            draftLastSaved = uiState.draftLastSaved,
+            onAccept = { viewModel.acceptDraft() },
+            onDiscard = { viewModel.discardDraft() }
+        )
+    }
+    
     Scaffold(
         topBar = {
             ExperienceEditorTopBar(
@@ -55,7 +68,9 @@ fun ExperienceEditorScreen(
                 onNavigateBack = { navigationController.navigateToExperiences() },
                 onSave = { viewModel.saveExperience() },
                 canSave = formState.isValid && uiState.canSave,
-                isSaving = uiState.isSaving
+                isSaving = uiState.isSaving,
+                autoSaveStatus = uiState.autoSaveStatus,
+                lastAutoSave = uiState.lastAutoSave
             )
         }
     ) { paddingValues ->
@@ -134,16 +149,25 @@ private fun ExperienceEditorTopBar(
     onNavigateBack: () -> Unit,
     onSave: () -> Unit,
     canSave: Boolean,
-    isSaving: Boolean
+    isSaving: Boolean,
+    autoSaveStatus: AutoSaveStatus,
+    lastAutoSave: Instant?
 ) {
     TopAppBar(
         title = {
-            Text(
-                text = when (mode) {
-                    EditorMode.CREATE -> "New Experience"
-                    EditorMode.EDIT -> "Edit Experience"
-                }
-            )
+            Column {
+                Text(
+                    text = when (mode) {
+                        EditorMode.CREATE -> "New Experience"
+                        EditorMode.EDIT -> "Edit Experience"
+                    }
+                )
+                
+                AutoSaveStatusIndicator(
+                    autoSaveStatus = autoSaveStatus,
+                    lastAutoSave = lastAutoSave
+                )
+            }
         },
         navigationIcon = {
             IconButton(onClick = onNavigateBack) {

@@ -18,8 +18,11 @@ import com.isaakhanimann.journal.data.experience.ExperienceSummary
 import com.isaakhanimann.journal.ui.compose.LocalConfiguration
 import com.isaakhanimann.journal.ui.layout.calculateWindowSizeClass
 import com.isaakhanimann.journal.ui.viewmodel.ExperiencesViewModel
+import com.isaakhanimann.journal.ui.components.ExperienceCalendarView
+import com.isaakhanimann.journal.ui.components.ExperienceTimelineView
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
+import kotlinx.datetime.LocalDate
 import org.koin.compose.koinInject
 
 @Composable
@@ -33,6 +36,9 @@ fun ExperiencesScreen(navController: DesktopNavigationController) {
         width = configuration.screenWidthDp.dp,
         height = configuration.screenHeightDp.dp
     )
+    
+    var viewMode by remember { mutableStateOf(ExperienceViewMode.LIST) }
+    var selectedDate by remember { mutableStateOf<LocalDate?>(null) }
     
     Box(modifier = Modifier.fillMaxSize()) {
         Column(modifier = Modifier.fillMaxSize()) {
@@ -65,6 +71,25 @@ fun ExperiencesScreen(navController: DesktopNavigationController) {
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
+                        // View mode toggle
+                        FilterChip(
+                            onClick = { viewMode = ExperienceViewMode.LIST },
+                            label = { Text("List") },
+                            selected = viewMode == ExperienceViewMode.LIST,
+                            leadingIcon = {
+                                Icon(Icons.Default.ViewList, contentDescription = null)
+                            }
+                        )
+                        
+                        FilterChip(
+                            onClick = { viewMode = ExperienceViewMode.CALENDAR },
+                            label = { Text("Calendar") },
+                            selected = viewMode == ExperienceViewMode.CALENDAR,
+                            leadingIcon = {
+                                Icon(Icons.Default.CalendarMonth, contentDescription = null)
+                            }
+                        )
+                        
                         FilterChip(
                             onClick = { viewModel.toggleFavoritesFilter() },
                             label = { Text("Favorites") },
@@ -186,21 +211,63 @@ fun ExperiencesScreen(navController: DesktopNavigationController) {
                     }
                 }
             } else {
-                // Experience list
-                LazyColumn(
-                    modifier = Modifier.fillMaxSize(),
-                    contentPadding = PaddingValues(responsiveConfig.contentPadding),
-                    verticalArrangement = Arrangement.spacedBy(responsiveConfig.cardSpacing)
-                ) {
-                    items(experiences) { experience ->
-                        ExperienceListItem(
-                            experience = experience,
-                            onClick = { 
-                                navController.navigate(Screen.ExperienceTimeline(experience.experience.id.toString()))
-                            },
-                            onEdit = {
-                                navController.navigate(Screen.ExperienceEditor(experience.experience.id.toString()))
+                // Content based on view mode
+                when (viewMode) {
+                    ExperienceViewMode.LIST -> {
+                        // Experience list
+                        LazyColumn(
+                            modifier = Modifier.fillMaxSize(),
+                            contentPadding = PaddingValues(responsiveConfig.contentPadding),
+                            verticalArrangement = Arrangement.spacedBy(responsiveConfig.cardSpacing)
+                        ) {
+                            items(experiences) { experience ->
+                                ExperienceListItem(
+                                    experience = experience,
+                                    onClick = { 
+                                        navController.navigate(Screen.ExperienceTimeline(experience.experience.id.toString()))
+                                    },
+                                    onEdit = {
+                                        navController.navigate(Screen.ExperienceEditor(experience.experience.id.toString()))
+                                    }
+                                )
                             }
+                        }
+                    }
+                    
+                    ExperienceViewMode.CALENDAR -> {
+                        // Calendar view with timeline
+                        Row(
+                            modifier = Modifier.fillMaxSize()
+                        ) {
+                            // Calendar on the left
+                            Box(
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .padding(responsiveConfig.contentPadding)
+                            ) {
+                                ExperienceCalendarView(
+                                    experiences = experiences,
+                                    selectedDate = selectedDate,
+                                    onDateSelected = { date -> selectedDate = date },
+                                    onMonthChanged = { /* Handle month change if needed */ }
+                                )
+                            }
+                            
+                            // Timeline on the right
+                            Box(
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .padding(responsiveConfig.contentPadding)
+                            ) {
+                                ExperienceTimelineView(
+                                    experiences = experiences,
+                                    selectedDate = selectedDate
+                                )
+                            }
+                        }
+                    }
+                }
+            }
                         )
             }
         }
@@ -272,10 +339,14 @@ private fun ExperienceListItem(
                             Icons.Default.Edit,
                             contentDescription = "Edit",
                             modifier = Modifier.size(16.dp)
-                        )
-                    }
-                }
-            }
+            )
+        }
+    }
+}
+
+enum class ExperienceViewMode {
+    LIST, CALENDAR
+}
             
             if (experience.experience.text.isNotBlank()) {
                 Spacer(modifier = Modifier.height(8.dp))
