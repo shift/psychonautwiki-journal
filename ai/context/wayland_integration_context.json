@@ -1,0 +1,226 @@
+{
+  "wayland_integration_context": {
+    "overview": {
+      "purpose": "Provide native Wayland integration for desktop Linux environments",
+      "scope": "Window management, input handling, system integration, and desktop environment compatibility",
+      "constraints": "JVM limitations require careful integration strategies"
+    },
+    "wayland_protocol_requirements": {
+      "core_protocols": {
+        "wl_display": {
+          "purpose": "Main Wayland connection and event loop",
+          "usage": "Foundation for all Wayland communication"
+        },
+        "wl_surface": {
+          "purpose": "Window surface management",
+          "usage": "Create and manage application windows"
+        },
+        "wl_shell": {
+          "purpose": "Window positioning and behavior",
+          "usage": "Handle window decorations and positioning"
+        },
+        "wl_seat": {
+          "purpose": "Input device management",
+          "usage": "Handle keyboard, mouse, and touch input"
+        },
+        "wl_output": {
+          "purpose": "Display information and management",
+          "usage": "Multi-monitor support and display properties"
+        }
+      },
+      "extended_protocols": {
+        "xdg_shell": {
+          "purpose": "Modern window management",
+          "usage": "Replace wl_shell with more sophisticated window management"
+        },
+        "wl_data_device": {
+          "purpose": "Clipboard and drag-and-drop",
+          "usage": "Inter-application data transfer"
+        },
+        "text_input": {
+          "purpose": "Input method framework integration",
+          "usage": "Support for complex text input and IME"
+        },
+        "fractional_scale": {
+          "purpose": "High-DPI display support",
+          "usage": "Proper scaling on high-resolution displays"
+        }
+      }
+    },
+    "jvm_wayland_integration": {
+      "limitations": {
+        "no_direct_protocol_access": "JVM abstracts away native Wayland protocol access",
+        "awt_swing_abstraction": "Must work through AWT/Swing backend",
+        "xwayland_fallback": "Many features work through XWayland compatibility"
+      },
+      "integration_strategies": {
+        "compose_desktop_backend": {
+          "approach": "Use Compose Desktop's native backend",
+          "capabilities": "Basic window management, input handling",
+          "limitations": "Limited direct Wayland protocol control"
+        },
+        "jni_bindings": {
+          "approach": "Custom JNI bindings for specific Wayland features",
+          "capabilities": "Direct protocol access for critical features",
+          "complexity": "Requires native code and careful memory management"
+        },
+        "system_integration": {
+          "approach": "Use desktop portal APIs and system services",
+          "capabilities": "File dialogs, notifications, system integration",
+          "compatibility": "Works across different desktop environments"
+        }
+      }
+    },
+    "desktop_integration_features": {
+      "window_management": {
+        "client_side_decorations": {
+          "description": "Application draws its own window decorations",
+          "implementation": "Custom title bar with window controls",
+          "benefits": "Consistent appearance, custom functionality"
+        },
+        "window_state_management": {
+          "description": "Handle minimize, maximize, fullscreen, and close",
+          "implementation": "Wayland surface state management",
+          "considerations": "Respect window manager policies"
+        },
+        "multi_monitor_support": {
+          "description": "Proper behavior across multiple displays",
+          "implementation": "wl_output protocol integration",
+          "features": "DPI awareness, monitor detection, positioning"
+        }
+      },
+      "input_handling": {
+        "keyboard_input": {
+          "description": "Keyboard event processing and layout support",
+          "implementation": "wl_keyboard interface",
+          "features": "Key repeat, modifiers, layout switching"
+        },
+        "mouse_input": {
+          "description": "Mouse and pointer device handling",
+          "implementation": "wl_pointer interface",
+          "features": "Button events, scroll, cursor management"
+        },
+        "touch_input": {
+          "description": "Touch screen and gesture support",
+          "implementation": "wl_touch interface",
+          "features": "Multi-touch, gesture recognition"
+        },
+        "input_method_support": {
+          "description": "Integration with input method frameworks",
+          "implementation": "text_input protocol",
+          "features": "IME support, complex text input"
+        }
+      },
+      "system_services": {
+        "clipboard_integration": {
+          "description": "System clipboard access and data transfer",
+          "implementation": "wl_data_device protocol",
+          "features": "Copy/paste, multiple formats, security"
+        },
+        "file_system_access": {
+          "description": "Secure file system access through portals",
+          "implementation": "xdg-desktop-portal APIs",
+          "features": "File dialogs, restricted access, user consent"
+        },
+        "notifications": {
+          "description": "Desktop notification system integration",
+          "implementation": "D-Bus notification service",
+          "features": "Toast notifications, action buttons, persistence"
+        },
+        "system_tray": {
+          "description": "System tray icon and menu",
+          "implementation": "StatusNotifierItem protocol",
+          "features": "Tray icon, context menu, status updates"
+        }
+      }
+    },
+    "hidpi_and_scaling": {
+      "fractional_scaling": {
+        "description": "Support for non-integer scale factors",
+        "implementation": "fractional_scale_v1 protocol",
+        "challenges": "Rendering at fractional scales, performance impact"
+      },
+      "scale_factor_detection": {
+        "description": "Automatic detection of appropriate scale factors",
+        "implementation": "wl_output scale information",
+        "considerations": "Per-monitor scaling, dynamic changes"
+      },
+      "rendering_optimization": {
+        "description": "Efficient rendering at different scale factors",
+        "implementation": "Scale-aware graphics pipeline",
+        "techniques": "Vector graphics, high-resolution assets"
+      }
+    },
+    "security_model": {
+      "sandboxing": {
+        "description": "Wayland's security-focused design",
+        "implications": "Limited access to system resources",
+        "benefits": "Enhanced security, process isolation"
+      },
+      "permission_model": {
+        "description": "Explicit permissions for system access",
+        "implementation": "Portal-based access control",
+        "user_experience": "User consent for sensitive operations"
+      }
+    },
+    "compatibility_considerations": {
+      "desktop_environments": {
+        "gnome": "Native Wayland support, good protocol compliance",
+        "kde": "Excellent Wayland support, advanced features",
+        "sway": "Minimal Wayland compositor, basic functionality",
+        "other": "Varying levels of protocol support and features"
+      },
+      "xwayland_fallback": {
+        "description": "Compatibility layer for X11 applications",
+        "usage": "Fallback when native Wayland features unavailable",
+        "limitations": "Reduced security, legacy behavior"
+      }
+    },
+    "implementation_approach": {
+      "phase_1_basic_integration": {
+        "goals": "Basic window creation and input handling",
+        "implementation": "Use Compose Desktop defaults with Wayland awareness",
+        "deliverables": "Functional window with basic interactions"
+      },
+      "phase_2_enhanced_features": {
+        "goals": "Improved desktop integration and native features",
+        "implementation": "Custom window decorations, better input handling",
+        "deliverables": "Native-feeling desktop application"
+      },
+      "phase_3_advanced_integration": {
+        "goals": "Full desktop environment integration",
+        "implementation": "System services, advanced protocols, optimization",
+        "deliverables": "Fully integrated desktop application"
+      }
+    },
+    "testing_strategy": {
+      "wayland_environments": {
+        "development": "Test in multiple Wayland compositors",
+        "ci_testing": "Automated testing in headless Wayland",
+        "user_testing": "Real-world testing across desktop environments"
+      },
+      "protocol_compliance": {
+        "validation": "Verify correct protocol usage",
+        "interoperability": "Test with different Wayland implementations",
+        "edge_cases": "Handle protocol edge cases and errors"
+      },
+      "performance_testing": {
+        "rendering": "Measure rendering performance across scale factors",
+        "input_latency": "Test input responsiveness and latency",
+        "resource_usage": "Monitor memory and CPU usage"
+      }
+    },
+    "development_tools": {
+      "debugging": {
+        "wayland_debug": "WAYLAND_DEBUG environment variable for protocol tracing",
+        "compositor_logs": "Desktop environment logging for troubleshooting",
+        "profiling_tools": "Performance analysis tools for Wayland applications"
+      },
+      "testing_tools": {
+        "headless_testing": "Automated testing in virtual Wayland environments",
+        "protocol_testing": "Tools for testing Wayland protocol compliance",
+        "integration_testing": "Desktop environment integration validation"
+      }
+    }
+  }
+}

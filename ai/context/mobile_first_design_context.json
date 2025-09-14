@@ -1,0 +1,177 @@
+{
+  "mobile_first_design_context": {
+    "overview": {
+      "philosophy": "Design for the smallest screen first, then progressively enhance for larger screens",
+      "approach": "Start with mobile constraints, add desktop enhancements",
+      "goal": "Maintain usability across all screen sizes while leveraging desktop advantages"
+    },
+    "core_principles": {
+      "content_prioritization": {
+        "description": "Most important content and actions are prioritized for small screens",
+        "implementation": [
+          "Critical actions always visible and accessible",
+          "Secondary actions available but not prominent",
+          "Content hierarchy reflects mobile importance",
+          "Progressive disclosure for additional features"
+        ]
+      },
+      "touch_first_design": {
+        "description": "All interactions designed for touch, enhanced for mouse/keyboard",
+        "implementation": [
+          "Minimum 44px touch targets",
+          "Appropriate spacing between interactive elements",
+          "Gesture-friendly interactions",
+          "Mouse hover states as enhancements, not requirements"
+        ]
+      },
+      "progressive_enhancement": {
+        "description": "Core functionality works on mobile, enhanced features for desktop",
+        "implementation": [
+          "Base functionality accessible on smallest screens",
+          "Additional features appear on larger screens",
+          "Keyboard shortcuts enhance desktop experience",
+          "Multi-pane layouts only on appropriate screen sizes"
+        ]
+      },
+      "performance_consciousness": {
+        "description": "Optimized for mobile performance constraints",
+        "implementation": [
+          "Efficient resource usage",
+          "Minimal initial load",
+          "Lazy loading of non-critical features",
+          "Responsive images and assets"
+        ]
+      }
+    },
+    "responsive_breakpoints": {
+      "mobile_portrait": {
+        "range": "320px - 600px width",
+        "characteristics": "Single column layout, bottom navigation, full-width components",
+        "navigation_pattern": "Bottom tab bar or hamburger menu",
+        "content_strategy": "Vertical stacking, minimal horizontal scrolling"
+      },
+      "mobile_landscape": {
+        "range": "600px - 900px width",
+        "characteristics": "Still primarily mobile but can accommodate some horizontal elements",
+        "navigation_pattern": "Bottom tabs or side drawer",
+        "content_strategy": "Some horizontal layouts for specific components"
+      },
+      "tablet_portrait": {
+        "range": "900px - 1200px width", 
+        "characteristics": "Transition zone, can support some desktop patterns",
+        "navigation_pattern": "Side navigation or adaptive tabs",
+        "content_strategy": "Beginning of multi-column layouts"
+      },
+      "desktop": {
+        "range": "1200px+ width",
+        "characteristics": "Full desktop capabilities, multi-pane layouts",
+        "navigation_pattern": "Persistent sidebar navigation",
+        "content_strategy": "Multi-column layouts, contextual panels"
+      }
+    },
+    "layout_adaptation_strategies": {
+      "navigation_transformation": {
+        "mobile": "Bottom tab bar with 3-5 primary destinations",
+        "tablet": "Side drawer or rail navigation",
+        "desktop": "Persistent sidebar with hierarchical navigation",
+        "implementation": "Conditional rendering based on screen size classes"
+      },
+      "content_panels": {
+        "mobile": "Single full-screen panels with navigation",
+        "tablet": "Contextual overlays or split views",
+        "desktop": "Multi-pane layouts with master-detail patterns",
+        "implementation": "BoxWithConstraints for conditional layouts"
+      },
+      "form_layouts": {
+        "mobile": "Single column, full-width inputs",
+        "tablet": "Optimized column layouts for specific forms",
+        "desktop": "Multi-column forms with logical grouping",
+        "implementation": "Responsive grid systems"
+      },
+      "data_visualization": {
+        "mobile": "Simplified charts, swipeable views",
+        "tablet": "More detailed charts with interaction",
+        "desktop": "Complex visualizations with hover states and multiple views",
+        "implementation": "Adaptive chart libraries with responsive behavior"
+      }
+    },
+    "interaction_patterns": {
+      "touch_interactions": {
+        "primary": "Tap for primary actions",
+        "secondary": "Long press for context menus",
+        "navigation": "Swipe gestures for navigation",
+        "desktop_enhancement": "Mouse hover states, right-click context menus"
+      },
+      "keyboard_navigation": {
+        "mobile": "On-screen keyboard optimization",
+        "desktop": "Full keyboard navigation with shortcuts",
+        "implementation": "Conditional keyboard handler registration"
+      },
+      "accessibility": {
+        "touch": "Large touch targets, clear feedback",
+        "desktop": "Keyboard navigation, screen reader support",
+        "universal": "High contrast support, scalable text"
+      }
+    },
+    "component_design_patterns": {
+      "buttons": {
+        "mobile": "Full-width or large touch-friendly buttons",
+        "desktop": "Appropriately sized buttons with hover states",
+        "considerations": "Minimum 44px height, clear visual hierarchy"
+      },
+      "lists": {
+        "mobile": "Single column, card-based design",
+        "desktop": "Grid layouts or multi-column lists with more dense information",
+        "considerations": "Consistent spacing, clear selection states"
+      },
+      "modals_dialogs": {
+        "mobile": "Full-screen overlays or bottom sheets",
+        "desktop": "Centered modal dialogs with backdrop",
+        "considerations": "Appropriate sizing for content, clear close actions"
+      },
+      "search": {
+        "mobile": "Expandable search with full-screen results",
+        "desktop": "Always-visible search with dropdown or dedicated results pane",
+        "considerations": "Keyboard shortcuts, search history, filters"
+      }
+    },
+    "material_design_adaptation": {
+      "material_3_principles": {
+        "adaptive_layouts": "Material 3 canonical layouts for different screen sizes",
+        "navigation_patterns": "Bottom bars, navigation rails, and navigation drawers",
+        "responsive_tokens": "Design tokens that scale with screen size"
+      },
+      "compose_implementations": {
+        "window_size_classes": "Use WindowSizeClass for layout decisions",
+        "adaptive_navigation": "NavigationSuiteScaffold for automatic navigation adaptation",
+        "responsive_components": "Material 3 components with responsive behavior"
+      }
+    },
+    "performance_considerations": {
+      "mobile_constraints": {
+        "cpu": "Limited processing power for complex layouts",
+        "memory": "Constrained memory for large datasets",
+        "network": "Potentially slow or expensive network connections",
+        "battery": "Power consumption considerations"
+      },
+      "optimization_strategies": {
+        "lazy_loading": "Load content as needed, prioritize visible content",
+        "efficient_layouts": "Avoid complex nested compositions",
+        "resource_management": "Proper disposal of heavy resources",
+        "progressive_loading": "Show content incrementally as it becomes available"
+      }
+    },
+    "testing_mobile_first": {
+      "responsive_testing": {
+        "breakpoint_validation": "Test all major breakpoints for layout integrity",
+        "interaction_testing": "Verify touch and mouse interactions work appropriately",
+        "performance_testing": "Validate performance across device capabilities"
+      },
+      "accessibility_testing": {
+        "touch_targets": "Verify minimum touch target sizes",
+        "keyboard_navigation": "Test keyboard accessibility on desktop",
+        "screen_reader": "Validate screen reader compatibility"
+      }
+    }
+  }
+}

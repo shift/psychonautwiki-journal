@@ -1,0 +1,190 @@
+{
+  "foundation_context": {
+    "description": "Context for foundation setup tasks including project structure and platform configuration",
+    "key_technologies": [
+      "Compose Multiplatform",
+      "Gradle Kotlin DSL", 
+      "Wayland client protocols",
+      "NixOS flake configuration"
+    ],
+    "requirements": [
+      "Cross-platform build system",
+      "Native Wayland integration",
+      "Reproducible development environment",
+      "CI/CD pipeline foundation"
+    ],
+    "success_criteria": [
+      "Project compiles and runs on desktop",
+      "Wayland integration works correctly",
+      "Development environment is reproducible",
+      "Basic CI/CD pipeline is functional"
+    ],
+    "risks": [
+      "Wayland compatibility issues on different distributions",
+      "Compose Multiplatform version compatibility",
+      "NixOS build environment complexity"
+    ]
+  },
+  "architecture_migration_context": {
+    "description": "Context for migrating core architecture components from Android to multiplatform",
+    "key_technologies": [
+      "Koin dependency injection",
+      "SQLDelight database",
+      "Kotlin coroutines",
+      "Repository pattern"
+    ],
+    "requirements": [
+      "Maintain existing functionality",
+      "Improve performance where possible",
+      "Ensure data integrity during migration",
+      "Preserve existing APIs where practical"
+    ],
+    "success_criteria": [
+      "All dependency injection works correctly",
+      "Database migration preserves all data",
+      "Repository pattern maintains same interface",
+      "Performance is equal or better than Android version"
+    ],
+    "risks": [
+      "Data loss during database migration",
+      "Performance regression",
+      "Breaking API changes",
+      "Dependency injection configuration complexity"
+    ]
+  },
+  "ui_framework_context": {
+    "description": "Context for adapting mobile UI to desktop while maintaining mobile-first principles",
+    "key_technologies": [
+      "Compose Multiplatform UI",
+      "Material Design 3",
+      "Responsive layout system",
+      "Desktop navigation patterns"
+    ],
+    "requirements": [
+      "Mobile-first responsive design",
+      "Desktop-specific enhancements",
+      "Accessibility compliance",
+      "Consistent visual design"
+    ],
+    "success_criteria": [
+      "UI adapts seamlessly across screen sizes",
+      "Desktop interactions feel natural",
+      "Accessibility standards are met",
+      "Visual consistency is maintained"
+    ],
+    "risks": [
+      "Layout breaking on extreme screen sizes",
+      "Performance issues with complex responsive layouts",
+      "Accessibility regression",
+      "Design inconsistencies"
+    ]
+  },
+  "feature_migration_context": {
+    "description": "Context for porting specific application features from Android to desktop",
+    "key_technologies": [
+      "Kotlin business logic",
+      "Compose UI components",
+      "Data persistence layer",
+      "Navigation system"
+    ],
+    "requirements": [
+      "Feature parity with Android version",
+      "Desktop-specific enhancements",
+      "Performance optimization",
+      "User experience consistency"
+    ],
+    "success_criteria": [
+      "All Android features work on desktop",
+      "Desktop enhancements improve usability",
+      "Performance meets or exceeds Android version",
+      "User workflows remain familiar"
+    ],
+    "risks": [
+      "Missing platform-specific functionality",
+      "Performance bottlenecks",
+      "User experience inconsistencies",
+      "Feature regression"
+    ]
+  },
+  "platform_integration_context": {
+    "description": "Context for integrating with desktop platform and Wayland ecosystem",
+    "key_technologies": [
+      "Wayland client protocols",
+      "Desktop portal APIs",
+      "System integration services",
+      "Native file operations"
+    ],
+    "requirements": [
+      "Native desktop behavior",
+      "Wayland protocol compliance",
+      "Security model compliance",
+      "Desktop environment integration"
+    ],
+    "success_criteria": [
+      "Application behaves like native desktop app",
+      "File operations work securely and intuitively",
+      "System integration features enhance workflow",
+      "Wayland compliance is maintained"
+    ],
+    "risks": [
+      "Wayland protocol complexity",
+      "Security model restrictions",
+      "Desktop environment compatibility issues",
+      "Native integration bugs"
+    ]
+  },
+  "testing_infrastructure_context": {
+    "description": "Context for establishing comprehensive testing framework with BDD approach",
+    "key_technologies": [
+      "Cucumber-JVM",
+      "Kotest framework",
+      "Compose UI testing",
+      "Test data management"
+    ],
+    "requirements": [
+      "Comprehensive test coverage",
+      "BDD scenario coverage",
+      "Automated UI testing",
+      "Performance testing"
+    ],
+    "success_criteria": [
+      "All features have BDD scenarios",
+      "UI tests can be automated",
+      "Test execution is reliable and fast",
+      "Test coverage meets quality standards"
+    ],
+    "risks": [
+      "Test framework integration complexity",
+      "UI testing reliability issues",
+      "Test maintenance overhead",
+      "Performance testing accuracy"
+    ]
+  },
+  "devops_infrastructure_context": {
+    "description": "Context for establishing DevOps practices and infrastructure for desktop application",
+    "key_technologies": [
+      "NixOS reproducible builds",
+      "GitHub Actions CI/CD",
+      "Package distribution",
+      "Quality gates"
+    ],
+    "requirements": [
+      "Reproducible build environment",
+      "Automated quality assurance",
+      "Reliable deployment pipeline",
+      "Package distribution system"
+    ],
+    "success_criteria": [
+      "Builds are completely reproducible",
+      "CI/CD pipeline prevents regressions",
+      "Deployment is fully automated",
+      "Package distribution works across distributions"
+    ],
+    "risks": [
+      "NixOS build complexity",
+      "CI/CD pipeline fragility",
+      "Package distribution compatibility",
+      "Build time performance"
+    ]
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "analysis": {
+    "current_tech_stack": {
+      "language": "Kotlin",
+      "ui_framework": "Jetpack Compose",
+      "architecture": "MVVM with Hilt DI",
+      "database": "Room",
+      "platform": "Android",
+      "build_system": "Gradle with Kotlin DSL",
+      "minimum_sdk": 26,
+      "target_sdk": 35,
+      "dependencies": [
+        "androidx.compose",
+        "androidx.navigation.compose",
+        "androidx.room",
+        "dagger.hilt.android",
+        "kotlinx.coroutines",
+        "kotlinx.serialization",
+        "androidx.lifecycle.viewmodel.compose"
+      ]
+    },
+    "app_features": {
+      "core_functionality": [
+        "Substance tracking and journaling",
+        "Experience logging",
+        "Safety information from PsychonautWiki",
+        "Custom substances and units",
+        "Statistics and visualizations",
+        "Data export functionality",
+        "Color themes and customization"
+      ],
+      "ui_components": [
+        "Tab-based navigation",
+        "Search functionality",
+        "Settings screens",
+        "Stats with charts",
+        "Custom unit management",
+        "Combination settings"
+      ],
+      "data_management": [
+        "Room database with entities",
+        "Experience and ingestion tracking",
+        "Custom substance definitions",
+        "User preferences storage",
+        "File system connections for export"
+      ]
+    },
+    "porting_challenges": {
+      "platform_specific": [
+        "Android Activity lifecycle -> Desktop window management",
+        "Android permissions -> Desktop file system access",
+        "Mobile UI patterns -> Desktop UI conventions",
+        "Touch interactions -> Mouse/keyboard interactions"
+      ],
+      "wayland_integration": [
+        "Native window decorations",
+        "Proper DPI scaling",
+        "Clipboard integration",
+        "File dialogs",
+        "System tray integration"
+      ],
+      "compose_multiplatform": [
+        "Platform-specific implementations",
+        "Resource handling differences",
+        "Navigation adaptations",
+        "Testing framework differences"
+      ]
+    },
+    "target_architecture": {
+      "platform": "Kotlin Desktop with Compose Multiplatform",
+      "windowing": "Wayland native",
+      "ui_paradigm": "Mobile-first reactive design",
+      "database": "SQLite with Room or SQLDelight",
+      "dependency_injection": "Koin or Kodein (desktop-friendly)",
+      "build_system": "Gradle with Kotlin DSL + Compose Multiplatform plugin",
+      "testing": "Kotest + Cucumber for BDD"
+    }
+  }
+}

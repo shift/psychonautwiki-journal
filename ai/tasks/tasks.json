@@ -1,0 +1,680 @@
+{
+  "project": "PsychonautWiki Journal Desktop Port - Refined Tasks",
+  "version": "2.0.0",
+  "created": "2025-09-09",
+  "updated": "2025-09-09",
+  "overview": {
+    "goal": "Port Android PsychonautWiki Journal to Kotlin Desktop with Wayland native support and mobile-first reactive UI",
+    "approach": "Atomic task breakdown with specialized personas, comprehensive BDD testing, and strict repo standards",
+    "key_requirements": [
+      "Kotlin Desktop with Compose Multiplatform",
+      "Wayland native integration", 
+      "Mobile-first reactive UI design",
+      "Complete feature parity with Android version",
+      "Comprehensive BDD test coverage",
+      "NixOS build environment"
+    ]
+  },
+  "tasks": [
+    {
+      "id": "FOUNDATION-001",
+      "title": "Setup NixOS Development Environment",
+      "description": "Configure reproducible NixOS development environment with all required tools and dependencies",
+      "type": "foundation",
+      "phase": 1,
+      "priority": "critical",
+      "persona": "devops_engineer",
+      "story": "As a developer, I want a reproducible development environment so that all team members have identical tooling",
+      "acceptance_criteria": [
+        "flake.nix provides all development dependencies",
+        "direnv auto-loads environment with .envrc",
+        "All team members can reproduce build environment",
+        "Development tools versions are pinned and consistent"
+      ],
+      "bdd_scenarios": [
+        {
+          "scenario": "Development environment setup",
+          "given": "A fresh system with Nix installed",
+          "when": "Running nix develop",
+          "then": "All development tools are available and functional"
+        }
+      ],
+      "dependencies": [],
+      "estimated_hours": 8,
+      "context_file": "foundation_context"
+    },
+    {
+      "id": "FOUNDATION-002", 
+      "title": "Configure Compose Multiplatform Build System",
+      "description": "Setup Gradle build configuration for Compose Multiplatform with desktop target",
+      "type": "foundation",
+      "phase": 1,
+      "priority": "critical",
+      "persona": "kotlin_desktop_architect",
+      "story": "As a developer, I want a properly configured build system so that I can compile desktop applications",
+      "acceptance_criteria": [
+        "Gradle builds desktop application successfully",
+        "Compose Multiplatform dependencies are properly configured",
+        "Build produces runnable desktop application",
+        "Version catalog manages all dependencies consistently"
+      ],
+      "bdd_scenarios": [
+        {
+          "scenario": "Desktop application compilation",
+          "given": "Configured Gradle build files",
+          "when": "Running gradle build",
+          "then": "Desktop application compiles without errors"
+        }
+      ],
+      "dependencies": ["FOUNDATION-001"],
+      "estimated_hours": 12,
+      "context_file": "foundation_context"
+    },
+    {
+      "id": "FOUNDATION-003",
+      "title": "Implement Basic Wayland Window Management",
+      "description": "Create basic window with Wayland integration and proper window management",
+      "type": "platform_integration",
+      "phase": 1,
+      "priority": "high",
+      "persona": "wayland_integration_specialist",
+      "story": "As a user, I want the application to create windows that integrate properly with my Wayland desktop",
+      "acceptance_criteria": [
+        "Application creates window using Wayland protocols",
+        "Window decorations follow Wayland client-side standards",
+        "Basic window controls (minimize, maximize, close) work",
+        "HiDPI scaling is properly supported"
+      ],
+      "bdd_scenarios": [
+        {
+          "scenario": "Wayland window creation",
+          "given": "A Wayland desktop environment",
+          "when": "Launching the application",
+          "then": "Window appears with proper Wayland integration"
+        }
+      ],
+      "dependencies": ["FOUNDATION-002"],
+      "estimated_hours": 16,
+      "context_file": "platform_integration_context"
+    },
+    {
+      "id": "ARCHITECTURE-001",
+      "title": "Design Multiplatform Project Structure",
+      "description": "Establish commonMain/desktopMain project structure with proper module organization",
+      "type": "architecture_migration",
+      "phase": 2,
+      "priority": "high",
+      "persona": "kotlin_desktop_architect",
+      "story": "As a developer, I want a clear project structure so that code is organized and maintainable",
+      "acceptance_criteria": [
+        "commonMain contains shared business logic",
+        "desktopMain contains platform-specific implementations",
+        "Module boundaries are clearly defined",
+        "Package structure follows domain organization"
+      ],
+      "bdd_scenarios": [
+        {
+          "scenario": "Code organization verification",
+          "given": "Established project structure",
+          "when": "Adding new features",
+          "then": "Clear placement guidelines exist for all code types"
+        }
+      ],
+      "dependencies": ["FOUNDATION-003"],
+      "estimated_hours": 10,
+      "context_file": "architecture_migration_context"
+    },
+    {
+      "id": "ARCHITECTURE-002",
+      "title": "Setup Koin Dependency Injection Framework",
+      "description": "Configure Koin DI framework and create initial module definitions",
+      "type": "architecture_migration", 
+      "phase": 2,
+      "priority": "high",
+      "persona": "dependency_injection_specialist",
+      "story": "As a developer, I want dependency injection configured so that components can be properly injected",
+      "acceptance_criteria": [
+        "Koin framework is configured and initialized",
+        "Basic DI modules are defined and working",
+        "ViewModel injection is functional",
+        "Repository injection patterns are established"
+      ],
+      "bdd_scenarios": [
+        {
+          "scenario": "Dependency injection initialization",
+          "given": "Koin configuration",
+          "when": "Application startup",
+          "then": "All dependencies resolve correctly"
+        }
+      ],
+      "dependencies": ["ARCHITECTURE-001"],
+      "estimated_hours": 14,
+      "context_file": "architecture_migration_context"
+    },
+    {
+      "id": "ARCHITECTURE-003",
+      "title": "Design SQLDelight Database Schema",
+      "description": "Create SQLDelight schema files based on Android Room entities",
+      "type": "data_migration",
+      "phase": 2,
+      "priority": "high",
+      "persona": "data_migration_engineer", 
+      "story": "As a developer, I want database schema defined so that data persistence works correctly",
+      "acceptance_criteria": [
+        "All Room entities converted to SQLDelight .sq files",
+        "Database schema matches Android version exactly",
+        "Foreign key relationships are preserved",
+        "Database migration scripts are created"
+      ],
+      "bdd_scenarios": [
+        {
+          "scenario": "Database schema creation",
+          "given": "SQLDelight schema files",
+          "when": "Database initialization",
+          "then": "Schema creates successfully with all tables and relationships"
+        }
+      ],
+      "dependencies": ["ARCHITECTURE-002"],
+      "estimated_hours": 20,
+      "context_file": "architecture_migration_context"
+    },
+    {
+      "id": "ARCHITECTURE-004",
+      "title": "Implement Repository Pattern with SQLDelight",
+      "description": "Create repository implementations using SQLDelight drivers and queries",
+      "type": "data_migration",
+      "phase": 2,
+      "priority": "high",
+      "persona": "data_migration_engineer",
+      "story": "As a developer, I want repository implementations so that business logic can access data",
+      "acceptance_criteria": [
+        "All repositories implement defined interfaces",
+        "SQLDelight queries handle all CRUD operations",
+        "Repository injection works with Koin",
+        "Data operations match Android behavior exactly"
+      ],
+      "bdd_scenarios": [
+        {
+          "scenario": "Repository CRUD operations",
+          "given": "Repository implementations",
+          "when": "Performing data operations",
+          "then": "All CRUD operations work correctly with proper error handling"
+        }
+      ],
+      "dependencies": ["ARCHITECTURE-003"],
+      "estimated_hours": 24,
+      "context_file": "architecture_migration_context"
+    },
+    {
+      "id": "UI-001",
+      "title": "Create Mobile-First Responsive Theme System",
+      "description": "Implement Material 3 theme system that adapts from mobile to desktop layouts",
+      "type": "ui_framework",
+      "phase": 3,
+      "priority": "high",
+      "persona": "ui_ux_migration_specialist",
+      "story": "As a user, I want consistent theming that adapts to different screen sizes",
+      "acceptance_criteria": [
+        "Theme system supports mobile-first responsive design",
+        "Material 3 color schemes adapt across platforms",
+        "Typography scales appropriately with screen size",
+        "Dark/light theme switching works correctly",
+        "High contrast and accessibility themes supported"
+      ],
+      "bdd_scenarios": [
+        {
+          "scenario": "Theme responsiveness",
+          "given": "Different screen sizes",
+          "when": "Resizing application window",
+          "then": "Theme elements adapt appropriately"
+        }
+      ],
+      "dependencies": ["ARCHITECTURE-004"],
+      "estimated_hours": 18,
+      "context_file": "ui_framework_context"
+    },
+    {
+      "id": "UI-002",
+      "title": "Implement Adaptive Navigation System",
+      "description": "Create navigation that transforms from mobile tabs to desktop sidebar based on screen size",
+      "type": "ui_framework",
+      "phase": 3,
+      "priority": "high",
+      "persona": "ui_ux_migration_specialist",
+      "story": "As a user, I want navigation that feels appropriate for the screen size I'm using",
+      "acceptance_criteria": [
+        "Navigation adapts between mobile tabs and desktop sidebar",
+        "Keyboard navigation is fully supported",
+        "Navigation state is preserved across screen size changes",
+        "Deep linking works correctly",
+        "Navigation animations are smooth and appropriate"
+      ],
+      "bdd_scenarios": [
+        {
+          "scenario": "Adaptive navigation behavior",
+          "given": "Application with different window sizes",
+          "when": "Changing window dimensions",
+          "then": "Navigation adapts appropriately between mobile and desktop patterns"
+        }
+      ],
+      "dependencies": ["UI-001"],
+      "estimated_hours": 22,
+      "context_file": "ui_framework_context"
+    },
+    {
+      "id": "UI-003",
+      "title": "Create Responsive Layout Component System",
+      "description": "Build reusable layout components that adapt from mobile-first to desktop-enhanced",
+      "type": "ui_framework",
+      "phase": 3,
+      "priority": "medium",
+      "persona": "ui_ux_migration_specialist",
+      "story": "As a developer, I want reusable responsive components so that layouts are consistent",
+      "acceptance_criteria": [
+        "Components follow mobile-first design principles",
+        "Desktop enhancements utilize additional screen space",
+        "All components work across different screen sizes",
+        "Component library is well documented",
+        "Accessibility standards are met"
+      ],
+      "bdd_scenarios": [
+        {
+          "scenario": "Component responsiveness",
+          "given": "Responsive layout components",
+          "when": "Used in different screen contexts",
+          "then": "Components adapt layout and functionality appropriately"
+        }
+      ],
+      "dependencies": ["UI-002"],
+      "estimated_hours": 20,
+      "context_file": "ui_framework_context"
+    },
+    {
+      "id": "FEATURE-001",
+      "title": "Migrate Substance Search and Management",
+      "description": "Port substance search, filtering, and management features from Android",
+      "type": "feature_migration",
+      "phase": 4,
+      "priority": "high",
+      "persona": "kotlin_desktop_architect",
+      "story": "As a user, I want to search and manage substances with the same functionality as the mobile app",
+      "acceptance_criteria": [
+        "Substance search works identically to Android version",
+        "Category filtering and sorting preserved",
+        "Custom substance creation and editing functional",
+        "Search performance optimized for desktop",
+        "Keyboard shortcuts enhance usability"
+      ],
+      "bdd_scenarios": [
+        {
+          "scenario": "Substance search functionality",
+          "given": "Database with substance information",
+          "when": "Searching for substances",
+          "then": "Results are accurate and performance is acceptable"
+        }
+      ],
+      "dependencies": ["UI-003"],
+      "estimated_hours": 28,
+      "context_file": "feature_migration_context"
+    },
+    {
+      "id": "FEATURE-002",
+      "title": "Migrate Experience Creation and Editing",
+      "description": "Port experience logging, creation, and editing functionality",
+      "type": "feature_migration",
+      "phase": 4, 
+      "priority": "high",
+      "persona": "kotlin_desktop_architect",
+      "story": "As a user, I want to create and edit experiences with full feature parity",
+      "acceptance_criteria": [
+        "Experience creation workflow preserved exactly",
+        "All form fields and validations work correctly",
+        "Time tracking and ingestion logging functional",
+        "Experience editing maintains data integrity",
+        "Desktop-specific enhancements improve workflow"
+      ],
+      "bdd_scenarios": [
+        {
+          "scenario": "Experience creation workflow",
+          "given": "Empty experience form",
+          "when": "Creating new experience with all data",
+          "then": "Experience is saved correctly with all fields validated"
+        }
+      ],
+      "dependencies": ["FEATURE-001"],
+      "estimated_hours": 32,
+      "context_file": "feature_migration_context"
+    },
+    {
+      "id": "FEATURE-003",
+      "title": "Migrate Statistics and Visualization",
+      "description": "Port charts, statistics calculations, and data visualization components",
+      "type": "feature_migration",
+      "phase": 4,
+      "priority": "medium",
+      "persona": "ui_ux_migration_specialist",
+      "story": "As a user, I want to view statistics and charts about my experiences",
+      "acceptance_criteria": [
+        "All chart types render correctly on desktop",
+        "Statistics calculations match mobile exactly",
+        "Chart interactions work with mouse and keyboard",
+        "Charts utilize desktop screen space effectively",
+        "Export functionality works from statistics view"
+      ],
+      "bdd_scenarios": [
+        {
+          "scenario": "Statistics and charts display",
+          "given": "Database with experience data",
+          "when": "Viewing statistics screen",
+          "then": "All statistics and charts display correctly with proper interactions"
+        }
+      ],
+      "dependencies": ["FEATURE-002"],
+      "estimated_hours": 24,
+      "context_file": "feature_migration_context"
+    },
+    {
+      "id": "FEATURE-004",
+      "title": "Migrate Settings and Preferences",
+      "description": "Port application settings, preferences, and configuration management",
+      "type": "feature_migration",
+      "phase": 4,
+      "priority": "medium",
+      "persona": "kotlin_desktop_architect",
+      "story": "As a user, I want to configure application settings and preferences",
+      "acceptance_criteria": [
+        "All Android settings are available on desktop",
+        "Settings persistence works correctly",
+        "Theme switching and customization functional",
+        "Export/import preferences work",
+        "Desktop-specific settings added where appropriate"
+      ],
+      "bdd_scenarios": [
+        {
+          "scenario": "Settings management",
+          "given": "Application settings interface",
+          "when": "Changing configuration options",
+          "then": "Settings are saved and applied correctly"
+        }
+      ],
+      "dependencies": ["FEATURE-003"],
+      "estimated_hours": 16,
+      "context_file": "feature_migration_context"
+    },
+    {
+      "id": "PLATFORM-001",
+      "title": "Implement Wayland Input Method Integration",
+      "description": "Integrate with Wayland input methods for text input and IME support",
+      "type": "platform_integration",
+      "phase": 5,
+      "priority": "medium",
+      "persona": "wayland_integration_specialist",
+      "story": "As a user, I want text input to work correctly with my input method configuration",
+      "acceptance_criteria": [
+        "Text input works with all configured input methods",
+        "IME support for international text input",
+        "Keyboard layout switching is supported",
+        "Input method popups display correctly",
+        "Text input performance is acceptable"
+      ],
+      "bdd_scenarios": [
+        {
+          "scenario": "Text input functionality",
+          "given": "Text input fields in application",
+          "when": "Typing with different input methods",
+          "then": "Text input works correctly for all configured methods"
+        }
+      ],
+      "dependencies": ["FEATURE-004"],
+      "estimated_hours": 18,
+      "context_file": "platform_integration_context"
+    },
+    {
+      "id": "PLATFORM-002",
+      "title": "Implement Desktop File Operations",
+      "description": "Add file dialogs, export functionality, and file system integration",
+      "type": "platform_integration",
+      "phase": 5,
+      "priority": "medium",
+      "persona": "wayland_integration_specialist",
+      "story": "As a user, I want to save and export my data using standard desktop file operations",
+      "acceptance_criteria": [
+        "Native file dialogs integrate with desktop environment",
+        "Export formats match mobile capabilities exactly",
+        "File operations respect desktop security models",
+        "Drag and drop functionality where appropriate",
+        "File associations work correctly"
+      ],
+      "bdd_scenarios": [
+        {
+          "scenario": "File export operations",
+          "given": "Application with exportable data",
+          "when": "Using export functionality",
+          "then": "File dialogs work and data exports correctly in chosen formats"
+        }
+      ],
+      "dependencies": ["PLATFORM-001"],
+      "estimated_hours": 20,
+      "context_file": "platform_integration_context"
+    },
+    {
+      "id": "PLATFORM-003",
+      "title": "Implement Desktop System Integration",
+      "description": "Add system tray, notifications, and desktop environment integration",
+      "type": "platform_integration",
+      "phase": 5,
+      "priority": "low",
+      "persona": "wayland_integration_specialist",
+      "story": "As a user, I want the application to integrate seamlessly with my desktop environment",
+      "acceptance_criteria": [
+        "System tray icon with appropriate menu",
+        "Desktop notifications display correctly",
+        "Application follows desktop theme conventions",
+        "Window state management works properly",
+        "Global keyboard shortcuts where appropriate"
+      ],
+      "bdd_scenarios": [
+        {
+          "scenario": "Desktop integration features",
+          "given": "Application with system integration",
+          "when": "Using desktop integration features",
+          "then": "All integration features work correctly with desktop environment"
+        }
+      ],
+      "dependencies": ["PLATFORM-002"],
+      "estimated_hours": 16,
+      "context_file": "platform_integration_context"
+    },
+    {
+      "id": "TESTING-001",
+      "title": "Setup BDD Testing Infrastructure",
+      "description": "Configure Cucumber-JVM and Kotest for comprehensive BDD testing",
+      "type": "testing_infrastructure",
+      "phase": 6,
+      "priority": "high",
+      "persona": "bdd_test_engineer",
+      "story": "As a developer, I want BDD testing infrastructure so that behavior is properly validated",
+      "acceptance_criteria": [
+        "Cucumber-JVM configured and functional",
+        "Kotest integration provides Kotlin-idiomatic testing",
+        "UI testing can interact with Compose components",
+        "Test data management is properly configured",
+        "Parallel test execution supported"
+      ],
+      "bdd_scenarios": [
+        {
+          "scenario": "BDD infrastructure functionality",
+          "given": "Configured BDD testing framework",
+          "when": "Running test suites",
+          "then": "All tests execute correctly with proper reporting"
+        }
+      ],
+      "dependencies": ["PLATFORM-003"],
+      "estimated_hours": 16,
+      "context_file": "testing_infrastructure_context"
+    },
+    {
+      "id": "TESTING-002",
+      "title": "Create Comprehensive BDD Scenarios",
+      "description": "Write BDD scenarios covering all application features and user workflows",
+      "type": "testing_scenarios",
+      "phase": 6,
+      "priority": "high",
+      "persona": "bdd_test_engineer",
+      "story": "As a stakeholder, I want comprehensive BDD scenarios so that all behavior is tested",
+      "acceptance_criteria": [
+        "All user workflows have corresponding BDD scenarios",
+        "Edge cases and error conditions covered",
+        "Scenarios written in clear, understandable language",
+        "Test data setup and teardown properly managed",
+        "100% coverage of critical user paths"
+      ],
+      "bdd_scenarios": [
+        {
+          "scenario": "Comprehensive scenario coverage",
+          "given": "Complete set of BDD scenarios",
+          "when": "Reviewing feature coverage",
+          "then": "All critical functionality is covered by scenarios"
+        }
+      ],
+      "dependencies": ["TESTING-001"],
+      "estimated_hours": 32,
+      "context_file": "testing_infrastructure_context"
+    },
+    {
+      "id": "TESTING-003",
+      "title": "Implement Performance and Integration Tests",
+      "description": "Create performance benchmarks and integration test suites",
+      "type": "testing_scenarios",
+      "phase": 6,
+      "priority": "medium",
+      "persona": "bdd_test_engineer",
+      "story": "As a developer, I want performance and integration tests so that quality is maintained",
+      "acceptance_criteria": [
+        "Performance benchmarks for startup time and responsiveness",
+        "Integration tests cover all major workflows",
+        "Memory usage and resource consumption monitored",
+        "Cross-platform compatibility verified",
+        "Regression testing prevents performance degradation"
+      ],
+      "bdd_scenarios": [
+        {
+          "scenario": "Performance testing validation",
+          "given": "Performance test suite",
+          "when": "Running performance tests",
+          "then": "All performance criteria are met and monitored"
+        }
+      ],
+      "dependencies": ["TESTING-002"],
+      "estimated_hours": 20,
+      "context_file": "testing_infrastructure_context"
+    },
+    {
+      "id": "DEVOPS-001",
+      "title": "Setup CI/CD Pipeline with GitHub Actions",
+      "description": "Configure automated CI/CD pipeline using NixOS for reproducible builds",
+      "type": "devops_infrastructure", 
+      "phase": 6,
+      "priority": "medium",
+      "persona": "devops_engineer",
+      "story": "As a developer, I want automated CI/CD so that quality is maintained automatically",
+      "acceptance_criteria": [
+        "GitHub Actions pipeline builds application reproducibly",
+        "All tests run automatically on every commit",
+        "Code quality gates prevent regressions",
+        "Automated builds produce distribution packages",
+        "NixOS flake ensures build reproducibility"
+      ],
+      "bdd_scenarios": [
+        {
+          "scenario": "CI/CD pipeline execution",
+          "given": "Configured CI/CD pipeline",
+          "when": "Code is committed",
+          "then": "Pipeline builds, tests, and validates automatically"
+        }
+      ],
+      "dependencies": ["TESTING-003"],
+      "estimated_hours": 18,
+      "context_file": "devops_infrastructure_context"
+    },
+    {
+      "id": "DEVOPS-002",
+      "title": "Setup Package Distribution",
+      "description": "Configure packaging and distribution for multiple Linux distributions",
+      "type": "devops_infrastructure",
+      "phase": 6,
+      "priority": "low",
+      "persona": "devops_engineer",
+      "story": "As a user, I want to install the application easily on my Linux distribution",
+      "acceptance_criteria": [
+        "AppImage packages work on all major distributions",
+        "Debian packages for Ubuntu/Debian systems",
+        "RPM packages for Red Hat/SUSE systems",
+        "Flatpak package for universal distribution",
+        "Installation instructions are clear and complete"
+      ],
+      "bdd_scenarios": [
+        {
+          "scenario": "Package distribution validation",
+          "given": "Built distribution packages",
+          "when": "Installing on different distributions",
+          "then": "Application installs and runs correctly on all supported systems"
+        }
+      ],
+      "dependencies": ["DEVOPS-001"],
+      "estimated_hours": 14,
+      "context_file": "devops_infrastructure_context"
+    }
+  ],
+  "summary": {
+    "total_tasks": 23,
+    "total_estimated_hours": 458,
+    "phases": 6,
+    "personas_involved": 5,
+    "critical_path": [
+      "FOUNDATION-001",
+      "FOUNDATION-002", 
+      "FOUNDATION-003",
+      "ARCHITECTURE-001",
+      "ARCHITECTURE-002",
+      "ARCHITECTURE-003",
+      "ARCHITECTURE-004",
+      "UI-001",
+      "UI-002",
+      "FEATURE-001",
+      "FEATURE-002"
+    ],
+    "phase_breakdown": {
+      "phase_1_foundation": {
+        "tasks": 3,
+        "hours": 36,
+        "focus": "Development environment and basic infrastructure"
+      },
+      "phase_2_architecture": {
+        "tasks": 4,
+        "hours": 68,
+        "focus": "Core architecture migration and data layer"
+      },
+      "phase_3_ui_framework": {
+        "tasks": 3,
+        "hours": 60,
+        "focus": "Mobile-first responsive UI system"
+      },
+      "phase_4_feature_migration": {
+        "tasks": 4,
+        "hours": 100,
+        "focus": "Complete feature parity with Android version"
+      },
+      "phase_5_platform_integration": {
+        "tasks": 3,
+        "hours": 54,
+        "focus": "Wayland native integration and desktop features"
+      },
+      "phase_6_testing_devops": {
+        "tasks": 6,
+        "hours": 140,
+        "focus": "Comprehensive testing and automated deployment"
+      }
+    }
+  }
+}

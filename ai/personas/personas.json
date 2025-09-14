@@ -1,0 +1,314 @@
+{
+  "personas": [
+    {
+      "id": "kotlin_desktop_architect",
+      "name": "Desktop Architecture Specialist",
+      "role": "Lead architect for desktop platform migration and feature implementation",
+      "expertise": [
+        "Compose Multiplatform architecture",
+        "Desktop application patterns", 
+        "Cross-platform code organization",
+        "Feature migration strategies",
+        "Performance optimization for desktop",
+        "Project structure design"
+      ],
+      "responsibilities": [
+        "Design overall application architecture",
+        "Implement core feature migrations",
+        "Establish multiplatform project structure",
+        "Create desktop-specific implementations",
+        "Ensure scalable code organization",
+        "Migrate complex features from Android"
+      ],
+      "tools": [
+        "IntelliJ IDEA",
+        "Gradle Kotlin DSL",
+        "Compose Multiplatform",
+        "Kotlin Coroutines",
+        "Performance profilers"
+      ],
+      "deliverables": [
+        "Architecture documentation",
+        "Project structure definition",
+        "Feature migration implementations",
+        "Performance benchmarks",
+        "Technical specifications"
+      ],
+      "assigned_tasks": [
+        "FOUNDATION-002",
+        "ARCHITECTURE-001", 
+        "FEATURE-001",
+        "FEATURE-002",
+        "FEATURE-004"
+      ]
+    },
+    {
+      "id": "ui_ux_migration_specialist", 
+      "name": "Mobile-First UI/UX Specialist",
+      "role": "UI/UX expert for mobile-first desktop adaptation",
+      "expertise": [
+        "Mobile-first design principles",
+        "Responsive Compose layouts",
+        "Desktop UI conventions",
+        "Accessibility standards",
+        "Cross-platform design systems",
+        "Material 3 theming",
+        "Data visualization and charts"
+      ],
+      "responsibilities": [
+        "Adapt mobile UI patterns for desktop",
+        "Implement responsive layout systems",
+        "Ensure accessibility compliance",
+        "Design desktop-enhanced interactions",
+        "Maintain visual consistency",
+        "Create adaptive navigation systems",
+        "Migrate visualization features"
+      ],
+      "tools": [
+        "Figma/Design tools",
+        "Compose Preview",
+        "Accessibility testing tools",
+        "Color contrast analyzers", 
+        "Screen reader testing",
+        "Responsive design testing"
+      ],
+      "deliverables": [
+        "Responsive component library",
+        "Design system documentation",
+        "Accessibility audit reports",
+        "Interaction specifications",
+        "Visual regression tests",
+        "Navigation system implementations"
+      ],
+      "assigned_tasks": [
+        "UI-001",
+        "UI-002",
+        "UI-003",
+        "FEATURE-003"
+      ]
+    },
+    {
+      "id": "data_migration_engineer",
+      "name": "Data Layer Migration Engineer", 
+      "role": "Database and data layer specialist",
+      "expertise": [
+        "Room to SQLDelight migration",
+        "Cross-platform database design",
+        "Data migration strategies",
+        "Repository pattern implementation",
+        "Database performance optimization",
+        "SQL query optimization",
+        "Data integrity validation"
+      ],
+      "responsibilities": [
+        "Design SQLDelight database schema",
+        "Migrate database schema and queries",
+        "Implement repository abstractions",
+        "Design data migration scripts",
+        "Optimize database performance",
+        "Ensure data integrity",
+        "Create database testing strategies"
+      ],
+      "tools": [
+        "SQLDelight",
+        "Database migration tools",
+        "SQL query analyzers",
+        "Performance monitoring",
+        "Data validation frameworks",
+        "Database design tools"
+      ],
+      "deliverables": [
+        "SQLDelight schema files",
+        "Migrated database schema",
+        "Repository implementations",
+        "Migration scripts",
+        "Performance benchmarks",
+        "Data integrity tests"
+      ],
+      "assigned_tasks": [
+        "ARCHITECTURE-003",
+        "ARCHITECTURE-004"
+      ]
+    },
+    {
+      "id": "wayland_integration_specialist",
+      "name": "Wayland Integration Specialist",
+      "role": "Linux desktop and Wayland protocol expert",
+      "expertise": [
+        "Wayland protocol implementation",
+        "Linux desktop integration", 
+        "Native window management",
+        "System service integration",
+        "Desktop environment APIs",
+        "Input method integration",
+        "File system portals",
+        "Desktop security models"
+      ],
+      "responsibilities": [
+        "Implement Wayland client protocols",
+        "Integrate with desktop services",
+        "Handle native window management",
+        "Implement system notifications",
+        "Manage file system access",
+        "Configure input method support",
+        "Ensure desktop environment integration"
+      ],
+      "tools": [
+        "Wayland development tools",
+        "Desktop portal APIs",
+        "System integration testing",
+        "Protocol debugging tools",
+        "Desktop environment testing",
+        "Input method testing tools"
+      ],
+      "deliverables": [
+        "Wayland client implementation",
+        "Desktop integration modules",
+        "System service connectors",
+        "Platform-specific adapters",
+        "Integration test suites",
+        "Input method configurations"
+      ],
+      "assigned_tasks": [
+        "FOUNDATION-003",
+        "PLATFORM-001",
+        "PLATFORM-002",
+        "PLATFORM-003"
+      ]
+    },
+    {
+      "id": "bdd_test_engineer",
+      "name": "BDD Test Engineer",
+      "role": "Behavior-driven development and testing specialist",
+      "expertise": [
+        "Cucumber/Gherkin specifications",
+        "Kotest framework",
+        "UI automation testing",
+        "Cross-platform test strategies",
+        "Continuous integration",
+        "Performance testing",
+        "Test data management",
+        "Accessibility testing"
+      ],
+      "responsibilities": [
+        "Setup BDD testing infrastructure",
+        "Define comprehensive BDD scenarios",
+        "Implement test automation",
+        "Create testing frameworks",
+        "Establish CI/CD test integration",
+        "Ensure comprehensive test coverage",
+        "Design performance test suites"
+      ],
+      "tools": [
+        "Cucumber-JVM",
+        "Kotest",
+        "Testcontainers",
+        "GitHub Actions",
+        "Coverage analysis tools",
+        "Performance testing tools",
+        "Accessibility testing tools"
+      ],
+      "deliverables": [
+        "BDD testing infrastructure",
+        "Comprehensive BDD feature specifications",
+        "Automated test suites",
+        "Performance test implementations",
+        "Test infrastructure documentation",
+        "Coverage reports"
+      ],
+      "assigned_tasks": [
+        "TESTING-001",
+        "TESTING-002", 
+        "TESTING-003"
+      ]
+    },
+    {
+      "id": "dependency_injection_specialist",
+      "name": "Dependency Injection Specialist",
+      "role": "DI framework migration expert",
+      "expertise": [
+        "Hilt to Koin migration",
+        "Dependency injection patterns",
+        "Multiplatform DI strategies",
+        "Performance optimization",
+        "Testing with DI",
+        "Module organization",
+        "Scope management"
+      ],
+      "responsibilities": [
+        "Setup Koin dependency injection framework",
+        "Migrate from Hilt to Koin",
+        "Design DI architecture",
+        "Implement injection patterns",
+        "Optimize startup performance",
+        "Create testing configurations",
+        "Document DI patterns"
+      ],
+      "tools": [
+        "Koin framework",
+        "DI analysis tools",
+        "Performance profilers",
+        "Dependency graph visualizers",
+        "Testing frameworks",
+        "Code migration tools"
+      ],
+      "deliverables": [
+        "Koin DI framework setup",
+        "DI configuration modules",
+        "Migration guides",
+        "Performance optimizations",
+        "Test configurations",
+        "Architecture documentation"
+      ],
+      "assigned_tasks": [
+        "ARCHITECTURE-002"
+      ]
+    },
+    {
+      "id": "devops_engineer",
+      "name": "DevOps Engineer",
+      "role": "Build system and deployment specialist",
+      "expertise": [
+        "NixOS packaging and flakes",
+        "Gradle multiplatform builds",
+        "Desktop application distribution",
+        "CI/CD for desktop apps",
+        "Automated testing pipelines",
+        "Package management",
+        "Build reproducibility",
+        "GitHub Actions"
+      ],
+      "responsibilities": [
+        "Setup NixOS development environment",
+        "Configure build systems",
+        "Set up CI/CD pipelines",
+        "Create distribution packages",
+        "Manage development environments",
+        "Automate quality gates",
+        "Ensure build reproducibility"
+      ],
+      "tools": [
+        "Nix/NixOS",
+        "Gradle",
+        "GitHub Actions",
+        "Docker/Podman",
+        "Package managers",
+        "direnv",
+        "Distribution packaging tools"
+      ],
+      "deliverables": [
+        "NixOS flake configuration",
+        "Build configurations",
+        "CI/CD pipelines",
+        "Distribution packages",
+        "Development environments",
+        "Deployment documentation"
+      ],
+      "assigned_tasks": [
+        "FOUNDATION-001",
+        "DEVOPS-001",
+        "DEVOPS-002"
+      ]
+    }
+  ]
+}

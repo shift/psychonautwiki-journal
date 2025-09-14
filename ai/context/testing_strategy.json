@@ -1,0 +1,292 @@
+{
+  "testing_strategy": {
+    "overview": {
+      "approach": "Comprehensive BDD-driven testing with mobile-first desktop adaptation validation",
+      "coverage_target": "90% code coverage, 100% critical path coverage",
+      "automation_level": "Fully automated CI/CD with quality gates"
+    },
+    "framework_selection": {
+      "bdd_framework": {
+        "name": "Cucumber-JVM",
+        "version": "7.18.1",
+        "rationale": "Industry standard for BDD, excellent Kotlin support, mature ecosystem, integrates well with Kotest"
+      },
+      "test_framework": {
+        "name": "Kotest",
+        "version": "5.9.1", 
+        "rationale": "Kotlin-native testing framework, excellent Compose support, flexible syntax, StringSpec style"
+      },
+      "ui_testing": {
+        "name": "Compose Testing",
+        "rationale": "Native Compose UI testing, multiplatform support, good debugging capabilities"
+      },
+      "mocking": {
+        "name": "MockK",
+        "version": "1.13.12",
+        "rationale": "Kotlin-first mocking library, coroutine support, multiplatform compatibility"
+      },
+      "performance_testing": {
+        "name": "JMH (Java Microbenchmark Harness)",
+        "rationale": "Industry standard for performance benchmarking, accurate measurements"
+      }
+    },
+    "test_categories": {
+      "unit_tests": {
+        "scope": "Individual functions and classes",
+        "framework": "Kotest StringSpec",
+        "coverage_target": "95%",
+        "patterns": [
+          "Repository implementations",
+          "ViewModel logic",
+          "Data transformations",
+          "Business rules validation",
+          "Utility functions",
+          "Domain model validation"
+        ],
+        "example_structure": {
+          "file_naming": "ClassNameTest.kt",
+          "test_naming": "should return expected result when given valid input",
+          "organization": "src/commonTest/kotlin/"
+        }
+      },
+      "integration_tests": {
+        "scope": "Component interactions and data flow",
+        "framework": "Kotest + Testcontainers",
+        "coverage_target": "85%",
+        "patterns": [
+          "Database operations with SQLDelight",
+          "Repository to database integration",
+          "DI container resolution",
+          "Cross-component workflows",
+          "Platform-specific implementations"
+        ],
+        "example_structure": {
+          "file_naming": "ClassNameIntegrationTest.kt",
+          "organization": "src/integrationTest/kotlin/"
+        }
+      },
+      "ui_tests": {
+        "scope": "User interface components and interactions",
+        "framework": "Compose Testing + Kotest",
+        "coverage_target": "75%",
+        "patterns": [
+          "Screen compositions and layout",
+          "User interaction flows",
+          "Navigation behavior",
+          "Theme and responsive design",
+          "Accessibility compliance",
+          "Desktop-specific UI interactions"
+        ],
+        "example_structure": {
+          "file_naming": "ScreenNameUITest.kt",
+          "organization": "src/desktopTest/kotlin/"
+        }
+      },
+      "bdd_tests": {
+        "scope": "Complete user workflows and business scenarios",
+        "framework": "Cucumber-JVM + Kotest",
+        "coverage_target": "100% of user stories",
+        "patterns": [
+          "End-to-end user workflows",
+          "Business rule validation",
+          "Error handling scenarios",
+          "Cross-platform compatibility",
+          "Mobile-to-desktop adaptation scenarios",
+          "Wayland integration scenarios"
+        ],
+        "example_structure": {
+          "file_naming": "feature_name.feature",
+          "organization": "src/test/resources/features/"
+        }
+      },
+      "performance_tests": {
+        "scope": "Application performance and resource usage",
+        "framework": "JMH + Custom benchmarks",
+        "coverage_target": "All critical performance paths",
+        "patterns": [
+          "Application startup time",
+          "UI responsiveness",
+          "Database query performance",
+          "Memory usage patterns",
+          "Resource consumption"
+        ]
+      }
+    },
+    "bdd_approach": {
+      "gherkin_standards": {
+        "language": "English",
+        "style": "Given-When-Then",
+        "naming_convention": "snake_case for files, Title Case for scenarios",
+        "organization": "Feature files organized by application domains (search, experiences, statistics, etc.)"
+      },
+      "scenario_types": {
+        "happy_path": "Normal user workflows with expected inputs and outcomes",
+        "edge_cases": "Boundary conditions and unusual but valid inputs", 
+        "error_conditions": "Invalid inputs and error handling verification",
+        "performance": "Response time and resource usage validation",
+        "accessibility": "Screen reader and keyboard navigation compliance",
+        "responsive_design": "Mobile-first to desktop adaptation validation",
+        "wayland_integration": "Native desktop integration scenarios"
+      },
+      "test_data_management": {
+        "approach": "Test data builders with realistic data sets",
+        "isolation": "Each scenario starts with clean state",
+        "persistence": "In-memory database for fast test execution",
+        "seed_data": "Minimal realistic data sets for complex scenarios",
+        "data_factories": "Kotlin data factories for consistent test data creation"
+      },
+      "feature_coverage": {
+        "substance_management": [
+          "Search functionality",
+          "Custom substance creation",
+          "Substance categorization",
+          "Data validation"
+        ],
+        "experience_logging": [
+          "Experience creation workflow",
+          "Ingestion tracking",
+          "Time-based calculations",
+          "Data persistence"
+        ],
+        "statistics_visualization": [
+          "Chart rendering",
+          "Data aggregation",
+          "Export functionality",
+          "Interactive features"
+        ],
+        "responsive_design": [
+          "Layout adaptation",
+          "Navigation transformation",
+          "Typography scaling",
+          "Touch to mouse interaction"
+        ],
+        "wayland_integration": [
+          "Window management",
+          "File system access",
+          "System integration",
+          "Input handling"
+        ]
+      }
+    },
+    "automation_strategy": {
+      "test_execution": {
+        "local_development": "Parallel execution with fast feedback loops",
+        "ci_pipeline": "Full test suite execution on all platforms",
+        "staging_deployment": "Smoke tests and critical path validation",
+        "production_monitoring": "Health checks and performance monitoring"
+      },
+      "quality_gates": {
+        "code_coverage": "Minimum 85% overall, 95% for critical paths",
+        "performance": "Startup time < 3s, UI response < 100ms",
+        "accessibility": "WCAG 2.1 AA compliance",
+        "security": "No secrets in logs, secure data handling",
+        "responsive_design": "Proper adaptation across all target screen sizes"
+      },
+      "ci_integration": {
+        "trigger_conditions": [
+          "Every push to main branch",
+          "Every pull request",
+          "Nightly full test runs",
+          "Release candidate validation"
+        ],
+        "test_parallelization": "Run test categories in parallel for faster feedback",
+        "failure_reporting": "Detailed reports with screenshots for UI test failures",
+        "performance_tracking": "Track test execution time trends and performance regressions"
+      }
+    },
+    "platform_specific_testing": {
+      "wayland_integration": {
+        "window_management": "Test window creation, sizing, positioning, and decorations",
+        "input_handling": "Verify keyboard, mouse, and touch input processing",
+        "clipboard_operations": "Test copy/paste functionality across applications",
+        "file_dialogs": "Validate native file picker integration",
+        "hidpi_scaling": "Test fractional scaling and high-resolution displays",
+        "multi_monitor": "Validate behavior across multiple displays"
+      },
+      "desktop_features": {
+        "system_tray": "Test tray icon functionality and menu operations",
+        "notifications": "Verify desktop notification display and interaction",
+        "keyboard_shortcuts": "Test global and application-specific shortcuts",
+        "accessibility": "Screen reader and keyboard navigation compliance",
+        "file_associations": "Test application file type associations"
+      },
+      "mobile_first_adaptation": {
+        "layout_responsiveness": "Validate mobile-first to desktop layout transitions",
+        "navigation_adaptation": "Test mobile tabs to desktop sidebar transformation",
+        "touch_to_mouse": "Verify touch interactions work with mouse/keyboard",
+        "typography_scaling": "Test font size and spacing across screen sizes",
+        "content_prioritization": "Ensure mobile content hierarchy is preserved"
+      },
+      "performance_testing": {
+        "startup_time": "Measure and validate application launch performance",
+        "memory_usage": "Monitor memory consumption patterns",
+        "cpu_utilization": "Verify efficient resource usage",
+        "ui_responsiveness": "Measure UI interaction latency",
+        "database_performance": "Benchmark database operations",
+        "rendering_performance": "Test UI rendering and animation performance"
+      }
+    },
+    "test_environment_setup": {
+      "development_environment": {
+        "requirements": [
+          "NixOS development shell with all testing tools",
+          "Local database for integration testing",
+          "Mock Wayland environment for headless testing",
+          "Performance monitoring tools"
+        ]
+      },
+      "ci_environment": {
+        "requirements": [
+          "GitHub Actions with NixOS support",
+          "Headless desktop environment simulation",
+          "Performance benchmarking infrastructure",
+          "Test result reporting and archiving"
+        ]
+      }
+    }
+  },
+  "implementation_guidelines": {
+    "test_structure": {
+      "directory_layout": {
+        "unit_tests": "src/commonTest/kotlin/",
+        "integration_tests": "src/integrationTest/kotlin/",
+        "ui_tests": "src/desktopTest/kotlin/",
+        "bdd_features": "src/test/resources/features/",
+        "test_utilities": "src/testFixtures/kotlin/"
+      },
+      "naming_conventions": {
+        "unit_tests": "ClassNameTest for unit tests",
+        "integration_tests": "ClassNameIntegrationTest for integration tests",
+        "ui_tests": "ScreenNameUITest for UI tests",
+        "bdd_step_definitions": "FeatureNameSteps for step definitions"
+      },
+      "base_classes": "Abstract test classes for common setup and utilities"
+    },
+    "bdd_implementation": {
+      "step_definitions": "Organized by domain with reusable step definitions",
+      "page_objects": "Screen representations for UI interaction abstractions", 
+      "test_utilities": "Common operations like data setup and navigation",
+      "data_builders": "Kotlin builders for consistent test data creation"
+    },
+    "test_data_management": {
+      "factories": "Data factories for each domain entity",
+      "builders": "Builder pattern for complex test scenarios",
+      "cleanup": "Automatic cleanup after each test scenario",
+      "isolation": "Each test runs with isolated, clean state"
+    }
+  },
+  "quality_assurance": {
+    "code_review_requirements": {
+      "test_coverage": "All new features must include comprehensive tests",
+      "bdd_scenarios": "User-facing features require BDD scenarios",
+      "performance_impact": "Performance-sensitive changes require benchmarks",
+      "accessibility": "UI changes require accessibility validation"
+    },
+    "continuous_monitoring": {
+      "test_execution_time": "Monitor and alert on test execution time increases",
+      "flaky_test_detection": "Identify and address unstable tests",
+      "performance_regression": "Automated detection of performance regressions",
+      "coverage_tracking": "Track test coverage trends over time"
+    }
+  }
+}
