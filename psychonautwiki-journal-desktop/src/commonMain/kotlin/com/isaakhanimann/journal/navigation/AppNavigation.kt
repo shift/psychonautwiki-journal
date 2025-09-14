@@ -4,18 +4,18 @@ import androidx.compose.runtime.*
 import com.isaakhanimann.journal.ui.screens.*
 
 @Composable
-fun AppNavigation() {
-    val navController = remember { DesktopNavigationController() }
+fun AppNavigation(navController: DesktopNavigationController? = null) {
+    val actualNavController = navController ?: remember { DesktopNavigationController() }
     
-    when (val screen = navController.currentScreen) {
-        is Screen.Dashboard -> DashboardScreen(navController = navController)
-        is Screen.Experiences -> ExperiencesScreen(navController = navController) 
-        is Screen.Substances -> SubstancesScreen(navController = navController)
-        is Screen.Settings -> SettingsScreen(navController = navController)
+    when (val screen = actualNavController.currentScreen) {
+        is Screen.Dashboard -> DashboardScreen(navController = actualNavController)
+        is Screen.Experiences -> ExperiencesScreen(navController = actualNavController) 
+        is Screen.Substances -> SubstancesScreen(navController = actualNavController)
+        is Screen.Settings -> SettingsScreen(navController = actualNavController)
         is Screen.ExperienceEditor -> {
             val experienceId = screen.experienceId?.toIntOrNull()
             ExperienceEditorScreen(
-                navigationController = navController,
+                navigationController = actualNavController,
                 experienceId = experienceId
             )
         }
@@ -23,7 +23,7 @@ fun AppNavigation() {
             val experienceId = screen.experienceId.toIntOrNull() ?: 0
             val ingestionId = screen.ingestionId?.toIntOrNull()
             IngestionEditorScreen(
-                navigationController = navController,
+                navigationController = actualNavController,
                 experienceId = experienceId,
                 ingestionId = ingestionId
             )
@@ -31,7 +31,7 @@ fun AppNavigation() {
         is Screen.ExperienceTimeline -> {
             val experienceId = screen.experienceId.toIntOrNull() ?: 0
             ExperienceTimelineScreen(
-                navigationController = navController,
+                navigationController = actualNavController,
                 experienceId = experienceId
             )
         }

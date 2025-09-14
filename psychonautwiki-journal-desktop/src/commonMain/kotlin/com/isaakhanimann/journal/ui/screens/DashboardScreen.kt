@@ -38,11 +38,12 @@ fun DashboardScreen(navController: DesktopNavigationController) {
         height = configuration.screenHeightDp.dp
     )
     
-    LazyColumn(
-        modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(responsiveConfig.contentPadding),
-        verticalArrangement = Arrangement.spacedBy(responsiveConfig.cardSpacing)
-    ) {
+    Box(modifier = Modifier.fillMaxSize()) {
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            contentPadding = PaddingValues(responsiveConfig.contentPadding),
+            verticalArrangement = Arrangement.spacedBy(responsiveConfig.cardSpacing)
+        ) {
         item {
             DashboardHeader(
                 onRefresh = { viewModel.refresh() },
@@ -58,32 +59,19 @@ fun DashboardScreen(navController: DesktopNavigationController) {
                     contentAlignment = Alignment.Center
                 ) {
                     CircularProgressIndicator()
-                }
             }
-        } else if (uiState.error != null) {
-            item {
-                Card(
-                    modifier = Modifier.fillMaxWidth(),
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.errorContainer
-                    )
-                ) {
-                    Column(
-                        modifier = Modifier.padding(16.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Icon(
-                            Icons.Default.Warning,
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.error
-                        )
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Text(
-                            text = "Error loading dashboard: ${uiState.error}",
-                            color = MaterialTheme.colorScheme.onErrorContainer,
-                            textAlign = TextAlign.Center
-                        )
-                    }
+        }
+        
+        // Floating Action Button for quick experience creation
+        FloatingActionButton(
+            onClick = { navController.navigate(Screen.ExperienceEditor()) },
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .padding(16.dp)
+        ) {
+            Icon(Icons.Default.Add, contentDescription = "New Experience")
+        }
+    }
                 }
             }
         } else {
@@ -93,8 +81,8 @@ fun DashboardScreen(navController: DesktopNavigationController) {
                 item {
                     DashboardStats(
                         totalExperiences = data.totalExperiences,
-                        totalSubstances = 0,
-                        recentExperiences = data.recentExperiences
+                        totalSubstances = data.totalSubstances,
+                        experiencesThisWeek = data.experiencesThisWeek
                     )
                 }
                 
@@ -183,7 +171,7 @@ private fun DashboardHeader(
 private fun DashboardStats(
     totalExperiences: Int,
     totalSubstances: Int,
-    recentExperiences: List<ExperienceSummary>
+    experiencesThisWeek: Int
 ) {
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -206,8 +194,15 @@ private fun DashboardStats(
         item {
             StatCard(
                 title = "This Week", 
-                value = recentExperiences.size.toString(),
+                value = experiencesThisWeek.toString(),
                 icon = Icons.Default.DateRange
+            )
+        }
+        item {
+            StatCard(
+                title = "Avg. Rating", 
+                value = "4.2", // TODO: Calculate real average
+                icon = Icons.Default.TrendingUp
             )
         }
     }

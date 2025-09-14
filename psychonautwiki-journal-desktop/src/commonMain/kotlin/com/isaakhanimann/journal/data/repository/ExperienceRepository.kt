@@ -15,6 +15,7 @@ interface ExperienceRepository {
     fun getAllExperiences(): Flow<List<Experience>>
     fun getExperienceById(id: Int): Flow<Experience?>
     fun getFavoriteExperiences(): Flow<List<Experience>>
+    fun searchExperiences(query: String): Flow<List<Experience>>
     suspend fun insertExperience(experience: Experience): Long
     suspend fun updateExperience(experience: Experience)
     suspend fun deleteExperience(id: Int)
@@ -353,5 +354,30 @@ class ExperienceRepositoryImpl(
     
     override suspend fun deleteTimedNote(id: Int) {
         queries.deleteTimedNote(id.toLong())
+            }
     }
-}
+    
+    override fun searchExperiences(query: String): Flow<List<Experience>> {
+        return queries.searchExperiences(query, query)
+            .asFlow()
+            .mapToList(Dispatchers.IO)
+            .map { experienceList ->
+                experienceList.map { exp ->
+                    Experience(
+                        id = exp.id.toInt(),
+                        title = exp.title,
+                        text = exp.text,
+                        creationDate = Instant.fromEpochSeconds(exp.creationDate),
+                        sortDate = Instant.fromEpochSeconds(exp.sortDate),
+                        isFavorite = exp.isFavorite == 1L,
+                        location = if (exp.locationName != null) {
+                            Location(
+                                name = exp.locationName,
+                                longitude = exp.locationLongitude,
+                                latitude = exp.locationLatitude
+                            )
+                        } else null
+                    )
+                }
+            }
+    }

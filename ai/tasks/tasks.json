@@ -624,12 +624,353 @@
       "dependencies": ["DEVOPS-001"],
       "estimated_hours": 14,
       "context_file": "devops_infrastructure_context"
+    },
+    {
+      "id": "QUICK-001",
+      "title": "Implement Dark/Light Theme Toggle",
+      "description": "Add theme switcher to Settings screen with persistence across app restarts",
+      "type": "quick_enhancement",
+      "phase": 7,
+      "priority": "high",
+      "persona": "ui_ux_migration_specialist",
+      "story": "As a user, I want to switch between dark and light themes so that I can use the app in different lighting conditions",
+      "acceptance_criteria": [
+        "Theme toggle button in Settings screen",
+        "Theme preference persists across app restarts",
+        "All UI components respect selected theme",
+        "Smooth transition between themes",
+        "System theme detection as default option"
+      ],
+      "bdd_scenarios": [
+        {
+          "scenario": "Theme switching functionality",
+          "given": "Application with theme toggle in Settings",
+          "when": "User switches between dark and light themes",
+          "then": "Theme changes immediately and persists after restart"
+        }
+      ],
+      "dependencies": ["FEATURE-004"],
+      "estimated_hours": 0.5,
+      "context_file": "quick_enhancement_context"
+    },
+    {
+      "id": "QUICK-002",
+      "title": "Add Essential Keyboard Shortcuts",
+      "description": "Implement common desktop keyboard shortcuts for navigation and actions",
+      "type": "quick_enhancement",
+      "phase": 7,
+      "priority": "high",
+      "persona": "ui_ux_migration_specialist",
+      "story": "As a user, I want keyboard shortcuts so that I can navigate and use the app efficiently",
+      "acceptance_criteria": [
+        "Ctrl+N for new experience creation",
+        "Ctrl+S for saving current form",
+        "Ctrl+Q for quitting application",
+        "Ctrl+F for global search activation",
+        "F1 for help/about dialog",
+        "Shortcuts work across all screens",
+        "Visual indicators for available shortcuts"
+      ],
+      "bdd_scenarios": [
+        {
+          "scenario": "Keyboard shortcut functionality",
+          "given": "Application with keyboard shortcuts configured",
+          "when": "User presses keyboard shortcuts",
+          "then": "Corresponding actions are executed correctly"
+        }
+      ],
+      "dependencies": ["QUICK-001"],
+      "estimated_hours": 0.75,
+      "context_file": "quick_enhancement_context"
+    },
+    {
+      "id": "QUICK-003",
+      "title": "Implement Window State Persistence",
+      "description": "Remember window size, position, and state between application sessions",
+      "type": "quick_enhancement",
+      "phase": 7,
+      "priority": "medium",
+      "persona": "kotlin_desktop_architect",
+      "story": "As a user, I want the application to remember my preferred window size and position",
+      "acceptance_criteria": [
+        "Window size persists across restarts",
+        "Window position is restored when possible",
+        "Maximized/minimized state is remembered",
+        "Multi-monitor setup handling",
+        "Graceful fallback for invalid positions"
+      ],
+      "bdd_scenarios": [
+        {
+          "scenario": "Window state persistence",
+          "given": "Application with customized window state",
+          "when": "Restarting the application",
+          "then": "Window returns to previous size and position"
+        }
+      ],
+      "dependencies": ["QUICK-002"],
+      "estimated_hours": 1,
+      "context_file": "quick_enhancement_context"
+    },
+    {
+      "id": "QUICK-004",
+      "title": "Create About Dialog",
+      "description": "Add About dialog with version info, credits, and PsychonautWiki attribution",
+      "type": "quick_enhancement",
+      "phase": 7,
+      "priority": "low",
+      "persona": "ui_ux_migration_specialist",
+      "story": "As a user, I want to see application information and give proper credit to PsychonautWiki",
+      "acceptance_criteria": [
+        "About dialog accessible from Help menu or F1",
+        "Shows application version and build info",
+        "Credits PsychonautWiki and contributors",
+        "Links to GitHub repository and documentation",
+        "Proper licensing information displayed"
+      ],
+      "bdd_scenarios": [
+        {
+          "scenario": "About dialog information",
+          "given": "About dialog is accessible",
+          "when": "User opens About dialog",
+          "then": "All application information is displayed correctly"
+        }
+      ],
+      "dependencies": ["QUICK-003"],
+      "estimated_hours": 0.5,
+      "context_file": "quick_enhancement_context"
+    },
+    {
+      "id": "QUICK-005",
+      "title": "Implement Global Search Functionality",
+      "description": "Add search capability across all experiences and substances from top navigation",
+      "type": "quick_enhancement",
+      "phase": 7,
+      "priority": "high",
+      "persona": "kotlin_desktop_architect",
+      "story": "As a user, I want to search across all my data from anywhere in the application",
+      "acceptance_criteria": [
+        "Global search bar in top navigation",
+        "Searches across experiences, substances, and notes",
+        "Real-time search results as user types",
+        "Keyboard navigation in search results",
+        "Search result categories and filtering"
+      ],
+      "bdd_scenarios": [
+        {
+          "scenario": "Global search functionality",
+          "given": "Application with experiences and substances data",
+          "when": "User searches for terms in global search",
+          "then": "Relevant results are displayed from all data sources"
+        }
+      ],
+      "dependencies": ["QUICK-004"],
+      "estimated_hours": 2,
+      "context_file": "quick_enhancement_context"
+    },
+    {
+      "id": "QUICK-006",
+      "title": "Add Recent Experiences Quick Access",
+      "description": "Show list of recently viewed/edited experiences on Dashboard for quick access",
+      "type": "quick_enhancement",
+      "phase": 7,
+      "priority": "medium",
+      "persona": "ui_ux_migration_specialist",
+      "story": "As a user, I want quick access to my recent experiences from the main dashboard",
+      "acceptance_criteria": [
+        "Recent experiences section on Dashboard",
+        "Shows last 5-10 recently accessed experiences",
+        "Click to open experience directly",
+        "Shows experience title and last modified date",
+        "Updates automatically when experiences are accessed"
+      ],
+      "bdd_scenarios": [
+        {
+          "scenario": "Recent experiences display",
+          "given": "User has accessed several experiences",
+          "when": "Viewing the Dashboard",
+          "then": "Recent experiences are displayed in chronological order"
+        }
+      ],
+      "dependencies": ["QUICK-005"],
+      "estimated_hours": 1.5,
+      "context_file": "quick_enhancement_context"
+    },
+    {
+      "id": "QUICK-007",
+      "title": "Implement Quick Add Floating Action Button",
+      "description": "Add floating action button for rapid experience creation from any screen",
+      "type": "quick_enhancement",
+      "phase": 7,
+      "priority": "medium",
+      "persona": "ui_ux_migration_specialist",
+      "story": "As a user, I want to quickly start creating a new experience from anywhere in the app",
+      "acceptance_criteria": [
+        "Floating action button visible on main screens",
+        "Material 3 FAB design with proper positioning",
+        "Direct navigation to new experience form",
+        "Appropriate animations and visual feedback",
+        "Consistent positioning across different screen sizes"
+      ],
+      "bdd_scenarios": [
+        {
+          "scenario": "Quick add functionality",
+          "given": "User is on any main screen",
+          "when": "Clicking the floating action button",
+          "then": "New experience creation form opens immediately"
+        }
+      ],
+      "dependencies": ["QUICK-006"],
+      "estimated_hours": 1,
+      "context_file": "quick_enhancement_context"
+    },
+    {
+      "id": "QUICK-008",
+      "title": "Add Experience Counter Dashboard Widget",
+      "description": "Display total experience count and basic statistics on the Dashboard",
+      "type": "quick_enhancement",
+      "phase": 7,
+      "priority": "low",
+      "persona": "ui_ux_migration_specialist",
+      "story": "As a user, I want to see a summary of my logged experiences at a glance",
+      "acceptance_criteria": [
+        "Experience counter card on Dashboard",
+        "Shows total experiences logged",
+        "Display recent activity summary",
+        "Visual card design matching app theme",
+        "Updates automatically when experiences are added"
+      ],
+      "bdd_scenarios": [
+        {
+          "scenario": "Experience counter display",
+          "given": "User has logged experiences in the database",
+          "when": "Viewing the Dashboard",
+          "then": "Experience counter shows accurate total and summary statistics"
+        }
+      ],
+      "dependencies": ["QUICK-007"],
+      "estimated_hours": 1,
+      "context_file": "quick_enhancement_context"
+    },
+    {
+      "id": "QUICK-009",
+      "title": "Implement Auto-save for Form Drafts",
+      "description": "Automatically save form progress to prevent data loss during experience entry",
+      "type": "quick_enhancement",
+      "phase": 7,
+      "priority": "high",
+      "persona": "kotlin_desktop_architect",
+      "story": "As a user, I want my form progress to be saved automatically so I don't lose data",
+      "acceptance_criteria": [
+        "Auto-save form data every 30 seconds",
+        "Restore unsaved drafts when returning to forms",
+        "Clear draft data after successful save",
+        "Visual indication of auto-save status",
+        "Works for both experience and ingestion forms"
+      ],
+      "bdd_scenarios": [
+        {
+          "scenario": "Auto-save functionality",
+          "given": "User is filling out an experience form",
+          "when": "Form data is entered and time passes",
+          "then": "Form data is automatically saved and can be restored"
+        }
+      ],
+      "dependencies": ["QUICK-008"],
+      "estimated_hours": 2,
+      "context_file": "quick_enhancement_context"
+    },
+    {
+      "id": "QUICK-010",
+      "title": "Add CSV/JSON Export Functionality",
+      "description": "Implement data export features with desktop file dialog integration",
+      "type": "quick_enhancement",
+      "phase": 7,
+      "priority": "medium",
+      "persona": "kotlin_desktop_architect",
+      "story": "As a user, I want to export my experience data in standard formats for backup or analysis",
+      "acceptance_criteria": [
+        "Export menu in Settings or main menu",
+        "CSV export for spreadsheet compatibility",
+        "JSON export for data interchange",
+        "Native file dialog for save location",
+        "Progress indication for large exports",
+        "Export includes all experience and ingestion data"
+      ],
+      "bdd_scenarios": [
+        {
+          "scenario": "Data export functionality",
+          "given": "Application with experience data",
+          "when": "User initiates data export",
+          "then": "File dialog opens and data exports correctly in chosen format"
+        }
+      ],
+      "dependencies": ["QUICK-009"],
+      "estimated_hours": 2.5,
+      "context_file": "quick_enhancement_context"
+    },
+    {
+      "id": "QUICK-011",
+      "title": "Implement Import/Backup Restoration",
+      "description": "Add ability to import experiences from backup files with validation",
+      "type": "quick_enhancement",
+      "phase": 7,
+      "priority": "medium",
+      "persona": "kotlin_desktop_architect",
+      "story": "As a user, I want to restore my experiences from backup files to recover my data",
+      "acceptance_criteria": [
+        "Import menu option with file dialog",
+        "Support for JSON and CSV import formats",
+        "Data validation before import",
+        "Duplicate detection and handling options",
+        "Import progress indication",
+        "Rollback capability if import fails"
+      ],
+      "bdd_scenarios": [
+        {
+          "scenario": "Data import functionality",
+          "given": "Valid backup file with experience data",
+          "when": "User imports the backup file",
+          "then": "Data is validated and imported correctly with appropriate feedback"
+        }
+      ],
+      "dependencies": ["QUICK-010"],
+      "estimated_hours": 3,
+      "context_file": "quick_enhancement_context"
+    },
+    {
+      "id": "QUICK-012",
+      "title": "Create Timeline Calendar View",
+      "description": "Add calendar-style view showing experiences organized by date",
+      "type": "quick_enhancement",
+      "phase": 7,
+      "priority": "medium",
+      "persona": "ui_ux_migration_specialist",
+      "story": "As a user, I want to see my experiences in a calendar format to understand temporal patterns",
+      "acceptance_criteria": [
+        "Calendar view accessible from Experiences screen",
+        "Month/week/day view options",
+        "Experience indicators on calendar dates",
+        "Click dates to see experience details",
+        "Navigation between months/years",
+        "Integration with existing experience data"
+      ],
+      "bdd_scenarios": [
+        {
+          "scenario": "Timeline calendar functionality",
+          "given": "Experiences logged on various dates",
+          "when": "User views timeline calendar",
+          "then": "Experiences are displayed correctly on corresponding calendar dates"
+        }
+      ],
+      "dependencies": ["QUICK-011"],
+      "estimated_hours": 3,
+      "context_file": "quick_enhancement_context"
     }
   ],
   "summary": {
-    "total_tasks": 23,
-    "total_estimated_hours": 458,
-    "phases": 6,
+    "total_tasks": 35,
+    "total_estimated_hours": 478.25,
+    "phases": 7,
     "personas_involved": 5,
     "critical_path": [
       "FOUNDATION-001",
@@ -674,6 +1015,11 @@
         "tasks": 6,
         "hours": 140,
         "focus": "Comprehensive testing and automated deployment"
+      },
+      "phase_7_quick_enhancements": {
+        "tasks": 12,
+        "hours": 20.25,
+        "focus": "Rapid UX improvements and desktop-specific features"
       }
     }
   }

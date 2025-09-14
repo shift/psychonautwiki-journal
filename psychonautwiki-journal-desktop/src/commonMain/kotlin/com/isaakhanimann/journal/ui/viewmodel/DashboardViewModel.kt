@@ -26,11 +26,16 @@ class DashboardViewModel(
                     experienceTracker.getAllExperiencesWithSummary(),
                     experienceTracker.getFavoriteExperiences()
                 ) { allExperiences, favoriteExperiences ->
+                    val uniqueSubstances = allExperiences.flatMap { it.substances }.distinct()
+                    val thisWeekExperiences = allExperiences.filter { it.isRecent }
+                    
                     DashboardData(
                         recentExperiences = allExperiences.take(5),
                         favoriteExperiences = favoriteExperiences.take(3),
                         totalExperiences = allExperiences.size,
-                        experiencesThisMonth = allExperiences.filter { it.isRecent }.size
+                        experiencesThisMonth = allExperiences.filter { it.isRecent }.size,
+                        totalSubstances = uniqueSubstances.size,
+                        experiencesThisWeek = thisWeekExperiences.size
                     )
                 }.collect { data ->
                     _uiState.value = DashboardUiState(
@@ -82,7 +87,9 @@ data class DashboardData(
     val recentExperiences: List<ExperienceSummary> = emptyList(),
     val favoriteExperiences: List<Experience> = emptyList(),
     val totalExperiences: Int = 0,
-    val experiencesThisMonth: Int = 0
+    val experiencesThisMonth: Int = 0,
+    val totalSubstances: Int = 0,
+    val experiencesThisWeek: Int = 0
 ) {
     val hasExperiences: Boolean get() = totalExperiences > 0
     val hasRecentActivity: Boolean get() = experiencesThisMonth > 0

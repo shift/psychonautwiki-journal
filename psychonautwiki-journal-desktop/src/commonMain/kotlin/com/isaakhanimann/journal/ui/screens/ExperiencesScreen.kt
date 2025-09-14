@@ -26,13 +26,16 @@ import org.koin.compose.koinInject
 fun ExperiencesScreen(navController: DesktopNavigationController) {
     val viewModel: ExperiencesViewModel = koinInject()
     val uiState by viewModel.uiState.collectAsState()
+    val searchQuery by viewModel.searchQuery.collectAsState()
+    val showFavoritesOnly by viewModel.showFavoritesOnly.collectAsState()
     val configuration = LocalConfiguration.current
     val responsiveConfig = calculateWindowSizeClass(
         width = configuration.screenWidthDp.dp,
         height = configuration.screenHeightDp.dp
     )
     
-    Column(modifier = Modifier.fillMaxSize()) {
+    Box(modifier = Modifier.fillMaxSize()) {
+        Column(modifier = Modifier.fillMaxSize()) {
         // Header with search and filters
         Card(
             modifier = Modifier.fillMaxWidth()
@@ -62,10 +65,21 @@ fun ExperiencesScreen(navController: DesktopNavigationController) {
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
+                        FilterChip(
+                            onClick = { viewModel.toggleFavoritesFilter() },
+                            label = { Text("Favorites") },
+                            selected = showFavoritesOnly,
+                            leadingIcon = if (showFavoritesOnly) {
+                                { Icon(Icons.Default.Favorite, contentDescription = null) }
+                            } else {
+                                { Icon(Icons.Default.FavoriteBorder, contentDescription = null) }
+                            }
+                        )
+                        
                         IconButton(
-                            onClick = { /* Add filter action */ }
+                            onClick = { /* Add more filter actions */ }
                         ) {
-                            Icon(Icons.Default.Settings, contentDescription = "Filter")
+                            Icon(Icons.Default.FilterList, contentDescription = "More Filters")
                         }
                         
                         FilledTonalButton(
@@ -81,12 +95,19 @@ fun ExperiencesScreen(navController: DesktopNavigationController) {
                 Spacer(modifier = Modifier.height(12.dp))
                 
                 OutlinedTextField(
-                    value = "", // Add search state
-                    onValueChange = { /* Add search logic */ },
+                    value = searchQuery,
+                    onValueChange = { viewModel.updateSearchQuery(it) },
                     placeholder = { Text("Search experiences...") },
                     leadingIcon = {
                         Icon(Icons.Default.Search, contentDescription = null)
                     },
+                    trailingIcon = if (searchQuery.isNotEmpty()) {
+                        {
+                            IconButton(onClick = { viewModel.updateSearchQuery("") }) {
+                                Icon(Icons.Default.Clear, contentDescription = "Clear search")
+                            }
+                        }
+                    } else null,
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true
                 )
@@ -181,10 +202,20 @@ fun ExperiencesScreen(navController: DesktopNavigationController) {
                                 navController.navigate(Screen.ExperienceEditor(experience.experience.id.toString()))
                             }
                         )
-                    }
-                }
             }
         }
+        
+        // Floating Action Button for quick experience creation
+        FloatingActionButton(
+            onClick = { navController.navigate(Screen.ExperienceEditor()) },
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .padding(16.dp)
+        ) {
+            Icon(Icons.Default.Add, contentDescription = "New Experience")
+        }
+    }
+}
     }
 }
 

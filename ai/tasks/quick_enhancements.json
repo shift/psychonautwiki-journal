@@ -1,0 +1,368 @@
+{
+  "project": "PsychonautWiki Journal Desktop - Quick Enhancement Features",
+  "version": "1.0.0",
+  "created": "2025-09-14",
+  "overview": {
+    "goal": "Implement rapid user experience improvements and desktop-specific features for immediate value",
+    "approach": "Quick wins focusing on 15 minutes to 3 hours implementation time each",
+    "key_principles": [
+      "Immediate user value with minimal architectural changes",
+      "Desktop platform advantages over mobile",
+      "Progressive enhancement approach",
+      "Consistent with existing UI patterns"
+    ]
+  },
+  "enhancement_categories": {
+    "super_quick": {
+      "timeframe": "15-30 minutes",
+      "description": "Minimal code changes with immediate user impact",
+      "examples": ["Theme toggle", "Keyboard shortcuts", "Window persistence", "About dialog"]
+    },
+    "quick_wins": {
+      "timeframe": "30-60 minutes", 
+      "description": "Single feature additions leveraging existing infrastructure",
+      "examples": ["Global search", "Recent experiences", "Quick add button", "Statistics widgets"]
+    },
+    "medium_features": {
+      "timeframe": "1-2 hours",
+      "description": "More complex features requiring moderate implementation effort",
+      "examples": ["Auto-save", "Export functionality", "Timeline views"]
+    },
+    "desktop_specific": {
+      "timeframe": "2-3 hours",
+      "description": "Features that take advantage of desktop platform capabilities",
+      "examples": ["Import/backup", "Calendar views", "Advanced file operations"]
+    }
+  },
+  "quick_enhancement_tasks": [
+    {
+      "id": "SUPER-001",
+      "title": "Dark/Light Theme Toggle",
+      "category": "super_quick",
+      "estimated_minutes": 30,
+      "priority": "high",
+      "user_story": "As a user, I want to switch between dark and light themes for different lighting conditions",
+      "implementation_steps": [
+        "Add theme toggle button to Settings screen",
+        "Create theme state management in ViewModel", 
+        "Add theme persistence to SharedPreferences",
+        "Test theme switching across all screens"
+      ],
+      "files_to_modify": [
+        "SettingsScreen.kt",
+        "SettingsViewModel.kt", 
+        "ThemeManager.kt",
+        "MainActivity.kt"
+      ],
+      "acceptance_criteria": [
+        "Theme toggle visible in Settings",
+        "Theme persists across app restarts",
+        "All UI components respect selected theme",
+        "Smooth transition animation"
+      ]
+    },
+    {
+      "id": "SUPER-002", 
+      "title": "Essential Keyboard Shortcuts",
+      "category": "super_quick",
+      "estimated_minutes": 45,
+      "priority": "high",
+      "user_story": "As a user, I want keyboard shortcuts for efficient navigation and actions",
+      "implementation_steps": [
+        "Add KeyEvent handling to main window",
+        "Implement Ctrl+N for new experience",
+        "Add Ctrl+S for saving current form",
+        "Add Ctrl+Q for quit, Ctrl+F for search",
+        "Add visual indicators for shortcuts"
+      ],
+      "files_to_modify": [
+        "MainWindow.kt",
+        "ExperienceEditorScreen.kt",
+        "KeyboardShortcutHandler.kt"
+      ],
+      "acceptance_criteria": [
+        "All essential shortcuts work correctly",
+        "Shortcuts work across different screens",
+        "Visual hints for available shortcuts",
+        "No conflicts with system shortcuts"
+      ]
+    },
+    {
+      "id": "SUPER-003",
+      "title": "Window State Persistence", 
+      "category": "super_quick",
+      "estimated_minutes": 60,
+      "priority": "medium",
+      "user_story": "As a user, I want the application to remember my window size and position",
+      "implementation_steps": [
+        "Create WindowPreferences data class",
+        "Save window state on window events",
+        "Restore window state on startup",
+        "Handle edge cases (offscreen, invalid sizes)"
+      ],
+      "files_to_modify": [
+        "WindowPreferences.kt",
+        "MainWindow.kt",
+        "DesktopApplication.kt"
+      ],
+      "acceptance_criteria": [
+        "Window size persists across restarts",
+        "Window position restored when valid",
+        "Maximized state is remembered",
+        "Graceful fallback for invalid positions"
+      ]
+    },
+    {
+      "id": "SUPER-004",
+      "title": "About Dialog",
+      "category": "super_quick", 
+      "estimated_minutes": 30,
+      "priority": "low",
+      "user_story": "As a user, I want to see application info and give credit to PsychonautWiki",
+      "implementation_steps": [
+        "Create AboutDialog composable",
+        "Add version info from build.gradle",
+        "Include PsychonautWiki attribution",
+        "Add links to GitHub and documentation"
+      ],
+      "files_to_modify": [
+        "AboutDialog.kt",
+        "SettingsScreen.kt",
+        "BuildConfig.kt"
+      ],
+      "acceptance_criteria": [
+        "About dialog accessible via F1 or menu",
+        "Shows version and build information",
+        "Proper PsychonautWiki credits",
+        "Working links to external resources"
+      ]
+    },
+    {
+      "id": "QUICK-001",
+      "title": "Global Search Functionality",
+      "category": "quick_wins",
+      "estimated_minutes": 120,
+      "priority": "high", 
+      "user_story": "As a user, I want to search across all my data from anywhere in the app",
+      "implementation_steps": [
+        "Add search bar to top navigation",
+        "Create GlobalSearchViewModel",
+        "Implement search across experiences and substances",
+        "Add search results screen with categories",
+        "Implement keyboard navigation in results"
+      ],
+      "files_to_modify": [
+        "TopNavigationBar.kt",
+        "GlobalSearchViewModel.kt",
+        "SearchResultsScreen.kt",
+        "ExperienceRepository.kt"
+      ],
+      "acceptance_criteria": [
+        "Global search bar in navigation",
+        "Real-time search as user types",
+        "Results from experiences and substances",
+        "Keyboard navigation support",
+        "Search result filtering options"
+      ]
+    },
+    {
+      "id": "QUICK-002",
+      "title": "Recent Experiences Quick Access",
+      "category": "quick_wins",
+      "estimated_minutes": 90,
+      "priority": "medium",
+      "user_story": "As a user, I want quick access to my recent experiences from the dashboard",
+      "implementation_steps": [
+        "Add recent experiences section to Dashboard",
+        "Create RecentExperiencesViewModel",
+        "Query last accessed experiences",
+        "Add click handlers for quick navigation"
+      ],
+      "files_to_modify": [
+        "DashboardScreen.kt",
+        "RecentExperiencesViewModel.kt",
+        "ExperienceRepository.kt"
+      ],
+      "acceptance_criteria": [
+        "Recent experiences widget on Dashboard",
+        "Shows last 5-10 accessed experiences",
+        "Direct navigation to experience details",
+        "Updates when experiences are accessed"
+      ]
+    },
+    {
+      "id": "QUICK-003",
+      "title": "Quick Add Floating Action Button",
+      "category": "quick_wins",
+      "estimated_minutes": 60,
+      "priority": "medium",
+      "user_story": "As a user, I want to quickly start creating experiences from any screen",
+      "implementation_steps": [
+        "Add FloatingActionButton to main screens",
+        "Implement consistent positioning logic",
+        "Add navigation to new experience form",
+        "Ensure proper Material 3 styling"
+      ],
+      "files_to_modify": [
+        "DashboardScreen.kt",
+        "ExperiencesScreen.kt", 
+        "MainScaffold.kt"
+      ],
+      "acceptance_criteria": [
+        "FAB visible on main screens",
+        "Consistent positioning across screens",
+        "Direct navigation to new experience",
+        "Proper Material 3 animations"
+      ]
+    },
+    {
+      "id": "QUICK-004",
+      "title": "Experience Counter Dashboard Widget",
+      "category": "quick_wins",
+      "estimated_minutes": 60,
+      "priority": "low",
+      "user_story": "As a user, I want to see a summary of my logged experiences at a glance",
+      "implementation_steps": [
+        "Create ExperienceStatsCard composable",
+        "Add stats calculation to DashboardViewModel",
+        "Design card layout matching app theme",
+        "Add automatic updates when data changes"
+      ],
+      "files_to_modify": [
+        "DashboardScreen.kt",
+        "DashboardViewModel.kt",
+        "ExperienceStatsCard.kt"
+      ],
+      "acceptance_criteria": [
+        "Stats card on Dashboard",
+        "Shows total experiences and activity",
+        "Updates automatically",
+        "Consistent theme styling"
+      ]
+    },
+    {
+      "id": "MEDIUM-001",
+      "title": "Auto-save for Form Drafts",
+      "category": "medium_features",
+      "estimated_minutes": 120,
+      "priority": "high",
+      "user_story": "As a user, I want form progress saved automatically to prevent data loss",
+      "implementation_steps": [
+        "Implement auto-save timer in form ViewModels",
+        "Create draft storage mechanism",
+        "Add draft restoration on form load",
+        "Implement visual auto-save indicators",
+        "Add draft cleanup after successful save"
+      ],
+      "files_to_modify": [
+        "ExperienceEditorViewModel.kt",
+        "IngestionEditorViewModel.kt",
+        "DraftManager.kt",
+        "FormAutoSave.kt"
+      ],
+      "acceptance_criteria": [
+        "Forms auto-save every 30 seconds",
+        "Drafts restored when returning to forms",
+        "Visual indication of save status",
+        "Draft cleanup after successful save"
+      ]
+    },
+    {
+      "id": "MEDIUM-002",
+      "title": "CSV/JSON Export Functionality",
+      "category": "medium_features",
+      "estimated_minutes": 150,
+      "priority": "medium", 
+      "user_story": "As a user, I want to export my data for backup or external analysis",
+      "implementation_steps": [
+        "Create ExportManager with CSV/JSON formatters",
+        "Add export menu to Settings screen",
+        "Implement desktop file dialog integration",
+        "Add progress indication for large exports",
+        "Include comprehensive data validation"
+      ],
+      "files_to_modify": [
+        "ExportManager.kt",
+        "SettingsScreen.kt",
+        "FileDialogHandler.kt",
+        "DataExporter.kt"
+      ],
+      "acceptance_criteria": [
+        "Export menu in Settings",
+        "CSV and JSON format support",
+        "Native file save dialog",
+        "Progress indication for exports",
+        "All experience data included"
+      ]
+    },
+    {
+      "id": "DESKTOP-001", 
+      "title": "Import/Backup Restoration",
+      "category": "desktop_specific",
+      "estimated_minutes": 180,
+      "priority": "medium",
+      "user_story": "As a user, I want to restore my data from backup files",
+      "implementation_steps": [
+        "Create ImportManager with format validation",
+        "Add import menu with file dialog",
+        "Implement duplicate detection logic",
+        "Add rollback capability for failed imports",
+        "Create import progress and validation UI"
+      ],
+      "files_to_modify": [
+        "ImportManager.kt",
+        "SettingsScreen.kt",
+        "DataValidator.kt",
+        "ImportProgressDialog.kt"
+      ],
+      "acceptance_criteria": [
+        "Import menu with file dialog",
+        "CSV and JSON import support",
+        "Data validation before import",
+        "Duplicate handling options",
+        "Rollback on import failure"
+      ]
+    },
+    {
+      "id": "DESKTOP-002",
+      "title": "Timeline Calendar View",
+      "category": "desktop_specific", 
+      "estimated_minutes": 180,
+      "priority": "medium",
+      "user_story": "As a user, I want to see my experiences in calendar format to understand patterns",
+      "implementation_steps": [
+        "Create CalendarView composable",
+        "Implement month/week/day view modes",
+        "Add experience indicators on calendar dates",
+        "Implement date navigation controls",
+        "Add click handlers for date selection"
+      ],
+      "files_to_modify": [
+        "CalendarView.kt",
+        "TimelineScreen.kt",
+        "CalendarViewModel.kt",
+        "ExperiencesScreen.kt"
+      ],
+      "acceptance_criteria": [
+        "Calendar view in Experiences screen",
+        "Multiple view modes (month/week/day)",
+        "Experience indicators on dates",
+        "Date navigation controls",
+        "Integration with existing data"
+      ]
+    }
+  ],
+  "implementation_priority": {
+    "phase_1_immediate": ["SUPER-001", "SUPER-002", "SUPER-003"],
+    "phase_2_quick_value": ["QUICK-001", "QUICK-002", "MEDIUM-001"],
+    "phase_3_enhanced_ux": ["QUICK-003", "QUICK-004", "MEDIUM-002"],
+    "phase_4_desktop_native": ["DESKTOP-001", "DESKTOP-002", "SUPER-004"]
+  },
+  "estimated_total_time": {
+    "super_quick": "2.75 hours",
+    "quick_wins": "5.5 hours",
+    "medium_features": "4.5 hours", 
+    "desktop_specific": "6 hours",
+    "total": "18.75 hours for all enhancements"
+  }
+}

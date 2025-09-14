@@ -1,10 +1,14 @@
 # Task Management Overview
 
 ## Task Organization
-The refined task breakdown contains **23 atomic tasks** organized into **6 phases** with **5 specialized personas**.
+The task breakdown contains **35 total tasks** organized into **7 phases** with **5 specialized personas**.
+
+### Files
+- `tasks.json` - Complete 35-task breakdown including core porting (23 tasks) and quick enhancements (12 tasks)
+- `quick_enhancements.json` - Focused breakdown of rapid UX improvement tasks (15 minutes to 3 hours each)
 
 ### Task Structure
-Each task in `tasks.json` includes:
+Each task includes:
 - **Atomic scope**: Single responsibility, clear deliverables
 - **Persona assignment**: Specialized role for execution
 - **BDD scenarios**: Comprehensive acceptance testing
@@ -12,6 +16,8 @@ Each task in `tasks.json` includes:
 - **Context references**: Background documentation links
 
 ### Phase Breakdown
+
+#### Core Porting Tasks (23 tasks, 458 hours)
 1. **Foundation** (3 tasks, 36 hours) - NixOS environment, build system, basic Wayland
 2. **Architecture** (4 tasks, 68 hours) - Project structure, DI, database migration
 3. **UI Framework** (3 tasks, 60 hours) - Responsive theming, navigation, components
@@ -19,14 +25,49 @@ Each task in `tasks.json` includes:
 5. **Platform Integration** (3 tasks, 54 hours) - Input methods, file operations, system integration
 6. **Testing & DevOps** (6 tasks, 140 hours) - BDD infrastructure, scenarios, CI/CD, packaging
 
+#### Quick Enhancement Tasks (12 tasks, 20.25 hours)
+7. **Quick Enhancements** (12 tasks, 20.25 hours) - Rapid UX improvements and desktop-specific features
+
+### Quick Enhancement Categories
+
+#### ⚡ Super Quick (15-30 minutes)
+- Dark/light theme toggle
+- Essential keyboard shortcuts  
+- Window state persistence
+- About dialog
+
+#### 🚀 Quick Wins (30-60 minutes)
+- Global search functionality
+- Recent experiences quick access
+- Quick add floating action button
+- Experience counter dashboard widget
+
+#### 💎 Medium Features (1-2 hours)
+- Auto-save for form drafts
+- CSV/JSON export functionality
+
+#### 🔥 Desktop-Specific (2-3 hours)
+- Import/backup restoration
+- Timeline calendar view
+
 ### Persona Assignments
-- **kotlin_desktop_architect**: Foundation, architecture, feature migrations
-- **ui_ux_migration_specialist**: UI framework, responsive design, visualizations
+- **kotlin_desktop_architect**: Foundation, architecture, feature migrations, data operations
+- **ui_ux_migration_specialist**: UI framework, responsive design, visualizations, quick UX enhancements
 - **data_migration_engineer**: Database schema and repository implementation
 - **wayland_integration_specialist**: Platform integration and desktop features
 - **bdd_test_engineer**: Testing infrastructure and comprehensive scenarios
 - **dependency_injection_specialist**: Koin DI framework setup
 - **devops_engineer**: NixOS environment and CI/CD pipeline
+
+## Implementation Priority
+
+### Core Application (Phases 1-6)
+Essential for basic functionality - must be completed first
+
+### Quick Enhancements (Phase 7)
+1. **Immediate UX** (super quick + high priority): Theme toggle, keyboard shortcuts, global search
+2. **Enhanced Desktop** (medium + desktop-specific): Auto-save, export, timeline view
+3. **Polish** (remaining quick wins): Recent experiences, FAB, statistics widgets
 
 ## Task Execution Guidelines
 
@@ -63,6 +104,14 @@ All tasks must meet these non-negotiable standards:
 - Clean commit history with meaningful messages
 - No random test files or temporary scripts
 
+### Quick Enhancement Guidelines
+
+For Phase 7 tasks, prioritize:
+- **Speed of implementation** over architectural perfection
+- **Immediate user value** over comprehensive features
+- **Leveraging existing infrastructure** over new systems
+- **Progressive enhancement** maintaining mobile-first principles
+
 ### BDD Implementation Requirements
 
 Every task includes BDD scenarios that **must** be implemented:
@@ -90,6 +139,7 @@ Feature: Task Feature Name
 - Testing infrastructure can run parallel to development
 - Platform integration depends on foundation but can overlap with features
 - DevOps tasks can be prepared while development is ongoing
+- Quick enhancements can begin once core features are stable
 
 ### Context File References
 
@@ -101,6 +151,7 @@ Each task references specific context files:
 - `platform_integration_context` - Wayland protocols, desktop integration
 - `testing_infrastructure_context` - BDD frameworks, test automation
 - `devops_infrastructure_context` - CI/CD, packaging, distribution
+- `quick_enhancement_context` - Rapid UX improvements, desktop-specific features
 
 ### Progress Tracking
 

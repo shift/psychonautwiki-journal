@@ -5,6 +5,7 @@ import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
 import com.isaakhanimann.journal.database.Database
 import com.isaakhanimann.journal.data.repository.*
 import com.isaakhanimann.journal.data.experience.ExperienceTracker
+import com.isaakhanimann.journal.ui.theme.ThemeManager
 import com.isaakhanimann.journal.ui.viewmodel.*
 import org.koin.dsl.module
 import java.io.File
@@ -55,6 +56,11 @@ val appModule = module {
         PreferencesRepositoryImpl(get())
     }
     
+    // Theme Management
+    single<ThemeManager> {
+        ThemeManager(get())
+    }
+    
     // Business Logic
     single<ExperienceTracker> {
         ExperienceTracker(get())
@@ -83,5 +89,9 @@ val appModule = module {
     
     factory<SubstancesViewModel> {
         SubstancesViewModel(get())
+    }
+    
+    factory<SettingsViewModel> {
+        SettingsViewModel(get())
     }
 }

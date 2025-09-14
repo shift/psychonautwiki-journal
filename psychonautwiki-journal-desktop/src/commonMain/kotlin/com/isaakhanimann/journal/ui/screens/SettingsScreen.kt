@@ -14,6 +14,9 @@ import androidx.compose.ui.unit.dp
 import com.isaakhanimann.journal.navigation.DesktopNavigationController
 import com.isaakhanimann.journal.ui.compose.LocalConfiguration
 import com.isaakhanimann.journal.ui.layout.calculateWindowSizeClass
+import com.isaakhanimann.journal.ui.theme.ThemeMode
+import com.isaakhanimann.journal.ui.viewmodel.SettingsViewModel
+import org.koin.compose.getKoin
 
 @Composable
 fun SettingsScreen(navController: DesktopNavigationController) {
@@ -23,9 +26,13 @@ fun SettingsScreen(navController: DesktopNavigationController) {
         height = configuration.screenHeightDp.dp
     )
     
-    var darkMode by remember { mutableStateOf(false) }
+    val koin = getKoin()
+    val settingsViewModel = remember { koin.get<SettingsViewModel>() }
+    val themeMode by settingsViewModel.themeMode.collectAsState()
+    
     var enableNotifications by remember { mutableStateOf(true) }
     var dataRetention by remember { mutableStateOf("1 year") }
+    var showAboutDialog by remember { mutableStateOf(false) }
     
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
@@ -58,9 +65,101 @@ fun SettingsScreen(navController: DesktopNavigationController) {
                                 style = MaterialTheme.typography.bodyMedium,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
-                        }
-                    }
+        }
+    }
+}
+
+@Composable
+private fun AboutDialog(
+    onDismiss: () -> Unit
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                Icon(
+                    Icons.Default.Info,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.size(32.dp)
+                )
+                Text(
+                    text = "About PsychonautWiki Journal",
+                    style = MaterialTheme.typography.headlineSmall
+                )
+            }
+        },
+        text = {
+            Column(
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                Text(
+                    text = "Version 1.0.0",
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.primary
+                )
+                
+                Text(
+                    text = "A safer way to track substance experiences",
+                    style = MaterialTheme.typography.bodyLarge
+                )
+                
+                Text(
+                    text = "This application helps you document and analyze your substance experiences with safety and harm reduction in mind.",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+                
+                HorizontalDivider()
+                
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Text(
+                        text = "Built with:",
+                        style = MaterialTheme.typography.titleSmall,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                    Text("• Kotlin Multiplatform", style = MaterialTheme.typography.bodyMedium)
+                    Text("• Compose Desktop", style = MaterialTheme.typography.bodyMedium)
+                    Text("• Material 3 Design", style = MaterialTheme.typography.bodyMedium)
+                    Text("• SQLDelight", style = MaterialTheme.typography.bodyMedium)
                 }
+                
+                HorizontalDivider()
+                
+                Text(
+                    text = "Data from PsychonautWiki.org",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+                
+                Text(
+                    text = "© 2024 PsychonautWiki Journal Contributors",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = onDismiss) {
+                Text("Close")
+            }
+        },
+        dismissButton = {
+            TextButton(
+                onClick = { 
+                    // Open PsychonautWiki website - placeholder for future implementation
+                }
+            ) {
+                Text("Visit PsychonautWiki")
+            }
+        }
+    )
+}
             }
         }
         
@@ -68,14 +167,29 @@ fun SettingsScreen(navController: DesktopNavigationController) {
         item {
             SettingsSection(title = "Appearance") {
                 SettingItem(
-                    title = "Dark Mode",
-                    description = "Use dark theme throughout the app",
-                    icon = Icons.Default.Settings,
+                    title = "Theme",
+                    description = "Choose your preferred theme",
+                    icon = Icons.Default.DarkMode,
                     trailing = {
-                        Switch(
-                            checked = darkMode,
-                            onCheckedChange = { darkMode = it }
-                        )
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            ThemeMode.values().forEach { mode ->
+                                FilterChip(
+                                    onClick = { settingsViewModel.setThemeMode(mode) },
+                                    label = { 
+                                        Text(
+                                            when (mode) {
+                                                ThemeMode.SYSTEM -> "System"
+                                                ThemeMode.LIGHT -> "Light"
+                                                ThemeMode.DARK -> "Dark"
+                                            }
+                                        ) 
+                                    },
+                                    selected = themeMode == mode
+                                )
+                            }
+                        }
                     }
                 )
             }
@@ -160,7 +274,8 @@ fun SettingsScreen(navController: DesktopNavigationController) {
                 SettingItem(
                     title = "Version",
                     description = "PsychonautWiki Journal Desktop v1.0.0",
-                    icon = Icons.Default.Info
+                    icon = Icons.Default.Info,
+                    onClick = { showAboutDialog = true }
                 )
                 
                 HorizontalDivider()
@@ -225,6 +340,13 @@ fun SettingsScreen(navController: DesktopNavigationController) {
                 }
             }
         }
+    }
+    
+    // About Dialog
+    if (showAboutDialog) {
+        AboutDialog(
+            onDismiss = { showAboutDialog = false }
+        )
     }
 }
 
