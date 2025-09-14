@@ -1,8 +1,7 @@
 package com.isaakhanimann.journal.ui.viewmodel
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.isaakhanimann.journal.data.repository.ExperienceRepository
+import com.isaakhanimann.journal.data.model.Experience
 import com.isaakhanimann.journal.plugin.*
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -22,7 +21,7 @@ enum class AnalyticsTimeRange(val displayName: String, val days: Int?) {
 class AnalyticsViewModel(
     private val experienceRepository: ExperienceRepository,
     private val pluginManager: PluginManager
-) : ViewModel() {
+) : BaseViewModel() {
     
     private val _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
@@ -79,7 +78,7 @@ class AnalyticsViewModel(
     ): List<Experience> {
         if (timeRange.days == null) return experiences
         
-        val cutoffDate = Clock.System.now().minus(timeRange.days, DateTimeUnit.DAY)
+        val cutoffDate = Clock.System.now().minus(timeRange.days!!, DateTimeUnit.TimeBased.DAY)
         return experiences.filter { experience ->
             experience.date?.let { date -> date >= cutoffDate } ?: false
         }
@@ -88,7 +87,7 @@ class AnalyticsViewModel(
     private fun getTimeRange(range: AnalyticsTimeRange): TimeRange? {
         return range.days?.let { days ->
             val end = Clock.System.now()
-            val start = end.minus(days, DateTimeUnit.DAY)
+            val start = end.minus(days, DateTimeUnit.TimeBased.DAY)
             TimeRange(start, end)
         }
     }

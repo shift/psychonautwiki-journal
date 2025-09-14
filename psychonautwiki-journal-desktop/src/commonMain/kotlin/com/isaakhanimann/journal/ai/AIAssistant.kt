@@ -1,9 +1,13 @@
 package com.isaakhanimann.journal.ai
 
-import com.isaakhanimann.journal.plugin.*
+import com.isaakhanimann.journal.data.model.*
+import com.isaakhanimann.journal.data.repository.*
+import com.isaakhanimann.journal.gamification.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.Contextual
 
 @Serializable
 data class Conversation(
@@ -92,6 +96,58 @@ interface AIAssistant {
     suspend fun exportConversation(id: String): String
 }
 
+@Serializable
+data class AIResult(
+    val response: String,
+    val confidence: Double,
+    val suggestions: List<String> = emptyList(),
+    val citations: List<String> = emptyList(),
+    val metadata: Map<String, String> = emptyMap()
+)
+
+@Serializable
+data class Recommendation(
+    val id: String,
+    val title: String,
+    val description: String,
+    val priority: RecommendationPriority,
+    val category: String,
+    val actionable: Boolean = true
+)
+
+@Serializable
+enum class RecommendationPriority {
+    LOW, MEDIUM, HIGH, CRITICAL
+}
+
+@Serializable
+data class Insight(
+    val id: String,
+    val title: String,
+    val description: String,
+    val confidence: Double,
+    val severity: InsightSeverity,
+    val category: String = "general"
+)
+
+@Serializable
+enum class InsightSeverity {
+    LOW, MEDIUM, HIGH, CRITICAL
+}
+
+@Serializable
+data class AnalyticsContext(
+    val experiences: List<Experience>,
+    val substances: List<Substance> = emptyList(),
+    val timeRange: TimeRange? = null
+)
+
+@Serializable
+data class TimeRange(
+    val start: Instant,
+    val end: Instant
+)
+
 interface AIProvider {
     val name: String
     val description: String
@@ -105,7 +161,7 @@ interface AIProvider {
 @Serializable
 data class AIQuery(
     val content: String,
-    val context: Map<String, Any>,
+    @Contextual val context: Map<String, Any>,
     val conversationHistory: List<ChatMessage>,
     val maxTokens: Int,
     val temperature: Double,
@@ -119,7 +175,7 @@ data class AIResponse(
     val suggestions: List<String> = emptyList(),
     val followUpQuestions: List<String> = emptyList(),
     val citations: List<String> = emptyList(),
-    val metadata: Map<String, Any> = emptyMap()
+    @Contextual val metadata: Map<String, Any> = emptyMap()
 )
 
 class LocalAIProvider : AIProvider {

@@ -14,6 +14,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.isaakhanimann.journal.plugin.*
 import com.isaakhanimann.journal.ui.viewmodel.AnalyticsViewModel
+import com.isaakhanimann.journal.ui.viewmodel.AnalyticsTimeRange
 import com.isaakhanimann.journal.ui.components.visualization.AdvancedVisualization
 import org.koin.compose.koinInject
 

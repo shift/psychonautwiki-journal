@@ -26,6 +26,10 @@ interface PreferencesRepository {
     suspend fun setInt(key: String, value: Int)
     suspend fun getDouble(key: String, default: Double = 0.0): Double
     suspend fun setDouble(key: String, value: Double)
+    
+    // Theme-specific methods
+    fun getThemeMode(): Flow<String>
+    suspend fun setThemeMode(themeMode: String)
 }
 
 class PreferencesRepositoryImpl(
@@ -111,5 +115,13 @@ class PreferencesRepositoryImpl(
     
     override suspend fun setDouble(key: String, value: Double) {
         setString(key, value.toString())
+    }
+    
+    override fun getThemeMode(): Flow<String> {
+        return getPreferenceByKey("theme_mode").map { it?.value ?: "SYSTEM" }
+    }
+    
+    override suspend fun setThemeMode(themeMode: String) {
+        setString("theme_mode", themeMode)
     }
 }

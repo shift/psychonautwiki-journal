@@ -1,6 +1,7 @@
 package com.isaakhanimann.journal.plugin.builtin
 
 import com.isaakhanimann.journal.plugin.*
+import com.isaakhanimann.journal.data.model.Experience
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlinx.datetime.DateTimeUnit
@@ -85,8 +86,8 @@ class SmartPatternRecognitionPlugin : Plugin {
         
         // Identify potentially dangerous combinations
         combinationMap.forEach { (substances, experienceList) ->
-            val negativeExperiences = experienceList.count { 
-                it.overallRating != null && it.overallRating < 3 
+            val negativeExperiences = experienceList.count { experience ->
+                experience.overallRating != null && experience.overallRating!! < 3 
             }
             val totalExperiences = experienceList.size
             
@@ -147,7 +148,8 @@ class SmartPatternRecognitionPlugin : Plugin {
                     data = mapOf(
                         "combinations" to combinationMap.keys.map { it.toList() },
                         "safety_scores" to combinationMap.map { (_, experiences) ->
-                            experiences.mapNotNull { it.overallRating }.average()
+                            val ratings = experiences.mapNotNull { exp -> exp.overallRating?.toDouble() }
+                            if (ratings.isNotEmpty()) ratings.average() else 0.0
                         }
                     ),
                     title = "Substance Interaction Network",
@@ -183,7 +185,7 @@ class SmartPatternRecognitionPlugin : Plugin {
             if (dosageData.size >= 3) {
                 // Calculate tolerance trend
                 val dosageIncreases = dosageData.zipWithNext().count { (prev, next) ->
-                    next.second > prev.first * 1.2 // 20% increase threshold
+                    next.second > prev.second * 1.2 // 20% increase threshold
                 }
                 
                 val toleranceRatio = dosageIncreases.toDouble() / (dosageData.size - 1)
@@ -254,9 +256,9 @@ class SmartPatternRecognitionPlugin : Plugin {
                 VisualizationData(
                     type = VisualizationType.LINE_CHART,
                     data = mapOf(
-                        "substance_trends" to substanceExperiences.mapValues { (_, experiences) ->
+                        "substance_trends" to substanceExperiences.mapValues { (substanceName, experiences) ->
                             experiences.mapNotNull { exp ->
-                                val ingestion = exp.ingestions?.find { it.substanceName == it.key }
+                                val ingestion = exp.ingestions?.find { it.substanceName == substanceName }
                                 mapOf(
                                     "date" to exp.date,
                                     "dosage" to ingestion?.dose,

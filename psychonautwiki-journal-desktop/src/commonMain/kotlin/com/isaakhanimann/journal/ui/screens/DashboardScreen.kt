@@ -14,6 +14,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -44,21 +45,51 @@ fun DashboardScreen(navController: DesktopNavigationController) {
             contentPadding = PaddingValues(responsiveConfig.contentPadding),
             verticalArrangement = Arrangement.spacedBy(responsiveConfig.cardSpacing)
         ) {
-        item {
-            DashboardHeader(
-                onRefresh = { viewModel.refresh() },
-                isLoading = uiState.isLoading
-            )
-        }
-        
-        // Show loading or error states
-        if (uiState.isLoading) {
             item {
-                Box(
-                    modifier = Modifier.fillMaxWidth(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    CircularProgressIndicator()
+                DashboardHeader(
+                    onRefresh = { viewModel.refresh() },
+                    isLoading = uiState.isLoading
+                )
+            }
+            
+            // Show loading or error states
+            if (uiState.isLoading) {
+                item {
+                    Box(
+                        modifier = Modifier.fillMaxWidth(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator()
+                    }
+                }
+            } else {
+                item {
+                    DashboardStats(
+                        totalExperiences = uiState.data?.totalExperiences ?: 0,
+                        totalSubstances = uiState.data?.totalSubstances ?: 0,
+                        experiencesThisWeek = uiState.data?.experiencesThisWeek ?: 0
+                    )
+                }
+                
+                item {
+                    DashboardQuickActions(
+                        onNewExperience = { navController.navigate(Screen.ExperienceEditor()) },
+                        onViewExperiences = { navController.navigate(Screen.Experiences) },
+                        onViewSubstances = { navController.navigate(Screen.Substances) },
+                        onViewAnalytics = { navController.navigate(Screen.Analytics) },
+                        onOpenAIAssistant = { /* TODO: AI Assistant */ },
+                        onOpenGamification = { navController.navigate(Screen.Gamification) }
+                    )
+                }
+                
+                item {
+                    DashboardRecentExperiences(
+                        recentExperiences = uiState.data?.recentExperiences ?: emptyList(),
+                        onExperienceClick = { experience ->
+                            navController.navigate(Screen.ExperienceEditor(experience.experience.id.toString()))
+                        }
+                    )
+                }
             }
         }
         
@@ -72,65 +103,10 @@ fun DashboardScreen(navController: DesktopNavigationController) {
             Icon(Icons.Default.Add, contentDescription = "New Experience")
         }
     }
-                }
-            }
-        } else {
-            // Success state - show dashboard content
-            val data = uiState.data
-            if (data != null) {
-                item {
-                    DashboardStats(
-                        totalExperiences = data.totalExperiences,
-                        totalSubstances = data.totalSubstances,
-                        experiencesThisWeek = data.experiencesThisWeek
-                    )
-                }
-                
-                item {
-                    DashboardQuickActions(
-                        onNewExperience = { 
-                            navController.navigate(Screen.ExperienceEditor())
-                        },
-                        onViewExperiences = { 
-                            navController.navigate(Screen.Experiences)
-                        },
-                        onViewSubstances = { 
-                            navController.navigate(Screen.Substances)
-                        },
-                        onViewAnalytics = {
-                            navController.navigate(Screen.Analytics)
-                        },
-                        onOpenAIAssistant = {
-                            navController.navigate(Screen.AIAssistant)
-                        }
-                    )
-                }
-                
-                if (data.recentExperiences.isNotEmpty()) {
-                    item {
-                        Text(
-                            text = "Recent Experiences",
-                            style = MaterialTheme.typography.titleMedium,
-                            modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)
-                        )
-                    }
-                    
-                    items(data.recentExperiences.take(3)) { experience ->
-                        ExperienceCard(
-                            experience = experience,
-                            onClick = { 
-                                navController.navigate(Screen.ExperienceTimeline(experience.experience.id.toString()))
-                            }
-                        )
-                    }
-                }
-            }
-        }
-    }
 }
 
 @Composable
-private fun DashboardHeader(
+fun DashboardHeader(
     onRefresh: () -> Unit,
     isLoading: Boolean
 ) {
@@ -174,7 +150,7 @@ private fun DashboardHeader(
 }
 
 @Composable
-private fun DashboardStats(
+fun DashboardStats(
     totalExperiences: Int,
     totalSubstances: Int,
     experiencesThisWeek: Int
@@ -215,7 +191,7 @@ private fun DashboardStats(
 }
 
 @Composable
-private fun StatCard(
+fun StatCard(
     title: String,
     value: String,
     icon: androidx.compose.ui.graphics.vector.ImageVector
@@ -250,12 +226,13 @@ private fun StatCard(
 }
 
 @Composable
-private fun DashboardQuickActions(
+fun DashboardQuickActions(
     onNewExperience: () -> Unit,
     onViewExperiences: () -> Unit,
     onViewSubstances: () -> Unit,
     onViewAnalytics: () -> Unit,
-    onOpenAIAssistant: () -> Unit
+    onOpenAIAssistant: () -> Unit,
+    onOpenGamification: () -> Unit = {}
 ) {
     Card(
         modifier = Modifier.fillMaxWidth()
@@ -319,29 +296,74 @@ private fun DashboardQuickActions(
             
             Spacer(modifier = Modifier.height(8.dp))
             
-            OutlinedButton(
-                onClick = onOpenAIAssistant,
-                modifier = Modifier.fillMaxWidth()
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                Icon(Icons.Default.Psychology, contentDescription = null)
-                Spacer(modifier = Modifier.width(8.dp))
-                Text("AI Assistant (Lucy)")
-            }
-        }
-    }
-}
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Icon(Icons.Default.Star, contentDescription = null)
-                Spacer(modifier = Modifier.width(8.dp))
-                Text("Browse Substances")
+                OutlinedButton(
+                    onClick = onOpenAIAssistant,
+                    modifier = Modifier.weight(1f)
+                ) {
+                    Icon(Icons.Default.Psychology, contentDescription = null)
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text("AI Assistant")
+                }
+                
+                OutlinedButton(
+                    onClick = onOpenGamification,
+                    modifier = Modifier.weight(1f)
+                ) {
+                    Icon(Icons.Default.EmojiEvents, contentDescription = null)
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text("Progress")
+                }
             }
         }
     }
 }
 
 @Composable
-private fun ExperienceCard(
+fun DashboardRecentExperiences(
+    recentExperiences: List<ExperienceSummary>,
+    onExperienceClick: (ExperienceSummary) -> Unit
+) {
+    Card(
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp)
+        ) {
+            Text(
+                text = "Recent Experiences",
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier.padding(bottom = 12.dp)
+            )
+            
+            if (recentExperiences.isEmpty()) {
+                Text(
+                    text = "No experiences yet. Create your first one!",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth().padding(32.dp)
+                )
+            } else {
+                recentExperiences.take(3).forEach { experience ->
+                    ExperienceCard(
+                        experience = experience,
+                        onClick = { onExperienceClick(experience) }
+                    )
+                    if (experience != recentExperiences.take(3).last()) {
+                        Spacer(modifier = Modifier.height(8.dp))
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun ExperienceCard(
     experience: ExperienceSummary,
     onClick: () -> Unit
 ) {

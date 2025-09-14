@@ -1,14 +1,12 @@
 package com.isaakhanimann.journal.ui.viewmodel
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.isaakhanimann.journal.ai.*
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class AIAssistantViewModel(
     private val aiAssistant: AIAssistant
-) : ViewModel() {
+) : BaseViewModel() {
     
     val currentConversation = aiAssistant.currentConversation
     val conversationHistory = aiAssistant.conversationHistory

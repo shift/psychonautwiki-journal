@@ -13,6 +13,12 @@ import com.isaakhanimann.journal.plugin.PluginManager
 import com.isaakhanimann.journal.plugin.PluginManagerImpl
 import com.isaakhanimann.journal.ai.AIAssistant
 import com.isaakhanimann.journal.ai.AIAssistantImpl
+import com.isaakhanimann.journal.ai.PersonalizedInsightService
+import com.isaakhanimann.journal.ai.PersonalizedInsightServiceImpl
+import com.isaakhanimann.journal.gamification.GamificationService
+import com.isaakhanimann.journal.gamification.GamificationServiceImpl
+import com.isaakhanimann.journal.gamification.WeeklyChallengeService
+import com.isaakhanimann.journal.gamification.WeeklyChallengeServiceImpl
 import com.isaakhanimann.journal.ui.theme.ThemeManager
 import com.isaakhanimann.journal.ui.utils.FileDialogHandler
 import com.isaakhanimann.journal.ui.utils.DesktopFileDialogHandler
@@ -92,6 +98,19 @@ val appModule = module {
         AIAssistantImpl()
     }
     
+    // Gamification System
+    single<GamificationService> {
+        GamificationServiceImpl()
+    }
+    
+    single<WeeklyChallengeService> {
+        WeeklyChallengeServiceImpl(get(), get())
+    }
+    
+    single<PersonalizedInsightService> {
+        PersonalizedInsightServiceImpl(get(), get(), get())
+    }
+    
     // Theme Management
     single<ThemeManager> {
         ThemeManager(get())
@@ -100,6 +119,11 @@ val appModule = module {
     // Business Logic
     single<ExperienceTracker> {
         ExperienceTracker(get())
+    }
+    
+    // UI Utils
+    single<com.isaakhanimann.journal.ui.utils.FileDialogHandler> {
+        com.isaakhanimann.journal.ui.utils.DesktopFileDialogHandler()
     }
     
     // ViewModels
@@ -137,5 +161,9 @@ val appModule = module {
     
     factory<AIAssistantViewModel> {
         AIAssistantViewModel(get())
+    }
+    
+    factory<GamificationViewModel> {
+        GamificationViewModel()
     }
 }

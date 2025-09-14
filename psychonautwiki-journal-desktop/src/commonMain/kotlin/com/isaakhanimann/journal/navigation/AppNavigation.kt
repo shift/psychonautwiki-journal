@@ -4,6 +4,7 @@ import androidx.compose.runtime.*
 import com.isaakhanimann.journal.ui.screens.*
 import com.isaakhanimann.journal.ui.screens.analytics.AnalyticsScreen
 import com.isaakhanimann.journal.ui.screens.ai.AIAssistantScreen
+import com.isaakhanimann.journal.ui.screens.gamification.GamificationScreen
 
 @Composable
 fun AppNavigation(navController: DesktopNavigationController? = null) {
@@ -16,6 +17,7 @@ fun AppNavigation(navController: DesktopNavigationController? = null) {
         is Screen.Settings -> SettingsScreen(navController = actualNavController)
         is Screen.Analytics -> AnalyticsScreen()
         is Screen.AIAssistant -> AIAssistantScreen()
+        is Screen.Gamification -> GamificationScreen()
         is Screen.ExperienceEditor -> {
             val experienceId = screen.experienceId?.toIntOrNull()
             ExperienceEditorScreen(

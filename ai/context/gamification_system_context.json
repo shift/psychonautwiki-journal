@@ -1,0 +1,120 @@
+{
+  "gamification_system_context": {
+    "overview": "Revolutionary gamification framework to transform harm reduction into engaging, educational experience",
+    "inspiration": "Language learning apps like Duolingo - proven engagement patterns applied to psychoactive substance safety",
+    
+    "core_principles": {
+      "harm_reduction_first": "All gamification elements must prioritize user safety and responsible use",
+      "education_through_engagement": "Learning happens naturally through interactive progression",
+      "positive_reinforcement": "Focus on celebrating safe practices rather than punishing risks",
+      "privacy_focused": "All progress data remains local, no cloud tracking or social pressure",
+      "scientific_foundation": "Achievements based on evidence-based harm reduction practices"
+    },
+    
+    "system_architecture": {
+      "foundation": "Built on existing plugin architecture for modularity and extensibility",
+      "integration_points": [
+        "Analytics engine for progress tracking",
+        "AI assistant for personalized challenges",
+        "Pattern recognition for intelligent progression",
+        "Visualization system for progress display"
+      ]
+    },
+    
+    "core_components": {
+      "level_progression": {
+        "description": "User advances through levels based on experience tracking milestones",
+        "mechanics": [
+          "XP earned for thorough documentation",
+          "Bonus XP for safety practices",
+          "Level gates unlock new features",
+          "Visual progress indicators"
+        ]
+      },
+      
+      "achievement_system": {
+        "categories": [
+          "Safety First: Testing, dosage precision, set/setting preparation",
+          "Knowledge Seeker: Learning about substances, interactions, effects",
+          "Consistency: Regular journaling, reflection habits",
+          "Integration: Post-experience processing and insights",
+          "Community Care: Sharing anonymous safety insights"
+        ],
+        "badge_types": [
+          "Bronze: Basic milestone achievements",
+          "Silver: Consistent practice over time",
+          "Gold: Excellence in harm reduction",
+          "Platinum: Teaching and mentoring others"
+        ]
+      },
+      
+      "streak_mechanics": {
+        "journaling_streaks": "Consecutive days of experience documentation",
+        "safety_streaks": "Consistent application of harm reduction practices",
+        "integration_streaks": "Regular post-experience reflection and insights",
+        "learning_streaks": "Daily substance knowledge acquisition"
+      },
+      
+      "knowledge_quests": {
+        "interactive_modules": [
+          "Substance interaction checker challenges",
+          "Dosage calculation practice",
+          "Set and setting optimization",
+          "Integration technique exploration",
+          "Harm reduction scenario training"
+        ],
+        "adaptive_difficulty": "AI adjusts challenge complexity based on user knowledge"
+      },
+      
+      "safety_scoring": {
+        "real_time_assessment": "Gamified risk evaluation with visual feedback",
+        "improvement_tracking": "Show safety score trends over time",
+        "benchmark_goals": "Personal safety targets and milestones"
+      }
+    },
+    
+    "user_experience_flow": {
+      "onboarding": [
+        "Welcome quest introducing harm reduction principles",
+        "Initial safety assessment to set baseline",
+        "First achievement unlock to demonstrate system"
+      ],
+      "daily_engagement": [
+        "Login bonus for consistent app usage",
+        "Daily challenges for knowledge building",
+        "Progress notifications and milestone celebrations"
+      ],
+      "experience_documentation": [
+        "XP rewards for thorough entries",
+        "Bonus points for safety practices",
+        "Achievement unlocks for detailed reporting"
+      ],
+      "learning_progression": [
+        "Substance knowledge trees unlock with experience",
+        "Advanced techniques become available at higher levels",
+        "Expert content gates behind proven safety practices"
+      ]
+    },
+    
+    "privacy_and_ethics": {
+      "data_protection": "All gamification data stored locally, no cloud synchronization",
+      "no_social_pressure": "Individual progress only, no leaderboards or public rankings",
+      "educational_focus": "Achievements promote learning, not consumption",
+      "safety_emphasis": "Reward systems prioritize harm reduction over frequency"
+    },
+    
+    "technical_implementation": {
+      "plugin_structure": "GamificationPlugin extends Plugin interface",
+      "database_schema": "User progress, achievements, streaks, XP tracking",
+      "ui_components": "Progress bars, badge displays, level indicators, quest interfaces",
+      "integration_apis": "Hooks into analytics, AI assistant, and pattern recognition"
+    },
+    
+    "success_metrics": {
+      "engagement": "Increased app usage and documentation consistency",
+      "education": "Improved harm reduction knowledge test scores",
+      "behavior": "Higher safety practice adoption rates",
+      "retention": "Long-term user engagement with harm reduction principles"
+    }
+  }
+}

@@ -34,6 +34,10 @@ class DesktopNavigationController {
         _currentScreen = Screen.AIAssistant
     }
     
+    fun navigateToGamification() {
+        _currentScreen = Screen.Gamification
+    }
+    
     fun navigateToExperienceEditor(experienceId: Int? = null) {
         _currentScreen = Screen.ExperienceEditor(experienceId?.toString())
     }

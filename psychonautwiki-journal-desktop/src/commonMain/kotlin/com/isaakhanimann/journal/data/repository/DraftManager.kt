@@ -2,6 +2,7 @@ package com.isaakhanimann.journal.data.repository
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.encodeToString
@@ -47,7 +48,8 @@ class DraftManagerImpl(
     override suspend fun getExperienceDraft(formId: String): ExperienceDraft? {
         val key = "$EXPERIENCE_DRAFT_PREFIX$formId"
         return try {
-            val jsonString = preferencesRepository.getPreference(key).first()
+            val preference = preferencesRepository.getPreferenceByKey(key).first()
+            val jsonString = preference?.value ?: ""
             if (jsonString.isBlank()) null
             else json.decodeFromString<ExperienceDraft>(jsonString)
         } catch (e: Exception) {
@@ -71,7 +73,8 @@ class DraftManagerImpl(
     override suspend fun getIngestionDraft(formId: String): IngestionDraft? {
         val key = "$INGESTION_DRAFT_PREFIX$formId"
         return try {
-            val jsonString = preferencesRepository.getPreference(key).first()
+            val preference = preferencesRepository.getPreferenceByKey(key).first()
+            val jsonString = preference?.value ?: ""
             if (jsonString.isBlank()) null
             else json.decodeFromString<IngestionDraft>(jsonString)
         } catch (e: Exception) {
@@ -92,12 +95,17 @@ class DraftManagerImpl(
     }
     
     override fun getAllDraftKeys(): Flow<List<String>> {
-        return preferencesRepository.getPreference(DRAFT_KEYS_KEY, "")
+        return preferencesRepository.getPreferenceByKey(DRAFT_KEYS_KEY).map { pref ->
+            val jsonString = pref?.value ?: ""
+            if (jsonString.isBlank()) emptyList()
+            else jsonString.split(",").filter { it.isNotBlank() }
+        }
     }
     
     private suspend fun addDraftKey(key: String) {
         // Track draft keys for cleanup purposes
-        val existingKeys = preferencesRepository.getPreference(DRAFT_KEYS_KEY, "").first()
+        val preference = preferencesRepository.getPreferenceByKey(DRAFT_KEYS_KEY).first()
+        val existingKeys = preference?.value ?: ""
         val keysList = if (existingKeys.isBlank()) emptyList() 
                       else existingKeys.split(",").filter { it.isNotBlank() }
         
@@ -108,7 +116,8 @@ class DraftManagerImpl(
     }
     
     private suspend fun removeDraftKey(key: String) {
-        val existingKeys = preferencesRepository.getPreference(DRAFT_KEYS_KEY, "").first()
+        val preference = preferencesRepository.getPreferenceByKey(DRAFT_KEYS_KEY).first()
+        val existingKeys = preference?.value ?: ""
         val keysList = if (existingKeys.isBlank()) emptyList() 
                       else existingKeys.split(",").filter { it.isNotBlank() }
         

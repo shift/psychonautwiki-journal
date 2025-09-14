@@ -26,7 +26,9 @@ class DashboardViewModel(
                     experienceTracker.getAllExperiencesWithSummary(),
                     experienceTracker.getFavoriteExperiences()
                 ) { allExperiences, favoriteExperiences ->
-                    val uniqueSubstances = allExperiences.flatMap { it.substances }.distinct()
+                    val uniqueSubstances = allExperiences.flatMap { 
+                        it.experience.ingestions?.map { ingestion -> ingestion.substanceName } ?: emptyList() 
+                    }.distinct()
                     val thisWeekExperiences = allExperiences.filter { it.isRecent }
                     
                     DashboardData(

@@ -48,7 +48,7 @@ class IngestionEditorViewModel(
             formState
                 .debounce(5000) // Wait 5 seconds after user stops typing
                 .collect { form ->
-                    if (formId.isNotBlank() && form.hasSubstantialContent()) {
+                    if (formId.isNotBlank() && form.hasSubstantialContent) {
                         autoSaveDraft()
                     }
                 }
@@ -65,7 +65,7 @@ class IngestionEditorViewModel(
     
     private suspend fun autoSaveDraft() {
         val form = _formState.value
-        if (form.hasSubstantialContent()) {
+        if (form.hasSubstantialContent) {
             val draft = IngestionDraft(
                 substanceName = form.substanceName,
                 dose = form.dose,
@@ -433,6 +433,17 @@ data class IngestionFormState(
 
 enum class IngestionEditorMode {
     CREATE, EDIT
+}
+
+enum class DoseClassification(val displayName: String, val description: String) {
+    THRESHOLD("Threshold", "Barely noticeable effects"),
+    LIGHT("Light", "Mild effects, still functional"),
+    COMMON("Common", "Normal recreational dose"),
+    STRONG("Strong", "Intense effects, impaired function"),
+    HEAVY("Heavy", "Very strong effects, high risk"),
+    UNKNOWN("Unknown", "Dose range not available");
+    
+    val isRisky: Boolean get() = this in listOf(HEAVY)
 }
 
 enum class AutoSaveStatus {

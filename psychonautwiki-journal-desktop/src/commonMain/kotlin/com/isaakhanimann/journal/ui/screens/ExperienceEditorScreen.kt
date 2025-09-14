@@ -55,7 +55,7 @@ fun ExperienceEditorScreen(
     // Show draft restore dialog
     if (uiState.hasDraft && uiState.draftLastSaved != null) {
         DraftRestoreDialog(
-            draftLastSaved = uiState.draftLastSaved,
+            draftLastSaved = uiState.draftLastSaved!!,
             onAccept = { viewModel.acceptDraft() },
             onDiscard = { viewModel.discardDraft() }
         )

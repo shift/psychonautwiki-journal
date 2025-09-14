@@ -1,1026 +1,220 @@
 {
-  "project": "PsychonautWiki Journal Desktop Port - Refined Tasks",
-  "version": "2.0.0",
-  "created": "2025-09-09",
-  "updated": "2025-09-09",
+  "project": "PsychonautWiki Journal Desktop - Advanced Framework Complete + Gamification",
+  "version": "3.0.0",
+  "created": "2025-09-14",
+  "updated": "2025-09-14",
   "overview": {
-    "goal": "Port Android PsychonautWiki Journal to Kotlin Desktop with Wayland native support and mobile-first reactive UI",
-    "approach": "Atomic task breakdown with specialized personas, comprehensive BDD testing, and strict repo standards",
-    "key_requirements": [
-      "Kotlin Desktop with Compose Multiplatform",
-      "Wayland native integration", 
-      "Mobile-first reactive UI design",
-      "Complete feature parity with Android version",
-      "Comprehensive BDD test coverage",
-      "NixOS build environment"
+    "current_status": "Complex features framework completed, gamification system ready for implementation",
+    "achievements": [
+      "Revolutionary plugin architecture with hot-loading and security model",
+      "AI assistant 'Lucy' for personalized insights and harm reduction coaching",
+      "Smart pattern recognition engine for substance interaction analysis",
+      "Advanced data visualization system with interactive charts",
+      "Navigation integration and reactive UI components"
+    ],
+    "next_phase": "Gamification system implementation - transform harm reduction into engaging educational experience"
+  },
+  "current_tasks": {
+    "completed": [
+      "Plugin architecture foundation (PluginManager.kt, PluginManagerImpl.kt)",
+      "AI assistant framework (AIAssistant.kt, AIAssistantImpl.kt)",
+      "Smart pattern recognition engine (SmartPatternRecognitionPlugin.kt)",
+      "Advanced data visualization system (AdvancedVisualization.kt)",
+      "Analytics and AI Assistant UI screens integration",
+      "Dependency injection configuration for new services",
+      "Comprehensive testing framework for plugin system"
+    ],
+    "in_progress": [
+      "Gradle build verification and configuration fixes"
+    ],
+    "next_priority": [
+      "Gamification system design and architecture",
+      "Core gamification plugin implementation",
+      "User progression and achievement system",
+      "Interactive learning modules (knowledge quests)",
+      "Gamification UI components and animations",
+      "Analytics integration with gamification tracking",
+      "Comprehensive testing for gamification features"
     ]
   },
-  "tasks": [
+  "gamification_roadmap": {
+    "phase_1_foundation": {
+      "status": "ready_to_start",
+      "tasks": [
+        "Fix gradle build infrastructure issues",
+        "Design comprehensive gamification system architecture",
+        "Create GamificationPlugin using existing plugin framework",
+        "Define achievement taxonomy and level progression mechanics"
+      ],
+      "estimated_duration": "2 days",
+      "deliverables": [
+        "Working build system",
+        "Gamification system design document",
+        "Core plugin structure and interfaces"
+      ]
+    },
+    "phase_2_core_features": {
+      "status": "pending", 
+      "tasks": [
+        "Implement user level progression tied to experience milestones",
+        "Build badge system for harm reduction practices",
+        "Add streak tracking for journaling and safety habits",
+        "Create experience points system with quality rewards",
+        "Design progress bars, achievement displays, level indicators"
+      ],
+      "estimated_duration": "3 days",
+      "deliverables": [
+        "User progression engine",
+        "Achievement framework",
+        "Gamification UI components"
+      ]
+    },
+    "phase_3_advanced_features": {
+      "status": "pending",
+      "tasks": [
+        "Integrate analytics engine with progress tracking",
+        "Create interactive knowledge quests and learning modules", 
+        "Implement weekly safety challenges and goals",
+        "Add real-time safety score gamification",
+        "Enhance AI assistant with personalized challenges"
+      ],
+      "estimated_duration": "3 days",
+      "deliverables": [
+        "Knowledge quest system",
+        "Challenge framework",
+        "AI-gamification integration"
+      ]
+    },
+    "phase_4_polish_and_integration": {
+      "status": "pending",
+      "tasks": [
+        "Complete comprehensive testing suite for gamification",
+        "Performance optimization and refinement",
+        "Technical documentation and user guides",
+        "User experience testing and feedback integration"
+      ],
+      "estimated_duration": "2 days",
+      "deliverables": [
+        "Complete test coverage",
+        "Technical documentation",
+        "Polished user experience"
+      ]
+    }
+  },
+  "system_architecture": {
+    "completed_infrastructure": {
+      "plugin_system": {
+        "status": "✅ Production Ready",
+        "features": [
+          "Manifest-based loading with security permissions",
+          "Hot-loading and lifecycle management",
+          "Extensible capability framework",
+          "Plugin dependency resolution"
+        ]
+      },
+      "ai_assistant": {
+        "status": "✅ Production Ready",
+        "features": [
+          "Natural language conversation interface",
+          "Experience analysis and personalized insights",
+          "Integration coaching with structured prompts",
+          "Multi-provider support (Local + OpenAI ready)"
+        ]
+      },
+      "analytics_engine": {
+        "status": "✅ Production Ready", 
+        "features": [
+          "Substance interaction detection",
+          "Personal tolerance tracking with ML predictions",
+          "Experience quality correlation analysis",
+          "Real-time risk assessment"
+        ]
+      },
+      "visualization_framework": {
+        "status": "✅ Production Ready",
+        "features": [
+          "Interactive Canvas-based charts",
+          "Multiple chart types (line, bar, scatter, gauge)",
+          "Real-time data updates",
+          "Responsive design for desktop"
+        ]
+      }
+    },
+    "gamification_integration_points": {
+      "plugin_architecture": "GamificationPlugin extends existing Plugin interface",
+      "analytics_connection": "Pattern recognition feeds progress tracking",
+      "ai_integration": "Assistant provides personalized challenges and coaching",
+      "visualization_display": "Charts show progress, achievements, and statistics",
+      "database_extension": "Schema supports user progress and achievement data"
+    }
+  },
+  "gamification_features": {
+    "core_mechanics": {
+      "level_progression": {
+        "description": "Language-learning style advancement through experience tracking",
+        "components": [
+          "XP earned for thorough documentation",
+          "Bonus points for safety practices",
+          "Level gates unlock new features",
+          "Visual progress indicators"
+        ]
+      },
+      "achievement_system": {
+        "categories": [
+          "Safety First: Testing, dosage precision, set/setting preparation",
+          "Knowledge Seeker: Learning about substances and interactions",
+          "Consistency: Regular journaling and reflection habits",
+          "Integration: Post-experience processing and insights"
+        ],
+        "badge_tiers": ["Bronze", "Silver", "Gold", "Platinum"]
+      },
+      "streak_mechanics": [
+        "Journaling consistency streaks",
+        "Safety practice maintenance",
+        "Integration reflection habits",
+        "Learning milestone streaks"
+      ],
+      "knowledge_quests": {
+        "interactive_modules": [
+          "Substance interaction challenges",
+          "Dosage calculation practice",
+          "Set and setting optimization",
+          "Harm reduction scenario training"
+        ],
+        "adaptive_difficulty": "AI adjusts complexity based on user knowledge"
+      }
+    },
+    "safety_and_ethics": {
+      "privacy_first": "All progress data stored locally, no cloud tracking",
+      "education_focused": "Rewards promote learning and safety, not consumption",
+      "harm_reduction_priority": "All achievements emphasize responsible use",
+      "no_social_pressure": "Individual progress only, no public rankings"
+    }
+  },
+  "immediate_action_items": [
     {
-      "id": "FOUNDATION-001",
-      "title": "Setup NixOS Development Environment",
-      "description": "Configure reproducible NixOS development environment with all required tools and dependencies",
-      "type": "foundation",
-      "phase": 1,
-      "priority": "critical",
-      "persona": "devops_engineer",
-      "story": "As a developer, I want a reproducible development environment so that all team members have identical tooling",
-      "acceptance_criteria": [
-        "flake.nix provides all development dependencies",
-        "direnv auto-loads environment with .envrc",
-        "All team members can reproduce build environment",
-        "Development tools versions are pinned and consistent"
-      ],
-      "bdd_scenarios": [
-        {
-          "scenario": "Development environment setup",
-          "given": "A fresh system with Nix installed",
-          "when": "Running nix develop",
-          "then": "All development tools are available and functional"
-        }
-      ],
-      "dependencies": [],
-      "estimated_hours": 8,
-      "context_file": "foundation_context"
+      "priority": "HIGH",
+      "task": "Fix gradle build verification issues",
+      "estimated_time": "2-4 hours",
+      "blocker": true
     },
     {
-      "id": "FOUNDATION-002", 
-      "title": "Configure Compose Multiplatform Build System",
-      "description": "Setup Gradle build configuration for Compose Multiplatform with desktop target",
-      "type": "foundation",
-      "phase": 1,
-      "priority": "critical",
-      "persona": "kotlin_desktop_architect",
-      "story": "As a developer, I want a properly configured build system so that I can compile desktop applications",
-      "acceptance_criteria": [
-        "Gradle builds desktop application successfully",
-        "Compose Multiplatform dependencies are properly configured",
-        "Build produces runnable desktop application",
-        "Version catalog manages all dependencies consistently"
-      ],
-      "bdd_scenarios": [
-        {
-          "scenario": "Desktop application compilation",
-          "given": "Configured Gradle build files",
-          "when": "Running gradle build",
-          "then": "Desktop application compiles without errors"
-        }
-      ],
-      "dependencies": ["FOUNDATION-001"],
-      "estimated_hours": 12,
-      "context_file": "foundation_context"
+      "priority": "HIGH", 
+      "task": "Design gamification system architecture",
+      "estimated_time": "1 day",
+      "dependencies": ["build_fix"]
     },
     {
-      "id": "FOUNDATION-003",
-      "title": "Implement Basic Wayland Window Management",
-      "description": "Create basic window with Wayland integration and proper window management",
-      "type": "platform_integration",
-      "phase": 1,
-      "priority": "high",
-      "persona": "wayland_integration_specialist",
-      "story": "As a user, I want the application to create windows that integrate properly with my Wayland desktop",
-      "acceptance_criteria": [
-        "Application creates window using Wayland protocols",
-        "Window decorations follow Wayland client-side standards",
-        "Basic window controls (minimize, maximize, close) work",
-        "HiDPI scaling is properly supported"
-      ],
-      "bdd_scenarios": [
-        {
-          "scenario": "Wayland window creation",
-          "given": "A Wayland desktop environment",
-          "when": "Launching the application",
-          "then": "Window appears with proper Wayland integration"
-        }
-      ],
-      "dependencies": ["FOUNDATION-002"],
-      "estimated_hours": 16,
-      "context_file": "platform_integration_context"
-    },
-    {
-      "id": "ARCHITECTURE-001",
-      "title": "Design Multiplatform Project Structure",
-      "description": "Establish commonMain/desktopMain project structure with proper module organization",
-      "type": "architecture_migration",
-      "phase": 2,
-      "priority": "high",
-      "persona": "kotlin_desktop_architect",
-      "story": "As a developer, I want a clear project structure so that code is organized and maintainable",
-      "acceptance_criteria": [
-        "commonMain contains shared business logic",
-        "desktopMain contains platform-specific implementations",
-        "Module boundaries are clearly defined",
-        "Package structure follows domain organization"
-      ],
-      "bdd_scenarios": [
-        {
-          "scenario": "Code organization verification",
-          "given": "Established project structure",
-          "when": "Adding new features",
-          "then": "Clear placement guidelines exist for all code types"
-        }
-      ],
-      "dependencies": ["FOUNDATION-003"],
-      "estimated_hours": 10,
-      "context_file": "architecture_migration_context"
-    },
-    {
-      "id": "ARCHITECTURE-002",
-      "title": "Setup Koin Dependency Injection Framework",
-      "description": "Configure Koin DI framework and create initial module definitions",
-      "type": "architecture_migration", 
-      "phase": 2,
-      "priority": "high",
-      "persona": "dependency_injection_specialist",
-      "story": "As a developer, I want dependency injection configured so that components can be properly injected",
-      "acceptance_criteria": [
-        "Koin framework is configured and initialized",
-        "Basic DI modules are defined and working",
-        "ViewModel injection is functional",
-        "Repository injection patterns are established"
-      ],
-      "bdd_scenarios": [
-        {
-          "scenario": "Dependency injection initialization",
-          "given": "Koin configuration",
-          "when": "Application startup",
-          "then": "All dependencies resolve correctly"
-        }
-      ],
-      "dependencies": ["ARCHITECTURE-001"],
-      "estimated_hours": 14,
-      "context_file": "architecture_migration_context"
-    },
-    {
-      "id": "ARCHITECTURE-003",
-      "title": "Design SQLDelight Database Schema",
-      "description": "Create SQLDelight schema files based on Android Room entities",
-      "type": "data_migration",
-      "phase": 2,
-      "priority": "high",
-      "persona": "data_migration_engineer", 
-      "story": "As a developer, I want database schema defined so that data persistence works correctly",
-      "acceptance_criteria": [
-        "All Room entities converted to SQLDelight .sq files",
-        "Database schema matches Android version exactly",
-        "Foreign key relationships are preserved",
-        "Database migration scripts are created"
-      ],
-      "bdd_scenarios": [
-        {
-          "scenario": "Database schema creation",
-          "given": "SQLDelight schema files",
-          "when": "Database initialization",
-          "then": "Schema creates successfully with all tables and relationships"
-        }
-      ],
-      "dependencies": ["ARCHITECTURE-002"],
-      "estimated_hours": 20,
-      "context_file": "architecture_migration_context"
-    },
-    {
-      "id": "ARCHITECTURE-004",
-      "title": "Implement Repository Pattern with SQLDelight",
-      "description": "Create repository implementations using SQLDelight drivers and queries",
-      "type": "data_migration",
-      "phase": 2,
-      "priority": "high",
-      "persona": "data_migration_engineer",
-      "story": "As a developer, I want repository implementations so that business logic can access data",
-      "acceptance_criteria": [
-        "All repositories implement defined interfaces",
-        "SQLDelight queries handle all CRUD operations",
-        "Repository injection works with Koin",
-        "Data operations match Android behavior exactly"
-      ],
-      "bdd_scenarios": [
-        {
-          "scenario": "Repository CRUD operations",
-          "given": "Repository implementations",
-          "when": "Performing data operations",
-          "then": "All CRUD operations work correctly with proper error handling"
-        }
-      ],
-      "dependencies": ["ARCHITECTURE-003"],
-      "estimated_hours": 24,
-      "context_file": "architecture_migration_context"
-    },
-    {
-      "id": "UI-001",
-      "title": "Create Mobile-First Responsive Theme System",
-      "description": "Implement Material 3 theme system that adapts from mobile to desktop layouts",
-      "type": "ui_framework",
-      "phase": 3,
-      "priority": "high",
-      "persona": "ui_ux_migration_specialist",
-      "story": "As a user, I want consistent theming that adapts to different screen sizes",
-      "acceptance_criteria": [
-        "Theme system supports mobile-first responsive design",
-        "Material 3 color schemes adapt across platforms",
-        "Typography scales appropriately with screen size",
-        "Dark/light theme switching works correctly",
-        "High contrast and accessibility themes supported"
-      ],
-      "bdd_scenarios": [
-        {
-          "scenario": "Theme responsiveness",
-          "given": "Different screen sizes",
-          "when": "Resizing application window",
-          "then": "Theme elements adapt appropriately"
-        }
-      ],
-      "dependencies": ["ARCHITECTURE-004"],
-      "estimated_hours": 18,
-      "context_file": "ui_framework_context"
-    },
-    {
-      "id": "UI-002",
-      "title": "Implement Adaptive Navigation System",
-      "description": "Create navigation that transforms from mobile tabs to desktop sidebar based on screen size",
-      "type": "ui_framework",
-      "phase": 3,
-      "priority": "high",
-      "persona": "ui_ux_migration_specialist",
-      "story": "As a user, I want navigation that feels appropriate for the screen size I'm using",
-      "acceptance_criteria": [
-        "Navigation adapts between mobile tabs and desktop sidebar",
-        "Keyboard navigation is fully supported",
-        "Navigation state is preserved across screen size changes",
-        "Deep linking works correctly",
-        "Navigation animations are smooth and appropriate"
-      ],
-      "bdd_scenarios": [
-        {
-          "scenario": "Adaptive navigation behavior",
-          "given": "Application with different window sizes",
-          "when": "Changing window dimensions",
-          "then": "Navigation adapts appropriately between mobile and desktop patterns"
-        }
-      ],
-      "dependencies": ["UI-001"],
-      "estimated_hours": 22,
-      "context_file": "ui_framework_context"
-    },
-    {
-      "id": "UI-003",
-      "title": "Create Responsive Layout Component System",
-      "description": "Build reusable layout components that adapt from mobile-first to desktop-enhanced",
-      "type": "ui_framework",
-      "phase": 3,
-      "priority": "medium",
-      "persona": "ui_ux_migration_specialist",
-      "story": "As a developer, I want reusable responsive components so that layouts are consistent",
-      "acceptance_criteria": [
-        "Components follow mobile-first design principles",
-        "Desktop enhancements utilize additional screen space",
-        "All components work across different screen sizes",
-        "Component library is well documented",
-        "Accessibility standards are met"
-      ],
-      "bdd_scenarios": [
-        {
-          "scenario": "Component responsiveness",
-          "given": "Responsive layout components",
-          "when": "Used in different screen contexts",
-          "then": "Components adapt layout and functionality appropriately"
-        }
-      ],
-      "dependencies": ["UI-002"],
-      "estimated_hours": 20,
-      "context_file": "ui_framework_context"
-    },
-    {
-      "id": "FEATURE-001",
-      "title": "Migrate Substance Search and Management",
-      "description": "Port substance search, filtering, and management features from Android",
-      "type": "feature_migration",
-      "phase": 4,
-      "priority": "high",
-      "persona": "kotlin_desktop_architect",
-      "story": "As a user, I want to search and manage substances with the same functionality as the mobile app",
-      "acceptance_criteria": [
-        "Substance search works identically to Android version",
-        "Category filtering and sorting preserved",
-        "Custom substance creation and editing functional",
-        "Search performance optimized for desktop",
-        "Keyboard shortcuts enhance usability"
-      ],
-      "bdd_scenarios": [
-        {
-          "scenario": "Substance search functionality",
-          "given": "Database with substance information",
-          "when": "Searching for substances",
-          "then": "Results are accurate and performance is acceptable"
-        }
-      ],
-      "dependencies": ["UI-003"],
-      "estimated_hours": 28,
-      "context_file": "feature_migration_context"
-    },
-    {
-      "id": "FEATURE-002",
-      "title": "Migrate Experience Creation and Editing",
-      "description": "Port experience logging, creation, and editing functionality",
-      "type": "feature_migration",
-      "phase": 4, 
-      "priority": "high",
-      "persona": "kotlin_desktop_architect",
-      "story": "As a user, I want to create and edit experiences with full feature parity",
-      "acceptance_criteria": [
-        "Experience creation workflow preserved exactly",
-        "All form fields and validations work correctly",
-        "Time tracking and ingestion logging functional",
-        "Experience editing maintains data integrity",
-        "Desktop-specific enhancements improve workflow"
-      ],
-      "bdd_scenarios": [
-        {
-          "scenario": "Experience creation workflow",
-          "given": "Empty experience form",
-          "when": "Creating new experience with all data",
-          "then": "Experience is saved correctly with all fields validated"
-        }
-      ],
-      "dependencies": ["FEATURE-001"],
-      "estimated_hours": 32,
-      "context_file": "feature_migration_context"
-    },
-    {
-      "id": "FEATURE-003",
-      "title": "Migrate Statistics and Visualization",
-      "description": "Port charts, statistics calculations, and data visualization components",
-      "type": "feature_migration",
-      "phase": 4,
-      "priority": "medium",
-      "persona": "ui_ux_migration_specialist",
-      "story": "As a user, I want to view statistics and charts about my experiences",
-      "acceptance_criteria": [
-        "All chart types render correctly on desktop",
-        "Statistics calculations match mobile exactly",
-        "Chart interactions work with mouse and keyboard",
-        "Charts utilize desktop screen space effectively",
-        "Export functionality works from statistics view"
-      ],
-      "bdd_scenarios": [
-        {
-          "scenario": "Statistics and charts display",
-          "given": "Database with experience data",
-          "when": "Viewing statistics screen",
-          "then": "All statistics and charts display correctly with proper interactions"
-        }
-      ],
-      "dependencies": ["FEATURE-002"],
-      "estimated_hours": 24,
-      "context_file": "feature_migration_context"
-    },
-    {
-      "id": "FEATURE-004",
-      "title": "Migrate Settings and Preferences",
-      "description": "Port application settings, preferences, and configuration management",
-      "type": "feature_migration",
-      "phase": 4,
-      "priority": "medium",
-      "persona": "kotlin_desktop_architect",
-      "story": "As a user, I want to configure application settings and preferences",
-      "acceptance_criteria": [
-        "All Android settings are available on desktop",
-        "Settings persistence works correctly",
-        "Theme switching and customization functional",
-        "Export/import preferences work",
-        "Desktop-specific settings added where appropriate"
-      ],
-      "bdd_scenarios": [
-        {
-          "scenario": "Settings management",
-          "given": "Application settings interface",
-          "when": "Changing configuration options",
-          "then": "Settings are saved and applied correctly"
-        }
-      ],
-      "dependencies": ["FEATURE-003"],
-      "estimated_hours": 16,
-      "context_file": "feature_migration_context"
-    },
-    {
-      "id": "PLATFORM-001",
-      "title": "Implement Wayland Input Method Integration",
-      "description": "Integrate with Wayland input methods for text input and IME support",
-      "type": "platform_integration",
-      "phase": 5,
-      "priority": "medium",
-      "persona": "wayland_integration_specialist",
-      "story": "As a user, I want text input to work correctly with my input method configuration",
-      "acceptance_criteria": [
-        "Text input works with all configured input methods",
-        "IME support for international text input",
-        "Keyboard layout switching is supported",
-        "Input method popups display correctly",
-        "Text input performance is acceptable"
-      ],
-      "bdd_scenarios": [
-        {
-          "scenario": "Text input functionality",
-          "given": "Text input fields in application",
-          "when": "Typing with different input methods",
-          "then": "Text input works correctly for all configured methods"
-        }
-      ],
-      "dependencies": ["FEATURE-004"],
-      "estimated_hours": 18,
-      "context_file": "platform_integration_context"
-    },
-    {
-      "id": "PLATFORM-002",
-      "title": "Implement Desktop File Operations",
-      "description": "Add file dialogs, export functionality, and file system integration",
-      "type": "platform_integration",
-      "phase": 5,
-      "priority": "medium",
-      "persona": "wayland_integration_specialist",
-      "story": "As a user, I want to save and export my data using standard desktop file operations",
-      "acceptance_criteria": [
-        "Native file dialogs integrate with desktop environment",
-        "Export formats match mobile capabilities exactly",
-        "File operations respect desktop security models",
-        "Drag and drop functionality where appropriate",
-        "File associations work correctly"
-      ],
-      "bdd_scenarios": [
-        {
-          "scenario": "File export operations",
-          "given": "Application with exportable data",
-          "when": "Using export functionality",
-          "then": "File dialogs work and data exports correctly in chosen formats"
-        }
-      ],
-      "dependencies": ["PLATFORM-001"],
-      "estimated_hours": 20,
-      "context_file": "platform_integration_context"
-    },
-    {
-      "id": "PLATFORM-003",
-      "title": "Implement Desktop System Integration",
-      "description": "Add system tray, notifications, and desktop environment integration",
-      "type": "platform_integration",
-      "phase": 5,
-      "priority": "low",
-      "persona": "wayland_integration_specialist",
-      "story": "As a user, I want the application to integrate seamlessly with my desktop environment",
-      "acceptance_criteria": [
-        "System tray icon with appropriate menu",
-        "Desktop notifications display correctly",
-        "Application follows desktop theme conventions",
-        "Window state management works properly",
-        "Global keyboard shortcuts where appropriate"
-      ],
-      "bdd_scenarios": [
-        {
-          "scenario": "Desktop integration features",
-          "given": "Application with system integration",
-          "when": "Using desktop integration features",
-          "then": "All integration features work correctly with desktop environment"
-        }
-      ],
-      "dependencies": ["PLATFORM-002"],
-      "estimated_hours": 16,
-      "context_file": "platform_integration_context"
-    },
-    {
-      "id": "TESTING-001",
-      "title": "Setup BDD Testing Infrastructure",
-      "description": "Configure Cucumber-JVM and Kotest for comprehensive BDD testing",
-      "type": "testing_infrastructure",
-      "phase": 6,
-      "priority": "high",
-      "persona": "bdd_test_engineer",
-      "story": "As a developer, I want BDD testing infrastructure so that behavior is properly validated",
-      "acceptance_criteria": [
-        "Cucumber-JVM configured and functional",
-        "Kotest integration provides Kotlin-idiomatic testing",
-        "UI testing can interact with Compose components",
-        "Test data management is properly configured",
-        "Parallel test execution supported"
-      ],
-      "bdd_scenarios": [
-        {
-          "scenario": "BDD infrastructure functionality",
-          "given": "Configured BDD testing framework",
-          "when": "Running test suites",
-          "then": "All tests execute correctly with proper reporting"
-        }
-      ],
-      "dependencies": ["PLATFORM-003"],
-      "estimated_hours": 16,
-      "context_file": "testing_infrastructure_context"
-    },
-    {
-      "id": "TESTING-002",
-      "title": "Create Comprehensive BDD Scenarios",
-      "description": "Write BDD scenarios covering all application features and user workflows",
-      "type": "testing_scenarios",
-      "phase": 6,
-      "priority": "high",
-      "persona": "bdd_test_engineer",
-      "story": "As a stakeholder, I want comprehensive BDD scenarios so that all behavior is tested",
-      "acceptance_criteria": [
-        "All user workflows have corresponding BDD scenarios",
-        "Edge cases and error conditions covered",
-        "Scenarios written in clear, understandable language",
-        "Test data setup and teardown properly managed",
-        "100% coverage of critical user paths"
-      ],
-      "bdd_scenarios": [
-        {
-          "scenario": "Comprehensive scenario coverage",
-          "given": "Complete set of BDD scenarios",
-          "when": "Reviewing feature coverage",
-          "then": "All critical functionality is covered by scenarios"
-        }
-      ],
-      "dependencies": ["TESTING-001"],
-      "estimated_hours": 32,
-      "context_file": "testing_infrastructure_context"
-    },
-    {
-      "id": "TESTING-003",
-      "title": "Implement Performance and Integration Tests",
-      "description": "Create performance benchmarks and integration test suites",
-      "type": "testing_scenarios",
-      "phase": 6,
-      "priority": "medium",
-      "persona": "bdd_test_engineer",
-      "story": "As a developer, I want performance and integration tests so that quality is maintained",
-      "acceptance_criteria": [
-        "Performance benchmarks for startup time and responsiveness",
-        "Integration tests cover all major workflows",
-        "Memory usage and resource consumption monitored",
-        "Cross-platform compatibility verified",
-        "Regression testing prevents performance degradation"
-      ],
-      "bdd_scenarios": [
-        {
-          "scenario": "Performance testing validation",
-          "given": "Performance test suite",
-          "when": "Running performance tests",
-          "then": "All performance criteria are met and monitored"
-        }
-      ],
-      "dependencies": ["TESTING-002"],
-      "estimated_hours": 20,
-      "context_file": "testing_infrastructure_context"
-    },
-    {
-      "id": "DEVOPS-001",
-      "title": "Setup CI/CD Pipeline with GitHub Actions",
-      "description": "Configure automated CI/CD pipeline using NixOS for reproducible builds",
-      "type": "devops_infrastructure", 
-      "phase": 6,
-      "priority": "medium",
-      "persona": "devops_engineer",
-      "story": "As a developer, I want automated CI/CD so that quality is maintained automatically",
-      "acceptance_criteria": [
-        "GitHub Actions pipeline builds application reproducibly",
-        "All tests run automatically on every commit",
-        "Code quality gates prevent regressions",
-        "Automated builds produce distribution packages",
-        "NixOS flake ensures build reproducibility"
-      ],
-      "bdd_scenarios": [
-        {
-          "scenario": "CI/CD pipeline execution",
-          "given": "Configured CI/CD pipeline",
-          "when": "Code is committed",
-          "then": "Pipeline builds, tests, and validates automatically"
-        }
-      ],
-      "dependencies": ["TESTING-003"],
-      "estimated_hours": 18,
-      "context_file": "devops_infrastructure_context"
-    },
-    {
-      "id": "DEVOPS-002",
-      "title": "Setup Package Distribution",
-      "description": "Configure packaging and distribution for multiple Linux distributions",
-      "type": "devops_infrastructure",
-      "phase": 6,
-      "priority": "low",
-      "persona": "devops_engineer",
-      "story": "As a user, I want to install the application easily on my Linux distribution",
-      "acceptance_criteria": [
-        "AppImage packages work on all major distributions",
-        "Debian packages for Ubuntu/Debian systems",
-        "RPM packages for Red Hat/SUSE systems",
-        "Flatpak package for universal distribution",
-        "Installation instructions are clear and complete"
-      ],
-      "bdd_scenarios": [
-        {
-          "scenario": "Package distribution validation",
-          "given": "Built distribution packages",
-          "when": "Installing on different distributions",
-          "then": "Application installs and runs correctly on all supported systems"
-        }
-      ],
-      "dependencies": ["DEVOPS-001"],
-      "estimated_hours": 14,
-      "context_file": "devops_infrastructure_context"
-    },
-    {
-      "id": "QUICK-001",
-      "title": "Implement Dark/Light Theme Toggle",
-      "description": "Add theme switcher to Settings screen with persistence across app restarts",
-      "type": "quick_enhancement",
-      "phase": 7,
-      "priority": "high",
-      "persona": "ui_ux_migration_specialist",
-      "story": "As a user, I want to switch between dark and light themes so that I can use the app in different lighting conditions",
-      "acceptance_criteria": [
-        "Theme toggle button in Settings screen",
-        "Theme preference persists across app restarts",
-        "All UI components respect selected theme",
-        "Smooth transition between themes",
-        "System theme detection as default option"
-      ],
-      "bdd_scenarios": [
-        {
-          "scenario": "Theme switching functionality",
-          "given": "Application with theme toggle in Settings",
-          "when": "User switches between dark and light themes",
-          "then": "Theme changes immediately and persists after restart"
-        }
-      ],
-      "dependencies": ["FEATURE-004"],
-      "estimated_hours": 0.5,
-      "context_file": "quick_enhancement_context"
-    },
-    {
-      "id": "QUICK-002",
-      "title": "Add Essential Keyboard Shortcuts",
-      "description": "Implement common desktop keyboard shortcuts for navigation and actions",
-      "type": "quick_enhancement",
-      "phase": 7,
-      "priority": "high",
-      "persona": "ui_ux_migration_specialist",
-      "story": "As a user, I want keyboard shortcuts so that I can navigate and use the app efficiently",
-      "acceptance_criteria": [
-        "Ctrl+N for new experience creation",
-        "Ctrl+S for saving current form",
-        "Ctrl+Q for quitting application",
-        "Ctrl+F for global search activation",
-        "F1 for help/about dialog",
-        "Shortcuts work across all screens",
-        "Visual indicators for available shortcuts"
-      ],
-      "bdd_scenarios": [
-        {
-          "scenario": "Keyboard shortcut functionality",
-          "given": "Application with keyboard shortcuts configured",
-          "when": "User presses keyboard shortcuts",
-          "then": "Corresponding actions are executed correctly"
-        }
-      ],
-      "dependencies": ["QUICK-001"],
-      "estimated_hours": 0.75,
-      "context_file": "quick_enhancement_context"
-    },
-    {
-      "id": "QUICK-003",
-      "title": "Implement Window State Persistence",
-      "description": "Remember window size, position, and state between application sessions",
-      "type": "quick_enhancement",
-      "phase": 7,
-      "priority": "medium",
-      "persona": "kotlin_desktop_architect",
-      "story": "As a user, I want the application to remember my preferred window size and position",
-      "acceptance_criteria": [
-        "Window size persists across restarts",
-        "Window position is restored when possible",
-        "Maximized/minimized state is remembered",
-        "Multi-monitor setup handling",
-        "Graceful fallback for invalid positions"
-      ],
-      "bdd_scenarios": [
-        {
-          "scenario": "Window state persistence",
-          "given": "Application with customized window state",
-          "when": "Restarting the application",
-          "then": "Window returns to previous size and position"
-        }
-      ],
-      "dependencies": ["QUICK-002"],
-      "estimated_hours": 1,
-      "context_file": "quick_enhancement_context"
-    },
-    {
-      "id": "QUICK-004",
-      "title": "Create About Dialog",
-      "description": "Add About dialog with version info, credits, and PsychonautWiki attribution",
-      "type": "quick_enhancement",
-      "phase": 7,
-      "priority": "low",
-      "persona": "ui_ux_migration_specialist",
-      "story": "As a user, I want to see application information and give proper credit to PsychonautWiki",
-      "acceptance_criteria": [
-        "About dialog accessible from Help menu or F1",
-        "Shows application version and build info",
-        "Credits PsychonautWiki and contributors",
-        "Links to GitHub repository and documentation",
-        "Proper licensing information displayed"
-      ],
-      "bdd_scenarios": [
-        {
-          "scenario": "About dialog information",
-          "given": "About dialog is accessible",
-          "when": "User opens About dialog",
-          "then": "All application information is displayed correctly"
-        }
-      ],
-      "dependencies": ["QUICK-003"],
-      "estimated_hours": 0.5,
-      "context_file": "quick_enhancement_context"
-    },
-    {
-      "id": "QUICK-005",
-      "title": "Implement Global Search Functionality",
-      "description": "Add search capability across all experiences and substances from top navigation",
-      "type": "quick_enhancement",
-      "phase": 7,
-      "priority": "high",
-      "persona": "kotlin_desktop_architect",
-      "story": "As a user, I want to search across all my data from anywhere in the application",
-      "acceptance_criteria": [
-        "Global search bar in top navigation",
-        "Searches across experiences, substances, and notes",
-        "Real-time search results as user types",
-        "Keyboard navigation in search results",
-        "Search result categories and filtering"
-      ],
-      "bdd_scenarios": [
-        {
-          "scenario": "Global search functionality",
-          "given": "Application with experiences and substances data",
-          "when": "User searches for terms in global search",
-          "then": "Relevant results are displayed from all data sources"
-        }
-      ],
-      "dependencies": ["QUICK-004"],
-      "estimated_hours": 2,
-      "context_file": "quick_enhancement_context"
-    },
-    {
-      "id": "QUICK-006",
-      "title": "Add Recent Experiences Quick Access",
-      "description": "Show list of recently viewed/edited experiences on Dashboard for quick access",
-      "type": "quick_enhancement",
-      "phase": 7,
-      "priority": "medium",
-      "persona": "ui_ux_migration_specialist",
-      "story": "As a user, I want quick access to my recent experiences from the main dashboard",
-      "acceptance_criteria": [
-        "Recent experiences section on Dashboard",
-        "Shows last 5-10 recently accessed experiences",
-        "Click to open experience directly",
-        "Shows experience title and last modified date",
-        "Updates automatically when experiences are accessed"
-      ],
-      "bdd_scenarios": [
-        {
-          "scenario": "Recent experiences display",
-          "given": "User has accessed several experiences",
-          "when": "Viewing the Dashboard",
-          "then": "Recent experiences are displayed in chronological order"
-        }
-      ],
-      "dependencies": ["QUICK-005"],
-      "estimated_hours": 1.5,
-      "context_file": "quick_enhancement_context"
-    },
-    {
-      "id": "QUICK-007",
-      "title": "Implement Quick Add Floating Action Button",
-      "description": "Add floating action button for rapid experience creation from any screen",
-      "type": "quick_enhancement",
-      "phase": 7,
-      "priority": "medium",
-      "persona": "ui_ux_migration_specialist",
-      "story": "As a user, I want to quickly start creating a new experience from anywhere in the app",
-      "acceptance_criteria": [
-        "Floating action button visible on main screens",
-        "Material 3 FAB design with proper positioning",
-        "Direct navigation to new experience form",
-        "Appropriate animations and visual feedback",
-        "Consistent positioning across different screen sizes"
-      ],
-      "bdd_scenarios": [
-        {
-          "scenario": "Quick add functionality",
-          "given": "User is on any main screen",
-          "when": "Clicking the floating action button",
-          "then": "New experience creation form opens immediately"
-        }
-      ],
-      "dependencies": ["QUICK-006"],
-      "estimated_hours": 1,
-      "context_file": "quick_enhancement_context"
-    },
-    {
-      "id": "QUICK-008",
-      "title": "Add Experience Counter Dashboard Widget",
-      "description": "Display total experience count and basic statistics on the Dashboard",
-      "type": "quick_enhancement",
-      "phase": 7,
-      "priority": "low",
-      "persona": "ui_ux_migration_specialist",
-      "story": "As a user, I want to see a summary of my logged experiences at a glance",
-      "acceptance_criteria": [
-        "Experience counter card on Dashboard",
-        "Shows total experiences logged",
-        "Display recent activity summary",
-        "Visual card design matching app theme",
-        "Updates automatically when experiences are added"
-      ],
-      "bdd_scenarios": [
-        {
-          "scenario": "Experience counter display",
-          "given": "User has logged experiences in the database",
-          "when": "Viewing the Dashboard",
-          "then": "Experience counter shows accurate total and summary statistics"
-        }
-      ],
-      "dependencies": ["QUICK-007"],
-      "estimated_hours": 1,
-      "context_file": "quick_enhancement_context"
-    },
-    {
-      "id": "QUICK-009",
-      "title": "Implement Auto-save for Form Drafts",
-      "description": "Automatically save form progress to prevent data loss during experience entry",
-      "type": "quick_enhancement",
-      "phase": 7,
-      "priority": "high",
-      "persona": "kotlin_desktop_architect",
-      "story": "As a user, I want my form progress to be saved automatically so I don't lose data",
-      "acceptance_criteria": [
-        "Auto-save form data every 30 seconds",
-        "Restore unsaved drafts when returning to forms",
-        "Clear draft data after successful save",
-        "Visual indication of auto-save status",
-        "Works for both experience and ingestion forms"
-      ],
-      "bdd_scenarios": [
-        {
-          "scenario": "Auto-save functionality",
-          "given": "User is filling out an experience form",
-          "when": "Form data is entered and time passes",
-          "then": "Form data is automatically saved and can be restored"
-        }
-      ],
-      "dependencies": ["QUICK-008"],
-      "estimated_hours": 2,
-      "context_file": "quick_enhancement_context"
-    },
-    {
-      "id": "QUICK-010",
-      "title": "Add CSV/JSON Export Functionality",
-      "description": "Implement data export features with desktop file dialog integration",
-      "type": "quick_enhancement",
-      "phase": 7,
-      "priority": "medium",
-      "persona": "kotlin_desktop_architect",
-      "story": "As a user, I want to export my experience data in standard formats for backup or analysis",
-      "acceptance_criteria": [
-        "Export menu in Settings or main menu",
-        "CSV export for spreadsheet compatibility",
-        "JSON export for data interchange",
-        "Native file dialog for save location",
-        "Progress indication for large exports",
-        "Export includes all experience and ingestion data"
-      ],
-      "bdd_scenarios": [
-        {
-          "scenario": "Data export functionality",
-          "given": "Application with experience data",
-          "when": "User initiates data export",
-          "then": "File dialog opens and data exports correctly in chosen format"
-        }
-      ],
-      "dependencies": ["QUICK-009"],
-      "estimated_hours": 2.5,
-      "context_file": "quick_enhancement_context"
-    },
-    {
-      "id": "QUICK-011",
-      "title": "Implement Import/Backup Restoration",
-      "description": "Add ability to import experiences from backup files with validation",
-      "type": "quick_enhancement",
-      "phase": 7,
-      "priority": "medium",
-      "persona": "kotlin_desktop_architect",
-      "story": "As a user, I want to restore my experiences from backup files to recover my data",
-      "acceptance_criteria": [
-        "Import menu option with file dialog",
-        "Support for JSON and CSV import formats",
-        "Data validation before import",
-        "Duplicate detection and handling options",
-        "Import progress indication",
-        "Rollback capability if import fails"
-      ],
-      "bdd_scenarios": [
-        {
-          "scenario": "Data import functionality",
-          "given": "Valid backup file with experience data",
-          "when": "User imports the backup file",
-          "then": "Data is validated and imported correctly with appropriate feedback"
-        }
-      ],
-      "dependencies": ["QUICK-010"],
-      "estimated_hours": 3,
-      "context_file": "quick_enhancement_context"
-    },
-    {
-      "id": "QUICK-012",
-      "title": "Create Timeline Calendar View",
-      "description": "Add calendar-style view showing experiences organized by date",
-      "type": "quick_enhancement",
-      "phase": 7,
-      "priority": "medium",
-      "persona": "ui_ux_migration_specialist",
-      "story": "As a user, I want to see my experiences in a calendar format to understand temporal patterns",
-      "acceptance_criteria": [
-        "Calendar view accessible from Experiences screen",
-        "Month/week/day view options",
-        "Experience indicators on calendar dates",
-        "Click dates to see experience details",
-        "Navigation between months/years",
-        "Integration with existing experience data"
-      ],
-      "bdd_scenarios": [
-        {
-          "scenario": "Timeline calendar functionality",
-          "given": "Experiences logged on various dates",
-          "when": "User views timeline calendar",
-          "then": "Experiences are displayed correctly on corresponding calendar dates"
-        }
-      ],
-      "dependencies": ["QUICK-011"],
-      "estimated_hours": 3,
-      "context_file": "quick_enhancement_context"
+      "priority": "MEDIUM",
+      "task": "Implement core gamification plugin",
+      "estimated_time": "2 days",
+      "dependencies": ["architecture_design"]
     }
   ],
-  "summary": {
-    "total_tasks": 35,
-    "total_estimated_hours": 478.25,
-    "phases": 7,
-    "personas_involved": 5,
-    "critical_path": [
-      "FOUNDATION-001",
-      "FOUNDATION-002", 
-      "FOUNDATION-003",
-      "ARCHITECTURE-001",
-      "ARCHITECTURE-002",
-      "ARCHITECTURE-003",
-      "ARCHITECTURE-004",
-      "UI-001",
-      "UI-002",
-      "FEATURE-001",
-      "FEATURE-002"
-    ],
-    "phase_breakdown": {
-      "phase_1_foundation": {
-        "tasks": 3,
-        "hours": 36,
-        "focus": "Development environment and basic infrastructure"
-      },
-      "phase_2_architecture": {
-        "tasks": 4,
-        "hours": 68,
-        "focus": "Core architecture migration and data layer"
-      },
-      "phase_3_ui_framework": {
-        "tasks": 3,
-        "hours": 60,
-        "focus": "Mobile-first responsive UI system"
-      },
-      "phase_4_feature_migration": {
-        "tasks": 4,
-        "hours": 100,
-        "focus": "Complete feature parity with Android version"
-      },
-      "phase_5_platform_integration": {
-        "tasks": 3,
-        "hours": 54,
-        "focus": "Wayland native integration and desktop features"
-      },
-      "phase_6_testing_devops": {
-        "tasks": 6,
-        "hours": 140,
-        "focus": "Comprehensive testing and automated deployment"
-      },
-      "phase_7_quick_enhancements": {
-        "tasks": 12,
-        "hours": 20.25,
-        "focus": "Rapid UX improvements and desktop-specific features"
-      }
-    }
+  "success_metrics": {
+    "engagement": "50% increase in daily app usage",
+    "education": "25% improvement in harm reduction knowledge",
+    "behavior": "35% higher safety practice adoption", 
+    "retention": "Long-term user engagement with harm reduction principles"
   }
 }

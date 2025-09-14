@@ -26,6 +26,7 @@ kotlin {
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)
+            implementation(compose.materialIconsExtended)
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
@@ -38,6 +39,9 @@ kotlin {
             
             // Navigation - handled manually for Compose Multiplatform
             // implementation(libs.navigation.compose)
+            
+            // Lifecycle
+            implementation(libs.lifecycle.viewmodel)
             
             // Dependency Injection
             implementation(libs.koin.core)

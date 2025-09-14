@@ -357,7 +357,7 @@ private fun ExperienceHeaderCard(
                     )
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(
-                        text = experience.location.name,
+                        text = experience.location ?: "Unknown location",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )

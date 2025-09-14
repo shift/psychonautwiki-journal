@@ -114,13 +114,7 @@ class ImportManagerImpl(
                     val experienceId = experienceTracker.createNewExperience(
                         title = exportExperience.title,
                         text = exportExperience.text,
-                        location = exportExperience.location?.let { loc ->
-                            Location(
-                                name = loc.name,
-                                latitude = loc.latitude,
-                                longitude = loc.longitude
-                            )
-                        },
+                        location = exportExperience.location?.name,
                         sortDate = Instant.fromEpochMilliseconds(exportExperience.sortDate)
                     )
                     
@@ -177,11 +171,7 @@ class ImportManagerImpl(
                         title = firstExp.title,
                         text = firstExp.text,
                         location = if (firstExp.locationName.isNotBlank()) {
-                            Location(
-                                name = firstExp.locationName,
-                                latitude = firstExp.locationLatitude,
-                                longitude = firstExp.locationLongitude
-                            )
+                            firstExp.locationName
                         } else null,
                         sortDate = Instant.fromEpochMilliseconds(firstExp.date)
                     )

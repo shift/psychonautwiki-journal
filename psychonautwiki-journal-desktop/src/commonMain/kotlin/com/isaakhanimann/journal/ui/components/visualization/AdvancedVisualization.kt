@@ -208,6 +208,7 @@ fun GaugeChart(
             .height(150.dp),
         contentAlignment = Alignment.Center
     ) {
+        val colorScheme = MaterialTheme.colorScheme
         Canvas(
             modifier = Modifier.size(120.dp)
         ) {
@@ -217,7 +218,7 @@ fun GaugeChart(
             
             // Background arc
             drawArc(
-                color = MaterialTheme.colorScheme.surfaceVariant,
+                color = colorScheme.surfaceVariant,
                 startAngle = 135f,
                 sweepAngle = 270f,
                 useCenter = false,

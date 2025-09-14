@@ -147,7 +147,7 @@ class ExperienceTracker(
     suspend fun createNewExperience(
         title: String,
         text: String = "",
-        location: Location? = null,
+        location: String? = null,
         sortDate: Instant = Clock.System.now()
     ): Long {
         val experience = Experience(

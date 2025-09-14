@@ -46,7 +46,7 @@ fun main() = application {
     ) {
         val koin = getKoin()
         val themeManager = remember { koin.get<ThemeManager>() }
-        val themeMode by themeManager.themeMode.collectAsState()
+        val themeMode by themeManager.themeMode.collectAsState(initial = com.isaakhanimann.journal.ui.theme.ThemeMode.SYSTEM)
         val isDarkTheme = themeManager.shouldUseDarkTheme(themeMode)
         
         JournalTheme(darkTheme = isDarkTheme) {

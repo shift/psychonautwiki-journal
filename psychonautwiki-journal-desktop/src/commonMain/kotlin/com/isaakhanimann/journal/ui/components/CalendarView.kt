@@ -127,9 +127,13 @@ private fun CalendarGrid(
     onDateSelected: (LocalDate) -> Unit
 ) {
     // Calculate calendar grid
-    val firstDayOfMonth = currentMonth.dayOfMonth(1)
+    val firstDayOfMonth = LocalDate(currentMonth.year, currentMonth.month, 1)
     val firstDayOfWeek = firstDayOfMonth.dayOfWeek.ordinal // Monday = 0
-    val daysInMonth = currentMonth.lengthOfMonth()
+    val daysInMonth = when (currentMonth.month) {
+        Month.FEBRUARY -> if (currentMonth.year % 4 == 0 && (currentMonth.year % 100 != 0 || currentMonth.year % 400 == 0)) 29 else 28
+        Month.APRIL, Month.JUNE, Month.SEPTEMBER, Month.NOVEMBER -> 30
+        else -> 31
+    }
     val today = Clock.System.todayIn(TimeZone.currentSystemDefault())
     
     // Create list of dates to display (including previous/next month padding)
@@ -137,15 +141,19 @@ private fun CalendarGrid(
     
     // Add padding days from previous month
     val prevMonth = currentMonth.minus(1, DateTimeUnit.MONTH)
-    val daysInPrevMonth = prevMonth.lengthOfMonth()
+    val daysInPrevMonth = when (prevMonth.month) {
+        Month.FEBRUARY -> if (prevMonth.year % 4 == 0 && (prevMonth.year % 100 != 0 || prevMonth.year % 400 == 0)) 29 else 28
+        Month.APRIL, Month.JUNE, Month.SEPTEMBER, Month.NOVEMBER -> 30
+        else -> 31
+    }
     for (i in firstDayOfWeek - 1 downTo 0) {
-        val date = prevMonth.dayOfMonth(daysInPrevMonth - i)
+        val date = LocalDate(prevMonth.year, prevMonth.month, daysInPrevMonth - i)
         calendarDates.add(CalendarDay(date, isCurrentMonth = false))
     }
     
     // Add days of current month
     for (day in 1..daysInMonth) {
-        val date = currentMonth.dayOfMonth(day)
+        val date = LocalDate(currentMonth.year, currentMonth.month, day)
         calendarDates.add(CalendarDay(date, isCurrentMonth = true))
     }
     
@@ -153,7 +161,7 @@ private fun CalendarGrid(
     val nextMonth = currentMonth.plus(1, DateTimeUnit.MONTH)
     var nextMonthDay = 1
     while (calendarDates.size % 7 != 0) {
-        val date = nextMonth.dayOfMonth(nextMonthDay++)
+        val date = LocalDate(nextMonth.year, nextMonth.month, nextMonthDay++)
         calendarDates.add(CalendarDay(date, isCurrentMonth = false))
     }
     

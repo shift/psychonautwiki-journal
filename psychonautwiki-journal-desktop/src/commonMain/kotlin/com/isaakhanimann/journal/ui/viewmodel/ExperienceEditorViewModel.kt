@@ -41,7 +41,7 @@ class ExperienceEditorViewModel(
             formState
                 .debounce(5000) // Wait 5 seconds after user stops typing
                 .collect { form ->
-                    if (formId.isNotBlank() && form.hasSubstantialContent()) {
+                    if (formId.isNotBlank() && form.hasSubstantialContent) {
                         autoSaveDraft()
                     }
                 }
@@ -58,7 +58,7 @@ class ExperienceEditorViewModel(
     
     private suspend fun autoSaveDraft() {
         val form = _formState.value
-        if (form.hasSubstantialContent()) {
+        if (form.hasSubstantialContent) {
             val draft = ExperienceDraft(
                 title = form.title,
                 text = form.text,
@@ -154,9 +154,9 @@ class ExperienceEditorViewModel(
                             title = experience.title,
                             text = experience.text,
                             isFavorite = experience.isFavorite,
-                            locationName = experience.location?.name ?: "",
-                            locationLatitude = experience.location?.latitude?.toString() ?: "",
-                            locationLongitude = experience.location?.longitude?.toString() ?: "",
+                            locationName = experience.location ?: "",
+                            locationLatitude = "", // not available in string location
+                            locationLongitude = "", // not available in string location
                             sortDate = experience.sortDate
                         )
                         _uiState.value = ExperienceEditorUiState(
@@ -253,7 +253,7 @@ class ExperienceEditorViewModel(
                             title = form.title,
                             text = form.text,
                             isFavorite = form.isFavorite,
-                            location = location
+                            location = location?.name
                         )
                         experienceTracker.updateExperience(updatedExperience)
                     }
@@ -262,7 +262,7 @@ class ExperienceEditorViewModel(
                     val experienceId = experienceTracker.createNewExperience(
                         title = form.title,
                         text = form.text,
-                        location = location,
+                        location = location?.name,
                         sortDate = form.sortDate
                     )
                     editingExperienceId = experienceId.toInt()

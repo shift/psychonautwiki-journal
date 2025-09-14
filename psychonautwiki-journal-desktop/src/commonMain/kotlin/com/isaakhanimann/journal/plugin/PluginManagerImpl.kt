@@ -300,7 +300,9 @@ class PluginManagerImpl : PluginManager, KoinComponent {
     
     private inner class PluginDataAccessImpl : PluginDataAccess {
         override suspend fun readExperiences() = experienceRepository.getAllExperiences()
-        override suspend fun readSubstances() = flow { emit(emptyList()) } // Simplified
+        override suspend fun readSubstances(): Flow<List<com.isaakhanimann.journal.data.model.Substance>> = flow { 
+            emit(emptyList<com.isaakhanimann.journal.data.model.Substance>()) // Simplified implementation
+        }
         override suspend fun hasPermission(permission: Permission): Boolean {
             // TODO: Implement permission checking based on loaded plugin manifest
             return true

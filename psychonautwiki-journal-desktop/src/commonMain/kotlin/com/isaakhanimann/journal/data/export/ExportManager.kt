@@ -56,9 +56,9 @@ class ExportManagerImpl(
                         exp.sortDate.toEpochMilliseconds().toString(),
                         exp.text.escapeCsv(),
                         exp.isFavorite.toString(),
-                        exp.location?.name?.escapeCsv() ?: "",
-                        exp.location?.latitude?.toString() ?: "",
-                        exp.location?.longitude?.toString() ?: "",
+                        exp.location?.escapeCsv() ?: "",
+                        "", // latitude not available in string location
+                        "", // longitude not available in string location
                         "", "", "", "", "", "", "", "", "", ""
                     ))
                 } else {
@@ -70,9 +70,9 @@ class ExportManagerImpl(
                             exp.sortDate.toEpochMilliseconds().toString(),
                             exp.text.escapeCsv(),
                             exp.isFavorite.toString(),
-                            exp.location?.name?.escapeCsv() ?: "",
-                            exp.location?.latitude?.toString() ?: "",
-                            exp.location?.longitude?.toString() ?: "",
+                            exp.location?.escapeCsv() ?: "",
+                            "", // latitude not available in string location
+                            "", // longitude not available in string location
                             ingestion.substanceName.escapeCsv(),
                             ingestion.dose?.toString() ?: "",
                             ingestion.units?.escapeCsv() ?: "",
@@ -136,11 +136,11 @@ private fun ExperienceWithDetails.toExportExperience(): ExportExperience {
         text = experience.text,
         isFavorite = experience.isFavorite,
         sortDate = experience.sortDate.toEpochMilliseconds(),
-        location = experience.location?.let { loc ->
+        location = experience.location?.let { locationName ->
             ExportLocation(
-                name = loc.name,
-                latitude = loc.latitude,
-                longitude = loc.longitude
+                name = locationName,
+                latitude = null, // not available in string location
+                longitude = null // not available in string location
             )
         },
         ingestions = ingestions.map { ingestion ->

@@ -1,5 +1,6 @@
 package com.isaakhanimann.journal.ai
 
+import com.isaakhanimann.journal.data.model.Experience
 import com.isaakhanimann.journal.data.repository.ExperienceRepository
 import com.isaakhanimann.journal.data.repository.PreferencesRepository
 import com.isaakhanimann.journal.plugin.*
@@ -13,8 +14,10 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import java.util.*
+import kotlin.uuid.ExperimentalUuidApi
+import kotlin.uuid.Uuid
 
+@OptIn(ExperimentalUuidApi::class)
 class AIAssistantImpl : AIAssistant, KoinComponent {
     private val experienceRepository: ExperienceRepository by inject()
     private val preferencesRepository: PreferencesRepository by inject()
@@ -102,11 +105,11 @@ class AIAssistantImpl : AIAssistant, KoinComponent {
     override suspend fun startNewConversation(title: String?): Conversation {
         val now = Clock.System.now()
         val conversation = Conversation(
-            id = UUID.randomUUID().toString(),
+            id = Uuid.random().toString(),
             title = title ?: "New Conversation",
             messages = listOf(
                 ChatMessage(
-                    id = UUID.randomUUID().toString(),
+            id = Uuid.random().toString(),
                     content = buildWelcomeMessage(),
                     role = MessageRole.ASSISTANT,
                     timestamp = now
@@ -132,7 +135,7 @@ class AIAssistantImpl : AIAssistant, KoinComponent {
             } ?: _currentConversation.value ?: startNewConversation()
             
             val userMessage = ChatMessage(
-                id = UUID.randomUUID().toString(),
+                id = Uuid.random().toString(),
                 content = content,
                 role = MessageRole.USER,
                 timestamp = Clock.System.now()
@@ -154,7 +157,7 @@ class AIAssistantImpl : AIAssistant, KoinComponent {
             val response = aiProvider.processQuery(query).getOrThrow()
             
             val assistantMessage = ChatMessage(
-                id = UUID.randomUUID().toString(),
+                id = Uuid.random().toString(),
                 content = response.content,
                 role = MessageRole.ASSISTANT,
                 timestamp = Clock.System.now(),
@@ -189,10 +192,10 @@ class AIAssistantImpl : AIAssistant, KoinComponent {
     
     override suspend fun analyzeExperiences(experienceIds: List<String>): AIResult {
         val experiences = experienceRepository.getAllExperiences().first()
-            .filter { experienceIds.contains(it.id) }
+            .filter { experienceIds.contains(it.id.toString()) }
         
         if (experiences.isEmpty()) {
-            return AIResult(
+            return com.isaakhanimann.journal.ai.AIResult(
                 response = "No experiences found to analyze.",
                 confidence = 0.0
             )
@@ -214,11 +217,12 @@ class AIAssistantImpl : AIAssistant, KoinComponent {
         )
         
         val response = aiProvider.processQuery(query).getOrThrow()
-        return AIResult(
+        return com.isaakhanimann.journal.ai.AIResult(
             response = response.content,
             confidence = response.confidence,
             suggestions = response.suggestions,
-            followUpQuestions = response.followUpQuestions
+            citations = emptyList(),
+            metadata = emptyMap()
         )
     }
     
@@ -251,11 +255,12 @@ class AIAssistantImpl : AIAssistant, KoinComponent {
         )
         
         val response = aiProvider.processQuery(query).getOrThrow()
-        return AIResult(
+        return com.isaakhanimann.journal.ai.AIResult(
             response = response.content,
             confidence = response.confidence,
             suggestions = response.suggestions,
-            followUpQuestions = response.followUpQuestions
+            citations = emptyList(),
+            metadata = emptyMap()
         )
     }
     
@@ -376,7 +381,7 @@ class AIAssistantImpl : AIAssistant, KoinComponent {
         """.trimIndent()
     }
     
-    private fun buildContextMap(messages: List<ChatMessage>): Map<String, Any> {
+    private suspend fun buildContextMap(messages: List<ChatMessage>): Map<String, Any> {
         return mapOf(
             "conversation_length" to messages.size,
             "recent_topics" to extractTopics(messages.takeLast(5)),
@@ -397,7 +402,7 @@ class AIAssistantImpl : AIAssistant, KoinComponent {
         }.distinct()
     }
     
-    private suspend fun getUserPreferences(): Map<String, Any> {
+    private suspend fun getUserPreferences(): Map<String, String> {
         return mapOf(
             "tone_preference" to preferencesRepository.getString("ai_tone_preference", "empathetic"),
             "detail_level" to preferencesRepository.getString("ai_detail_level", "medium"),
@@ -418,11 +423,12 @@ class AIAssistantImpl : AIAssistant, KoinComponent {
                 """
                 Experience ${index + 1}:
                 - Date: ${exp.date}
-                - Substances: ${exp.ingestions?.joinToString(", ") { "${it.substanceName} (${it.dose})" }}
+                - Substances: ${exp.ingestions?.joinToString(", ") { "${it.substanceName} (${it.dose})" } ?: "None listed"}
                 - Setting: ${exp.location ?: "Not specified"}
                 - Overall Rating: ${exp.overallRating ?: "Not rated"}
-                - Notes: ${exp.notes ?: "No notes"}
+                - Notes: ${exp.text}
                 """.trimIndent()
+            }.joinToString("\n\n")}
             }.joinToString("\n\n")}
             
             Please provide:
@@ -457,12 +463,12 @@ class AIAssistantImpl : AIAssistant, KoinComponent {
         return lines.mapIndexedNotNull { index, line ->
             if (line.trim().startsWith("-") || line.trim().startsWith("•")) {
                 Recommendation(
-                    id = "ai-rec-${UUID.randomUUID()}",
+                    id = "ai-rec-${Uuid.random()}",
                     title = "AI Recommendation ${index + 1}",
                     description = line.trim().removePrefix("-").removePrefix("•").trim(),
                     actionable = true,
-                    priority = RecommendationPriority.MEDIUM,
-                    category = RecommendationCategory.SAFETY
+                     priority = RecommendationPriority.MEDIUM,
+                     category = "SAFETY"
                 )
             } else null
         }
@@ -475,7 +481,7 @@ class AIAssistantImpl : AIAssistant, KoinComponent {
         return lines.mapIndexedNotNull { index, line ->
             if (line.trim().startsWith("-") || line.trim().startsWith("•")) {
                 Insight(
-                    id = "ai-insight-${UUID.randomUUID()}",
+                    id = "ai-insight-${Uuid.random()}",
                     title = "AI Insight ${index + 1}",
                     description = line.trim().removePrefix("-").removePrefix("•").trim(),
                     confidence = 0.7,
