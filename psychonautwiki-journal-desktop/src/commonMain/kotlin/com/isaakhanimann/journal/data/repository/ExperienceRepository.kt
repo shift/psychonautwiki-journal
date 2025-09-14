@@ -118,6 +118,7 @@ class ExperienceRepositoryImpl(
                 creationDate = experience.creationDate.epochSeconds,
                 sortDate = experience.sortDate.epochSeconds,
                 isFavorite = if (experience.isFavorite) 1L else 0L,
+                overallRating = experience.overallRating?.toLong(),
                 locationName = experience.location,
                 locationLongitude = null,
                 locationLatitude = null
@@ -131,6 +132,7 @@ class ExperienceRepositoryImpl(
             title = experience.title,
             text = experience.text,
             isFavorite = if (experience.isFavorite) 1L else 0L,
+            overallRating = experience.overallRating?.toLong(),
             locationName = experience.location,
             locationLongitude = null,
             locationLatitude = null,

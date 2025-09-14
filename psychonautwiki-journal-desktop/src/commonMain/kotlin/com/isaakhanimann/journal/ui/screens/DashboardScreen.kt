@@ -77,7 +77,7 @@ fun DashboardScreen(navController: DesktopNavigationController) {
                         onViewExperiences = { navController.navigate(Screen.Experiences) },
                         onViewSubstances = { navController.navigate(Screen.Substances) },
                         onViewAnalytics = { navController.navigate(Screen.Analytics) },
-                        onOpenAIAssistant = { /* TODO: AI Assistant */ },
+                        onOpenAIAssistant = { navController.navigateToAIAssistant() },
                         onOpenGamification = { navController.navigate(Screen.Gamification) }
                     )
                 }
