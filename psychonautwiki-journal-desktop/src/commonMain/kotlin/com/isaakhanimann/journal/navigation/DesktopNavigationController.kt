@@ -26,6 +26,14 @@ class DesktopNavigationController {
         _currentScreen = Screen.Settings
     }
     
+    fun navigateToAnalytics() {
+        _currentScreen = Screen.Analytics
+    }
+    
+    fun navigateToAIAssistant() {
+        _currentScreen = Screen.AIAssistant
+    }
+    
     fun navigateToExperienceEditor(experienceId: Int? = null) {
         _currentScreen = Screen.ExperienceEditor(experienceId?.toString())
     }

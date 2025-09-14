@@ -5,6 +5,8 @@ sealed class Screen(val route: String) {
     object Experiences : Screen("experiences")  
     object Substances : Screen("substances")
     object Settings : Screen("settings")
+    object Analytics : Screen("analytics")
+    object AIAssistant : Screen("ai_assistant")
     data class ExperienceEditor(val experienceId: String? = null) : Screen("experience_editor/${experienceId ?: "new"}")
     data class IngestionEditor(val experienceId: String, val ingestionId: String? = null) : Screen("ingestion_editor/$experienceId/${ingestionId ?: "new"}")
     data class ExperienceTimeline(val experienceId: String) : Screen("experience_timeline/$experienceId")

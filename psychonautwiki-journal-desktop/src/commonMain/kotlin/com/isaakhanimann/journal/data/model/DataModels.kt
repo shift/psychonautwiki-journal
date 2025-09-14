@@ -11,7 +11,62 @@ data class Experience(
     val creationDate: Instant,
     val sortDate: Instant,
     val isFavorite: Boolean = false,
-    val location: Location? = null
+    val location: String? = null,
+    val date: Instant? = sortDate,
+    val overallRating: Int? = null,
+    val ingestions: List<Ingestion>? = null
+)
+
+@Serializable
+data class Substance(
+    val name: String,
+    val commonNames: List<String> = emptyList(),
+    val tolerance: ToleranceInfo? = null,
+    val roas: List<RouteOfAdministration> = emptyList(),
+    val interactions: List<String> = emptyList(),
+    val categories: List<String> = emptyList(),
+    val psychoactiveClass: List<String> = emptyList(),
+    val chemicalClass: List<String> = emptyList()
+)
+
+@Serializable
+data class ToleranceInfo(
+    val full: String? = null,
+    val half: String? = null,
+    val zero: String? = null
+)
+
+@Serializable
+data class RouteOfAdministration(
+    val route: AdministrationRoute,
+    val dosage: DosageInfo? = null,
+    val duration: DurationInfo? = null,
+    val bioavailability: String? = null
+)
+
+@Serializable
+data class DosageInfo(
+    val threshold: Double? = null,
+    val light: DoubleRange? = null,
+    val common: DoubleRange? = null,
+    val strong: DoubleRange? = null,
+    val heavy: Double? = null,
+    val units: String = "mg"
+)
+
+@Serializable
+data class DurationInfo(
+    val onset: String? = null,
+    val comeup: String? = null,
+    val peak: String? = null,
+    val offset: String? = null,
+    val total: String? = null
+)
+
+@Serializable
+data class DoubleRange(
+    val min: Double,
+    val max: Double
 )
 
 @Serializable

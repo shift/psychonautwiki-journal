@@ -1,8 +1,13 @@
 package com.isaakhanimann.journal.plugin
 
+import androidx.compose.runtime.Composable
+import com.isaakhanimann.journal.data.model.*
+import com.isaakhanimann.journal.data.repository.ExperienceRepository
+import com.isaakhanimann.journal.data.repository.SubstanceRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.serialization.Serializable
+import kotlin.reflect.KClass
 
 @Serializable
 data class PluginManifest(

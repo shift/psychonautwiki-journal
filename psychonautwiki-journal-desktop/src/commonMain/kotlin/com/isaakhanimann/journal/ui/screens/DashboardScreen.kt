@@ -96,6 +96,12 @@ fun DashboardScreen(navController: DesktopNavigationController) {
                         },
                         onViewSubstances = { 
                             navController.navigate(Screen.Substances)
+                        },
+                        onViewAnalytics = {
+                            navController.navigate(Screen.Analytics)
+                        },
+                        onOpenAIAssistant = {
+                            navController.navigate(Screen.AIAssistant)
                         }
                     )
                 }
@@ -247,7 +253,9 @@ private fun StatCard(
 private fun DashboardQuickActions(
     onNewExperience: () -> Unit,
     onViewExperiences: () -> Unit,
-    onViewSubstances: () -> Unit
+    onViewSubstances: () -> Unit,
+    onViewAnalytics: () -> Unit,
+    onOpenAIAssistant: () -> Unit
 ) {
     Card(
         modifier = Modifier.fillMaxWidth()
@@ -286,8 +294,42 @@ private fun DashboardQuickActions(
             
             Spacer(modifier = Modifier.height(8.dp))
             
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                OutlinedButton(
+                    onClick = onViewSubstances,
+                    modifier = Modifier.weight(1f)
+                ) {
+                    Icon(Icons.Default.Science, contentDescription = null)
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text("Substances")
+                }
+                
+                OutlinedButton(
+                    onClick = onViewAnalytics,
+                    modifier = Modifier.weight(1f)
+                ) {
+                    Icon(Icons.Default.Analytics, contentDescription = null)
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text("Analytics")
+                }
+            }
+            
+            Spacer(modifier = Modifier.height(8.dp))
+            
             OutlinedButton(
-                onClick = onViewSubstances,
+                onClick = onOpenAIAssistant,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Icon(Icons.Default.Psychology, contentDescription = null)
+                Spacer(modifier = Modifier.width(8.dp))
+                Text("AI Assistant (Lucy)")
+            }
+        }
+    }
+}
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Icon(Icons.Default.Star, contentDescription = null)

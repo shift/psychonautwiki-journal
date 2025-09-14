@@ -2,6 +2,8 @@ package com.isaakhanimann.journal.navigation
 
 import androidx.compose.runtime.*
 import com.isaakhanimann.journal.ui.screens.*
+import com.isaakhanimann.journal.ui.screens.analytics.AnalyticsScreen
+import com.isaakhanimann.journal.ui.screens.ai.AIAssistantScreen
 
 @Composable
 fun AppNavigation(navController: DesktopNavigationController? = null) {
@@ -12,6 +14,8 @@ fun AppNavigation(navController: DesktopNavigationController? = null) {
         is Screen.Experiences -> ExperiencesScreen(navController = actualNavController) 
         is Screen.Substances -> SubstancesScreen(navController = actualNavController)
         is Screen.Settings -> SettingsScreen(navController = actualNavController)
+        is Screen.Analytics -> AnalyticsScreen()
+        is Screen.AIAssistant -> AIAssistantScreen()
         is Screen.ExperienceEditor -> {
             val experienceId = screen.experienceId?.toIntOrNull()
             ExperienceEditorScreen(

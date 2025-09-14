@@ -57,13 +57,10 @@ class ExperienceRepositoryImpl(
                         creationDate = Instant.fromEpochSeconds(exp.creationDate),
                         sortDate = Instant.fromEpochSeconds(exp.sortDate),
                         isFavorite = exp.isFavorite == 1L,
-                        location = if (exp.locationName != null) {
-                            Location(
-                                name = exp.locationName,
-                                longitude = exp.locationLongitude,
-                                latitude = exp.locationLatitude
-                            )
-                        } else null
+                        location = exp.locationName,
+                        date = Instant.fromEpochSeconds(exp.sortDate),
+                        overallRating = exp.overallRating?.toInt(),
+                        ingestions = null // Will be loaded separately when needed
                     )
                 }
             }
@@ -82,13 +79,10 @@ class ExperienceRepositoryImpl(
                         creationDate = Instant.fromEpochSeconds(it.creationDate),
                         sortDate = Instant.fromEpochSeconds(it.sortDate),
                         isFavorite = it.isFavorite == 1L,
-                        location = if (it.locationName != null) {
-                            Location(
-                                name = it.locationName,
-                                longitude = it.locationLongitude,
-                                latitude = it.locationLatitude
-                            )
-                        } else null
+                        location = it.locationName,
+                        date = Instant.fromEpochSeconds(it.sortDate),
+                        overallRating = it.overallRating?.toInt(),
+                        ingestions = null // Will be loaded separately when needed
                     )
                 }
             }
@@ -107,13 +101,10 @@ class ExperienceRepositoryImpl(
                         creationDate = Instant.fromEpochSeconds(exp.creationDate),
                         sortDate = Instant.fromEpochSeconds(exp.sortDate),
                         isFavorite = exp.isFavorite == 1L,
-                        location = if (exp.locationName != null) {
-                            Location(
-                                name = exp.locationName,
-                                longitude = exp.locationLongitude,
-                                latitude = exp.locationLatitude
-                            )
-                        } else null
+                        location = exp.locationName,
+                        date = Instant.fromEpochSeconds(exp.sortDate),
+                        overallRating = exp.overallRating?.toInt(),
+                        ingestions = null // Will be loaded separately when needed
                     )
                 }
             }
@@ -127,9 +118,9 @@ class ExperienceRepositoryImpl(
                 creationDate = experience.creationDate.epochSeconds,
                 sortDate = experience.sortDate.epochSeconds,
                 isFavorite = if (experience.isFavorite) 1L else 0L,
-                locationName = experience.location?.name,
-                locationLongitude = experience.location?.longitude,
-                locationLatitude = experience.location?.latitude
+                locationName = experience.location,
+                locationLongitude = null,
+                locationLatitude = null
             )
             queries.lastInsertRowId().executeAsOne()
         }
@@ -140,9 +131,9 @@ class ExperienceRepositoryImpl(
             title = experience.title,
             text = experience.text,
             isFavorite = if (experience.isFavorite) 1L else 0L,
-            locationName = experience.location?.name,
-            locationLongitude = experience.location?.longitude,
-            locationLatitude = experience.location?.latitude,
+            locationName = experience.location,
+            locationLongitude = null,
+            locationLatitude = null,
             id = experience.id.toLong()
         )
     }
@@ -370,13 +361,10 @@ class ExperienceRepositoryImpl(
                         creationDate = Instant.fromEpochSeconds(exp.creationDate),
                         sortDate = Instant.fromEpochSeconds(exp.sortDate),
                         isFavorite = exp.isFavorite == 1L,
-                        location = if (exp.locationName != null) {
-                            Location(
-                                name = exp.locationName,
-                                longitude = exp.locationLongitude,
-                                latitude = exp.locationLatitude
-                            )
-                        } else null
+                        location = exp.locationName,
+                        date = Instant.fromEpochSeconds(exp.sortDate),
+                        overallRating = exp.overallRating?.toInt(),
+                        ingestions = null // Will be loaded separately when needed
                     )
                 }
             }
