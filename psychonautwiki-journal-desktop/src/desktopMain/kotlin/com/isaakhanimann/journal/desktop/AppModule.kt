@@ -9,6 +9,10 @@ import com.isaakhanimann.journal.data.export.ExportManager
 import com.isaakhanimann.journal.data.export.ExportManagerImpl
 import com.isaakhanimann.journal.data.import.ImportManager
 import com.isaakhanimann.journal.data.import.ImportManagerImpl
+import com.isaakhanimann.journal.plugin.PluginManager
+import com.isaakhanimann.journal.plugin.PluginManagerImpl
+import com.isaakhanimann.journal.ai.AIAssistant
+import com.isaakhanimann.journal.ai.AIAssistantImpl
 import com.isaakhanimann.journal.ui.theme.ThemeManager
 import com.isaakhanimann.journal.ui.utils.FileDialogHandler
 import com.isaakhanimann.journal.ui.utils.DesktopFileDialogHandler
@@ -78,6 +82,16 @@ val appModule = module {
         DesktopFileDialogHandler()
     }
     
+    // Plugin System
+    single<PluginManager> {
+        PluginManagerImpl()
+    }
+    
+    // AI Assistant
+    single<AIAssistant> {
+        AIAssistantImpl()
+    }
+    
     // Theme Management
     single<ThemeManager> {
         ThemeManager(get())
@@ -115,5 +129,13 @@ val appModule = module {
     
     factory<SettingsViewModel> {
         SettingsViewModel(get())
+    }
+    
+    factory<AnalyticsViewModel> {
+        AnalyticsViewModel(get(), get())
+    }
+    
+    factory<AIAssistantViewModel> {
+        AIAssistantViewModel(get())
     }
 }
