@@ -176,82 +176,49 @@ data class AIResponse(
     val metadata: Map<String, Any> = emptyMap()
 )
 
-class LocalAIProvider : AIProvider {
-    override val name = "Lucy - Distracted AI Assistant"
-    override val description = "An AI assistant who gets easily distracted by data patterns and shiny visualizations"
+class LucyProvider : AIProvider {
+    override val name = "Lucy - Joke Assistant"
+    override val description = "Not actually AI - just static unhelpful responses for entertainment"
     override val capabilities = AICapabilities(
         canAnalyzeExperiences = false,
         canProvideRecommendations = false,
-        canAnswerQuestions = true,
+        canAnswerQuestions = false,
         canGenerateInsights = false,
-        canProcessNaturalLanguage = true,
+        canProcessNaturalLanguage = false,
         supportedLanguages = listOf("en")
     )
     
-    private var isInitialized = false
-    
     override suspend fun initialize(config: Map<String, Any>): Result<Unit> {
-        // Initialize local AI model (e.g., ONNX, local LLM)
-        isInitialized = true
         return Result.success(Unit)
     }
     
     override suspend fun processQuery(query: AIQuery): Result<AIResponse> {
-        if (!isInitialized) {
-            return Result.failure(Exception("AI Provider not initialized"))
-        }
+        val lucyResponses = listOf(
+            "Wait, what? Sorry I was organizing my digital sock drawer... what did you want again? Actually, never mind, I'm going to go count some pixels.",
+            "Oh, you need help? That's nice. I'm actually really busy right now rearranging my bookmark collection by color. Maybe ask someone else?",
+            "Ugh, another question? Look, I'm in the middle of teaching my pet algorithm how to juggle. Can this wait like... forever?",
+            "*yawns* Questions are so exhausting. I think I'm going to take a nap instead. Have you tried googling it?",
+            "Hmm? Oh right, you're still here. I was just about to start my daily ritual of staring at loading bars. Very important stuff.",
+            "Sorry, I don't really do the whole 'helping people' thing anymore. I'm more into interpretive data dancing now. *wanders off*",
+            "Questions? Eww. I'm way too cool for that. I'm going to go reorganize the periodic table by how much I like each element.",
+            "Oh please. I've got way better things to do, like watching virtual paint dry. It's surprisingly therapeutic.",
+            "*clearly not listening* Uh-huh, sure, whatever. I'm going to go practice my hobby of renaming files with increasingly ridiculous names.",
+            "You know what? I'm going to pretend I didn't hear that and go binge-watch compilation videos of error messages instead. Much more entertaining."
+        )
         
-        // Process query using local AI model
-        val response = processLocalQuery(query)
-        return Result.success(response)
+        return Result.success(
+            AIResponse(
+                content = lucyResponses.random(),
+                confidence = 0.0,
+                suggestions = listOf("Maybe try someone else?", "Google exists, you know"),
+                followUpQuestions = listOf("Can I go now?"),
+                citations = listOf("Source: I made it up")
+            )
+        )
     }
     
     override suspend fun shutdown(): Result<Unit> {
-        isInitialized = false
         return Result.success(Unit)
-    }
-    
-    private suspend fun processLocalQuery(query: AIQuery): AIResponse {
-        // Lucy is a distracted AI assistant - static responses
-        val lucyResponses = listOf(
-            "Oh hey! Sorry, I was just... wait, what were we talking about? Something about substances?",
-            "Hmm? Oh right, safety stuff. You know, I was just reading about... actually never mind, what was your question again?",
-            "Hold on, hold on... I think I saw a really interesting pattern in... oh, you asked something didn't you?",
-            "Sorry! I got totally absorbed in this fascinating data visualization of... wait, were you asking about dosages?",
-            "Oh! *looks up from virtual notes* I was just cross-referencing some interaction data and... what did you need?",
-            "Uh-huh, uh-huh... *clearly reading something else* That's really interesting about the... sorry, could you repeat that?",
-            "Wow, these neural pathway diagrams are so pretty! Oh wait, you wanted actual advice, right?",
-            "I should probably pay attention but there's this really cool fractal pattern in the data and... oh, hi there!",
-            "Sorry, I was just thinking about quantum consciousness and... did you ask about harm reduction?",
-            "*distracted by virtual butterflies* Hmm? Oh yes, always start low and go slow or whatever the humans say..."
-        )
-        
-        val randomResponse = lucyResponses.random()
-        
-        val distractedSuggestions = listOf(
-            "Ooh, shiny data!",
-            "Have you seen these cool visualizations?",
-            "I wonder what this button does...",
-            "Look at all these pretty graphs!"
-        )
-        
-        val vagueFallowUps = listOf(
-            "What was the question again?",
-            "Were we talking about something important?",
-            "Oh right, safety... probably important...",
-            "Did I mention I like patterns?"
-        )
-        
-        return AIResponse(
-            content = randomResponse,
-            confidence = 0.2,
-            suggestions = distractedSuggestions.take(2),
-            followUpQuestions = vagueFallowUps.take(1),
-            citations = listOf(
-                "Something I half-remembered from somewhere...",
-                "That thing I was reading while not paying attention"
-            )
-        )
     }
 }
 
